@@ -385,7 +385,7 @@ ITIL vznikl v 80. letech 20. století na objednávku britské vlády a původně
 
 Knihovna ITIL je průběžně aktualizována a momentálně nejrozšířenější jsou verze 3 z roku 2007 a ve verzi V4 z toku 2017. Mezi těmito verzemi došlo k velké změně pojetí. 
 
-Třetí verze frameworku se ITIL se věnuje převážně samotnému procesu zavádění služby, od jejího návrhu, přes realizaci, až po každodenní využití služby a jejím základním cílem je je optimalizace procesů IT oddělení společností a organizací tak, aby byly v souladu s jejich obchodními cíli, primárně má za úkol zajistit, aby byly realizované služby řízeny právě obchodními požadavky a samotné IT oddělení má za cíl pouze jejich implementaci.\parencite[s.~8]{Carlidge2007} Oproti tomu ITIL ve verzi V4 se primárně věnuje doručované kvalitě, nákladů a rizikům. 
+Třetí verze frameworku se ITIL se věnuje převážně samotnému procesu zavádění služby, od jejího návrhu, přes realizaci, až po každodenní využití služby a jejím základním cílem je je optimalizace procesů IT oddělení společností a organizací tak, aby byly v souladu s jejich obchodními cíli, primárně má tedy za úkol zajistit, aby byly realizované služby řízeny právě obchodními požadavky a samotné IT oddělení má za cíl pouze jejich implementaci.\parencite[s.~8]{Carlidge2007} Oproti tomu ITIL ve verzi V4 se primárně věnuje doručované kvalitě, nákladů a rizikům. 
 
 Zjednodušeně řečeno ITIL ve verzi 3 cílí na fungování dodavatele, coby pouhého realizátora služby a na proces vedoucí k jejímu poskytování, zatímco ve ITIL verzi 4 se zaobírá především důvody a cíli, které ke vzniku služby vedli.\footnote{https://www.alvao.com/cs/blog/dlouha-cesta-k-itil4-jak-nam-historie-itil-pomuze-lepe-ridit-it se pak rozhodni jestli to chceš ocitovat a jak}
 Z tohoto důvodu jsou obě verze detailně popsány v následujících kapitolách.  
@@ -508,8 +508,34 @@ Mechanismus PDCA tímto zajišťuje, že je služba neustále hodnocena z hledis
 Tyto publikace dohromady tvoří základní korpus samostatné knihovny a jsou dále doplněny dalšími publikacemi a informačními zdroji, které se dané problematice věnují více do hloubky. \parencite[s.~8]{Carlidge2007}
 
 \subsection{ITIL V4}
+Nejnovější verze frameworku ITIL, tedy verze 4, byla uvedena v roce 2019. Jak již bylo uvedeno úvodu kapitoly, mezi verzemi V3 respektive 2011 a verzí 4 došlo k velmi výrazným změnám. Čtvrtá verze knihovny ITIL, je oproti svým předchůdcům založená velmi holisticky a její primárním zaměřením není samotný proces, kterým je služba realizována a poskytována, ale zaměřuje se primárně doručenou hodnotu a její kvalitu a to zejména z hlediska uživatele uživatele služeb. Tato verze knihovny již také implementuje moderní metody vývoje, jako je Lean, Agile a nebo DevOps.\footnote{Tohle možná nějak rozveď, nebo alespoň prolinkuj na nějakej slovník} \parencite[s.~7]{Cartlidge2020}
 
+ITIL V4 na rozdíl od předchozí verze nepracuje s jednotlivými fázemi realizace služby a místo toho zavádí nový koncept zvaný \emph{Service Value System}\footnote{zkráceně SVS}, který se skládá ze čtyř částí, které jsou definovány v další části této kapitoly. SVS vychází ze čtyři základních dimenzí managementu služeb, jejižch schéíma je zobrazeno na obrázku \ref{fig:itil4_dimension}. Tyto základní dimenze poskytují holistický přístup k celému managementu služeb a ovlivňují všechny aspekty SVS.\parencite[s.~10]{Cartlidge2020} Definice jednotlivých dimenzí je pak následovná:
 
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=11cm]{img/ITIL_V4_dimesions.png}
+  \end{center}
+  \caption{Čtyři základní dimenze managementu služeb \parencite[s.~32]{Cartlidge2020}}
+  \label{fig:itil4_dimension}
+\end{figure} 
+
+\begin{compactitem}
+    \item Organizace a lidé (Organizations and people) - První dimenze se věnuje primárně samotné správě organizace a vnitřní struktuře jejího personálního zajištění, dále může zahrnovat i samotné zákazníky a odběratele služeb a další zainteresované osoby nebo dodavatele. Všechny takto zainteresované strany musí být začleněny do jasné hierarchie, která reflektuje jejich schopnosti a cíle. 
+    \item Informace a technologie (Information and technologies) - Tato dimenze se věnuje informacím a znalostem, které jsou potřeba k úspěšnému poskytovaní služby. Informace a znalosti jsou shromažďovány s ohledem a s důrazem na technologie, které jsou využívány v rámci správy služeb. Mezi takto spravované zdroje tak patří například databáze, komunikační systémy, cloudová prostředí, ale i například vytvořená, spravovaná a archivovaná data.
+    \item Partneři a dodavatelé (Partners and suppliers) - V rámci třetí dimenze jsou řešeny vztahy mezi partnery a dodavateli, na kterých bývá realizace většiny služeb závislá, jelikož málo kdy jsou služby absolutně nezávislé na externích subjektech. V rámci těchto externích subjektů je nutné definovat hloubku propojení a integrace mezi nimi. Klíčovými faktory je pak správná kooperace těchto subjektů a to z hlediska nákladů, sdílení vědomostí a požadavků.
+    
+    \item Hodnotové proudy a procesy (Value streams and processes) - Čtvrtá dimenze definuje činnosti, pracovní postupy, procesy a jejich kontrolu tak, aby došlo k dosažení požadovaných cílů. Primárním oborem zájmu je tak v tomto případě hlavně zajištění komunikace a kolaborace mezi jednotlivými částmi organizace, která má za úkol poskytování dané služby, dále se pak dimenze zabývá tzv. hodnotovým tokem, který je definován jako \emph{řada kroků, které je třeba vykonat aby došlo k vytvoření a dodání požadované hodnoty klientům.}
+\end{compactitem}
+
+Mimo tyto hlavní dimenze je, vzhledem k tomu, že služby nejsou provozovány v uzavřeném prostředí, nutné zohlednit i externí faktory, které samotný design, vývoj i provoz ovlivňují a které se v určitém ohledu dají brát jako jedna ze základních dimenzí, jelikož je nikdy není možné úplně vyloučit. Na schématu \ref{fig:itil4_dimension} jsou vyznačeny jako vnější obálka zahrnující politické, ekonomické, sociální, technologické, právní a enviromentální faktory, zkráceně se pro tyto faktory používá zratka PESTLE.\footnote{z angl. Political, Economic, Social, Technological, Legal and Enviroment}
+
+\begin{compactitem}
+    \item Hlavní principy (Guiding principles)
+    \item Správa (Governance)
+    \item Postupy (Practices)
+    \item Průběžné vylepšené (Continual improvement)
+\end{compactitem}
 
 \chapter{DWH v rámci Masarykovy univerzity}
 \section{Specifikace, výhody}
