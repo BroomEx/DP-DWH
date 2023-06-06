@@ -108,43 +108,42 @@
 \begin{document}
 %% The \chapter* command can be used to produce unnumbered chapters:
 \chapter{Úvod}
-Velký rozmach informačních technologií v druhé polovině dvacátého století, měl za následek zautomatizování a zjednodušení velkého množství procesů, u kterých čím dál více úkonů přecházelo z lidských zdrojů na informační systémy. Procesy, které jsou realizovány za pomoci informačních systémů umožňují lepší optimalizaci, nepřetržitý provoz a také z velké části eliminují chyby, které jsou způsobeny lidským faktorem. Z těchto důvodů se postupně IT služby prosadili ve všech aspektech lidské společnosti, která je nyní na jejich bezchybném fungování a dostatečné dostupnosti de-facto závislá. 
+Velký rozmach informačních technologií v druhé polovině dvacátého století vedl k rozsáhle automatizaci a zjednodušení mnoha procesů, u kterých čím dál více úkonů přecházelo z lidských zdrojů na informační systémy. Procesy, které jsou realizovány za pomoci informačních systémů umožňují lepší optimalizaci, nepřetržitý provoz a také z velké části eliminují chyby, které jsou způsobeny lidským faktorem. Z těchto důvodů se postupně IT služby prosadili ve všech aspektech lidské společnosti, která je nyní na jejich bezchybném fungování a dostatečné dostupnosti de facto závislá. 
 
-Informační služby za nás dnes vykonávají velké množství činností, z nichž by velká část nebyla nebyla ani realizovatelná, pokud bychom k realizaci využili pouze lidské zdroje. Díky informačním službám je dnes také možné uchovávat a zpracovávat obrovské množství dat, které následně můžeme využívat jako znalostní bázy pro naše rozhodování, ať co se světa velkých organizací a korporací týče, tak i v běžném životě každého jednotlivce. 
+Informační služby za nás dnes vykonávají velké množství činností, z nichž by velká část nebyla nebyla ani realizovatelná, pokud bychom k realizaci využili pouze lidské zdroje. Díky informačním službám je dnes také možné uchovávat a zpracovávat obrovské množství dat, které následně můžeme využívat jako znalostní bázi pro naše rozhodování, ať co se světa velkých organizací a korporací týče, tak i v běžném životě jednotlivců.
 
-Spolu s tímto rozmachem byl však bezprostředně nutný i vznik patřičných standardizovaných postupů, za pomoci kterých můžeme tyto služby v rámci organizací zavádět a udržovat, neboť samotný vývoj IT služeb je značně odlišný od jejich implementace a údržby. 
+Spolu s tímto rozmachem byl nutný i vznik patřičných standardizovaných postupů, za pomoci kterých můžeme tyto služby v rámci organizací zavádět a udržovat, neboť samotný vývoj IT služeb je značně odlišný od jejich implementace a údržby. 
 
-Tato diplomová práce se zabývá rozborem procesu zavádění IT služeb v rámci Ústavu výpočetní techniky (ÚVT) Masarykovy univerzity a to konkrétně na příkladu zavádění služby datového skladu. Diplomová postupně danou problematiku rozebírá jak z teoretického, tak z aplikačního hlediska, kdy teoretická část obsahuje potřebné ukotvení v tématice datových skladů a managementu informačních služeb, jejich historickým vývojem, kategorizací, základním popisem a charakteristikou. Velká část je pak věnována popisu procesu zavádění datového skladu a konkrétního případu využití. Tento proces následně prochází evaluací a případnou optimalizací. 
+Tato diplomová práce se zabývá rozborem procesu zavádění IT služeb v rámci Ústavu výpočetní techniky (ÚVT) Masarykovy univerzity, a to konkrétně na příkladu zavádění služby datového skladu. Diplomová práce postupně danou problematiku rozebírá jak z teoretického, tak z aplikačního hlediska. Teoretická část zahrnuje potřebné ukotvení v problematice datových skladů a managementu informačních služeb, jejich historický vývoj, kategorizaci, základní popise a charakteristiku. Velká část je pak věnována popisu procesu zavádění datového skladu a konkrétního případu využití. Tento proces následně prochází teoretickou evaluací a případnou optimalizací. 
 
 V aplikační části se pak diplomová práce věnuje samotnému technickému řešení datového skladu a jednoho ukázkového případu jeho využití. Na základě výsledků evaluace zaváděcího procesu z teoretické části, je pak navržen zaváděcí proces pro ukázkový případ, který je pak v rám diplomové práce nasazen. 
 
-Cílem diplomové práce je tedy náhled na proces zavádění nové IT služby v rámci ÚVT MUNI a to jak z technického hlediska, tak z hlediska managementu služeb z pohledu frameworku ITIL. Praktickým výstupem pak je uživatelský report, který je vytvořen dat anonymizovanými daty z datového skladu a nasazen za pomocí procesu, který splňuje požadavky frameworku ITIL.
+Cílem diplomové práce je náhled na proces zavádění nové IT služby v rámci ÚVT MUNI a to jak z technického hlediska, tak z hlediska managementu služeb z pohledu frameworku ITIL. Praktickým výstupem pak je uživatelský report, který je vytvořen anonymizovanými daty z datového skladu a nasazen za pomocí procesu, který splňuje požadavky frameworku ITIL.
 \chapter{Datový sklad}
 
-V dnešní společnosti se každým dnem vygeneruje ohromné množství dat a informací a
+V dnešní společnosti se každý den vygeneruje ohromné množství dat a informací a
 toto množství neustále roste. Zatímco ve starém Římě dosahovaly, při přepočtu na dnešní
 jednotky, největší sbírky svitků velikosti okolo 100Mb \parencite[p.~157]{Smil2021}, v roce 2016 již
-lidstvo dokázalo vygenerovat 16Zb dat každý rok\parencite[p.~160]{Smil2021}, což představuje nárůst
+lidstvo dokázalo vygenerovat 16Zb dat každý rok\parencite[p.~160]{Smil2021}, což je nárůst
 o celých 14 řádů.
 
 Spolu s velkým množstvím nově vygenerovaných informací se ale mění jejich
 forma. Ve zmíněných římských sbírkách, bychom nalezli zejména písemnosti, ty však v současné době představují s
-píše marginální čast uložených informací. Například v repositářích Kongresové knihovny ve Spojených státech amerických, zabírají písemnosti
+píše marginální čast uložených informací. Například v repozitářích Kongresové knihovny ve Spojených státech amerických, zabírají písemnosti
 pouze 1 \% ze všech uchovaných informačních artefaktů. \parencite[p.~158]{Smil2021}
-Vzhledem k takto velkému množství dostupných informací, je jejich zpracovaní velmi
-komplikované, a to i na úrovni menších celků, jako jsou například obchodní společnosti, univerzity
-anebo jim podobné organizace.Pokud však chceme na základě informací dělat jakékoliv analýzy čí rozhodnutí, je velmi vhodné informace zkonsolidovat do jednoho úložiště,
+Vzhledem k takto velkému množství dostupných informací, je jejich zpracovaní značně
+komplikované, a to i na úrovni menších celků, jako jsou například obchodní společnosti, univerzity a další podobné organizace.Pokud však chceme na základě informací dělat jakékoliv analýzy čí rozhodnutí, je velmi vhodné informace zkonsolidovat do jednoho úložiště,
 provést základní očištění a data alespoň základně standardizovat.
 
 Jednou z možností, jak tohoto docílit, je vytvoření datového skladu. Pojem datový
-sklad může mít vícero definic a je možné na něj pohlížet i pouze jako na proces, který má
-zjednodušit přístup k datům a kdy je pak technické řešení datového skladu pouze podpůrný prvek celého procesu.
+sklad může mít vícero definic. Je možné na něj nahlížet například pouze jako na proces, který má
+zjednodušit přístup k datům a kdy je technické řešení datového skladu pouze podpůrný prvek celého procesu.
 Nejčastěji se však na datový sklad pohlíží jako na systém, který \emph{extrahuje, čistí, upravuje a dodává zdrojová data do dimenzionálního
 datového úložiště a poté podporuje a zavádí dotazování a analýzu dat za účelem
 rozhodování.} \parencite[s.~23]{Kimballc2004}
 
 Z této definice jasně vyplývá, že primárním účelem datového skladu je centralizace a
-standardizace dat, díky které je pak přístup k datům velmi usnadněn. Zároveň je zde důležité
+standardizace dat, díky které je pak přístup k datům usnadněn. Zároveň je zde důležité
 uvést, že každý datový sklad se skládá z několika komponent, z nichž nejdůležitější je proces
 extrakce, čištění a úpravy dat. Tento proces se ve spojitosti s datovými sklady nazývá ETL
 proces \footnote{z angl. Extract, Transform and Load} a pojem datový sklad tak nelze zaměňovat
@@ -157,31 +156,31 @@ systém}, kde často slouží jako primární znalostní báze. \parencite[s.~2]
 \section{Historický vývoj datových skladů}
 Datové sklady se spolu se systémy podpory rozhodování začaly vyvíjet v 60. letech,
 kdy z důvodu ukládání dat na magnetické pásky bylo problematické data zpětně procházet a
-analyzovat, data se tak postupně začala pročišťovat a ukládat v již zpracované formě, což by
+analyzovat. Data se tak postupně začala pročišťovat a ukládat v již zpracované formě, což by
 se dalo označit za prvopočátek datových skladů.\parencite[s.~2]{Inmon2005}
 
-V polovině 60. let, se postupně začala rozšiřovat technologie diskových úložišť, která
-na rozdíl od magnetický pásků umožňovala přímý přístup k datům, bez nutnosti jejich
+V polovině 60. let, se postupně začala rozšiřovat technologie diskových úložišť. Ta,
+na rozdíl od magnetický pásků, umožňovala přímý přístup k datům bez nutnosti jejich
 kompletního nahrání do pamětí počítače. Díky této technologii začali vznikat první systémy,
 které lze označit za DBMS \footnote{z angl. Database management system}, které umožňovaly lepší
 správu dat.\parencite{Foote19042018} Vzhledem k primitivnímu systému uložení dat a jejich nízké strukturalizaci 
 však tyto systémy neposkytovali data v takové kvalitě jako je známe dnes.
 
-Velkým milníkem pak byly relační databáze, které začaly vznikat v osmdesátých letech
+Velkým milníkem byly relační databáze, které začaly vznikat v osmdesátých letech
 a které pomocí dotazovacích jazyků, jako je například SQL \footnote{z angl. Structured Query
-Language} umožňovaly velmi snadnou práci s daty, v porovnání s předchozím stavem.\parencite{Foote19042018}
+Language} umožňovaly, v porovnání s předchozím stavem, velmi snadnou práci s daty.\parencite{Foote19042018}
 
 Spolu s nástupem osobních počítačů a rostoucí velikostí firemních sítí, stoupala i
 potřeba skutečného datového skladu. Vzájemně propojené osobní počítače měly oproti
 architektuře centrálních počítačů velkou nevýhodu v roztříštěnosti dat, kdy data byla uložena
-na velké množství míst a bylo velmi složité udržet data aktuální a konzistentní, souhrnně se
-tento problém nazývá \emph{spider web}. \cite[s.~6]{Inmon2005} Nástup osobních počítačů a s 
-ním spojený rozvoj specializovaných programů jako byl například Microsoft Excel, Microsoft Access atp. 
+na více míst a bylo složité udržovat data aktuální a konzistentní. Souhrnně se
+tento problém nazývá \emph{spider web}. \cite[s.~6]{Inmon2005} Nástup osobních počítačů, a s 
+ním spojený rozvoj specializovaných programů jako byl například Microsoft Excel, Microsoft Access atp., 
 přinesl další problém a to neustále se zvětšující množství datových formátů, ve kterých byla data uložena.\parencite{Foote19042018}
 
-V devadesátých letech, tak všechny tyto pohnutky vyvrcholili v potřebu vzniku
+V devadesátých letech, tak všechny tyto skutečnosti vyvrcholily v potřebu vzniku
 jednotného úložiště, které by umožňovalo data snadno udržet v aktualizované a konzistentní
-podobě. Za tímto účelem vzniklo několik konceptů, z nich nejrozšířenější jsou již výše zmíněný koncept
+podobě. Za tímto účelem vzniklo několik konceptů, z nich nejrozšířenější je již výše zmíněný koncept
 datového skladu a následně koncepty data lake a data cube.
 
 Koncept data lake, se od datového sklad odlišuje převážně tím, že data
@@ -189,31 +188,30 @@ nepřevádí do jednotné struktury, ale udržuje je v jejich původní formě. 
 primárně o jednotné úložiště, kde mohou být data uložena ve všech možných souborových
 i datových formátech a kde jsou k datům doplněny detailní anotace, které usnadňují jejich následné zpracování.\parencite{Foote19042018}
 Data tedy v tomto případě neprochází žádnou transformací, což komplikuje jejich využití, velkou výhodou však je, že  díky chybějící 
-transformaci dosahuje mnohem vyšších rychlostí při práci s daty, díky čemuž je tento koncept vhodnější pro aplikace,
-kde je potřeba zpracovat velké množství dat s ohledem na čas.\parencite[s.~1]{Harby20221217}
+transformaci dosahuje mnohem vyšších rychlostí při manipulaci s daty, díky čemuž je tento koncept vhodnější pro aplikace,
+zpracovávající velké množství dat s ohledem na čas.\parencite[s.~1]{Harby20221217}
 
-Více odlišný je pak koncept data cube, který ukládá data ve třech a více
-rozměrných maticích, kde každá matice představuje jednu datovou dimenzi. Když
+Koncept data cube je odlišný. Ukládá data ve třech a vícerozměrných maticích, kde každá matice představuje jednu datovou dimenzi. Když
 data v dimenzích následně relačně propojíme, je možné snadno filtrovat data dle
 jednotlivých dimenzí, bez nutnosti propojovat tabulky mezi sebou.\parencite{Foote19042018}
 
-Všechny tři zmíněné koncepty mají své dodnes opodstatnění a jsou i nadále využívány. S ohledem na již zmíněný masivní nárůst množství zpracovávaných informací a vysoké nároky na rychlost jejich zpracování, se však začíná prosazovat nový koncept, a to koncept data lakehouse. Jak již název napovídá, koncept data lakehouse kombinuje výhody úložišť typu data lake a data warehouse. Data lakehouse je schopné, stejně jako data lake, zpracovávat surová data velkou rychlostí a flexibilitou, zároveň však poskytuje úložiště i pro vyčištěná a strukturovaná data, stejně jako data warehouse. U data lakehouse se také počítá s přímím napojením analytických nástrojů sloužících například pro BI\footnote{z angl. Business Intelligence}, či jako infromační báze pro AI\footnote{z angl. Artificial Intelligence}.
+Všechny tři zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále využívány. S ohledem na již zmíněný masivní nárůst zpracovávaných informací, a s tím spojenými nároky na rychlost jejich zpracování, se však začíná prosazovat nový koncept, a to koncept data lakehouse. Jak již název napovídá, koncept data lakehouse kombinuje výhody úložišť typu data lake a data warehouse. Data lakehouse je schopné, stejně jako data lake, zpracovávat surová data velkou rychlostí a flexibilně, zároveň však poskytuje úložiště i pro vyčištěná a strukturovaná data, stejně jako data warehouse. U data lakehouse se také počítá s přímým napojením analytických nástrojů sloužících například pro BI\footnote{z angl. Business Intelligence}, či jako informační báze pro AI\footnote{z angl. Artificial Intelligence}.
 
-V rámci Masarykovy univerzity byl však nasazen koncept datového skladu dle definice uvedené v úvodní kapitole a tak se práce dále zabývá již pouze tímto konceptem.
+V rámci Masarykovy univerzity byl nasazen koncept datového skladu, tak jak byl definován v úvodní kapitole. Práce se tedy zabývá pouze tímto konceptem.
 
 \section{Typy datových skladů}
 Datové sklady se dají rozdělit na několik druhů dle různých kritérií. \citeauthor{Inmon2005}
-v knize \citetitle{Inmon2005} z roku \citeyear{Inmon2005} dělí datové sklady dle způsobu a rozsahu
+v knize \citetitle{Inmon2005} z roku \citeyear{Inmon2005} dělí datové sklady podle způsobu a rozsahu,
 v jakém data shromažďují a dle prostředí, ve kterém je datový sklad nasazen.
 
 Pro první rozdělovací kritérium, tedy dle rozsahu shromažďovaných dat zavádí Inmon
-postupně tři kategorie, a to hluboký datový sklad \footnote{angl. Deep Data Warehouse}, široký
+postupně tři kategorie: hluboký datový sklad \footnote{angl. Deep Data Warehouse}, široký
 datový sklad \footnote{angl. Wide Data Warehouse} a hybridní datový sklad \footnote{angl. Hybrid Data
 Warehouse}. Tyto jednotlivé kategorie jsou pak definovány takto:
 \paragraph{Hluboký datový sklad}
-Shromažďovaná data jsou převážně historická a velmi detailní, slouží primárně k analýze vývoje a trendů.
+Shromažďovaná data jsou převážně historická a velmi detailní. Slouží primárně k analýze vývoje a trendů.
 \paragraph{Široký datový sklad}
-Zaměřuje se na velké spektrum informací, přičemž neukládá data v takovém detailu, využívá se především pro tvorbu přehledů a rychlé vyhledávání dat.
+Zaměřuje se na velké spektrum informací, přičemž neukládá data v takovém detailu. Využívá se především pro tvorbu přehledů a rychlé vyhledávání dat.
 \paragraph{Hybridní datový sklad}
 Jedná se o kombinaci obou předchozích kategorií.
 
@@ -230,13 +228,13 @@ Datový sklad, který centralizuje všechna data z celé organizace a slouží j
 Malé datové sklady, typicky se budují pro jednotlivá oddělení organizací a na základě jejich specifických potřeb. Tento typ také někdy bývá realizován pouze jako podmnožina velkých datových skladů, jako je Operational Data Store nebo Enterprise data warehouse.
 \paragraph{Virtual data warehouse}
 Specifický typ datového skladu, který funguje pouze jako transportní a translační vrstva nad různými datovými 
-zdroji a pro uživatele tak vytváří jeden přístupový bod. data tedy nejsou uložena na jednom místě a ve strukturalizované
+zdroji a pro uživatele tak vytváří jeden přístupový bod. Data tedy nejsou uložena na jednom místě a ve strukturalizované
 podobě, ale jsou nahrávána z více externích zdrojů, následně dle potřeby přetransformovaná a doručena uživateli. 
 
 \vspace{5mm}
 Každý z těchto typů datových skladů vyžaduje specifický přístup, a to jak
 k architektuře samotného skladu, zpracování dat, tak i k technickému vybavení. Z tohoto
-důvodu je velmi důležité zvolit správný typ datového skladu v již ve fázi návrhu, neboť
+důvodu je důležité zvolit správný typ datového skladu již ve fázi návrhu, protože
 možnost konverze mezi jednotlivými druhy datových skladů nemusí být vždy možná.
 
 \section{Zpracování dat v datových skladech}
@@ -245,16 +243,16 @@ Celý tento proces bývá zpravidla automatický, byť to není nikterak podmín
 
 Proces nahrávání dat do datového skladu se nazývá ETL \footnote{z angl. Exract, transform and Load} 
 a jedná se o esenciální součást datového skladu. Celý proces se skládá, jak již název
-napovídá, ze tří fází, a to fáze extrakce, transformace a finální nahrání dat do datového skladu.
+napovídá, ze tří fází, a to fáze extrakce, transformace a finálního nahrání dat do datového skladu.
 
 Kimball a Caserta v knize \citetitle{Kimballc2004} z roku \citeyear{Kimballc2004} celý proces rozšiřují do fází čtyř, a to extrakce, čištění, přizpůsobení \footnote{angl. Conforming}
-a doručení. V další části se tedy budu zbývat tímto rozdělením ETL
-procesu, a ne pouze základními třemi fázemi.
+a doručení. Vzhledem k tomu, že zmíněná publikace patří mezi základní v oboru datových skladů, budu se v další části zabývat jen tímto rozdělením ETL
+procesu, a ne pouze základními třemi fázemi. %%tady bych se klidně nebála přidat větu, proč ti to přijde lepší použít čtyři 
 
 \subsection{ETL proces dle Kimballa a Casertyho}
 \paragraph{Extract}
 První operací, kterou je potřeba pro nahrání dat udělat, je jejich extrahování
-z původních úložišť, to probíhá většinou v přesně definovaných cyklech. Během této operace
+z původních úložišť. To probíhá většinou v přesně definovaných cyklech. Během této operace
 dojde k nahrání všech požadovaných dat do přechodného úložiště, kde jsou dále
 zpracovávány v dalších krocích ETL procesu. Data jsou nahrávána v surové formě a
 v původních formátech a souborech, které mohou představovat například data z relačních
@@ -270,7 +268,7 @@ typu, typicky například Data Lake.
 \paragraph{Cleaning}
 Poté, co jsou požadovaná data vyextrahována je potřeba je vyčistit. Během této fáze
 se provádí kontrola integrity dat, odstraňují se duplicity a provádějí další operace s cílem
-dosáhnutí požadované kvality dat.\parencite[s.~18-19]{Kimballc2004}
+dosáhnutí požadované datové kvality.\parencite[s.~18-19]{Kimballc2004}
 
 Během této fáze také dobré zvolit požadovanou granularitu, neboli míru detailu
 uchovávaných informací \parencite[s.~41]{Inmon2005}, a případně data na požadovanou úroveň
@@ -287,85 +285,85 @@ napříč datovými zdroji nemusí mít vždy stejný význam. \parencite{Kimbal
 
 \paragraph{Doručení (Delivering)}
 Během doručovací fáze pak dochází k samotné transformaci dat do stejného formátu a
-následně se z dat vytvoří dimenzionální model nebo požadované schéma, mezi které patří například
+následně se z dat vytvoří dimenzionální model, nebo požadované schéma. Mezi ty patří například
 schéma hvězdice či datová krychle.\parencite[s.~19]{Kimballc2004}
 
-Výstupem této fáze je tedy již patřičně setříděný a provázaný soubor dat, nad kterým
+Výstupem této fáze je tedy patřičně setříděný a provázaný soubor dat, nad kterým
 je již možné provádět dotazy, jako nad celkem, tedy bez ohledu na datové zdroje a jejich
 formát. Takto zpracovaná data se pak následně nahrají do databáze samotného datového
 skladu.
 
-Díky ETL procesu jsou ve výsledku v datovém skladu data uloženy v jednoduché,
+Díky ETL procesu jsou ve výsledku v datovém skladu data uložena v jednoduché,
 snadno dotazovatelné formě, což značně usnadňuje a urychluje přístup a práci s těmito daty.
 
 \section{Využití datových skladů}
 Datové sklady nacházejí velké využití zejména u velkých organizací a společností, ale i
 u tak velkých celků, jako jsou například samostatné státy. Velkou výhodou datových skladů je
 jejich perzistentní struktura, kdy data můžeme shromažďovat po dlouhou dobu a jejich
-analýzu provést až ve chvíli, kdy nastane její potřeba. Díky tomu se velmi hodí na analýzu dat dlouhodobého charakteru.
+analýzu provést až ve chvíli, kdy nastane její potřeba. Díky tomu se hodí na analýzu dat dlouhodobého charakteru.
 
-Jedním z typických zástupců tohoto typu nasazení je pak například sdílení dat mezi
+Jedním z typických zástupců tohoto typu nasazení je pak sdílení dat mezi
 vědeckými pracovišti. Například v případové studii \citetitle{Seneviratne20180124} \parencite{Seneviratne20180124} 
 se autoři zabývali propojením vědeckých pracovišť Stanford University, Stanford Cancer Institute a California Cancer Registry za účelem vytvoření
 společného datového skladu obsahujícího elektronické zdravotní záznamy pacientů
-postižených rakovinou prostaty. Díky tomuto datovému skladu tak vědci přístup mají
+postižených rakovinou prostaty. Díky tomuto datovému skladu vědci mají přístup
 k tisícům reálných případů, napříč těmito třemi institucemi.
 
-Další velmi zajímavou aplikací, je například optimalizace a analýza mléčné farmy. Tato
+Další zajímavou aplikací, je například optimalizace a analýza mléčné farmy. Tato
 aplikace popsaná v článku \citetitle{Schuetz20180326} \parencite{Schuetz20180326} se zabývá návrhem a implementací
-datového skladu, který má za cíl pomocí různých senzorů, sledujících například pohyb dojnic
+datového skladu, který má za cíl pomocí různých senzorů sledujících například pohyb dojnic
 či samotné dojení, optimalizovat a vylepšit výkon této mléčné farmy. Celý projekt je velmi
-zajímavý a to zejména z důvodu, že se jedná o velmi specifickou oblast, kde ještě nebyl
+zajímavý a to zejména z důvodu, že se jedná o specifickou oblast, kde ještě nebyl
 koncept datového skladu nasazen.
 
-Zajímavým příkladem jednoúčelově zaměřeného datového skladu je projekt, týkající
-se nedávno proběhlé pandemie viru SARS-COV-2. V článku \citetitle{Agapito2020} \parencite{Agapito2020},
+Zvláštním příkladem jednoúčelově zaměřeného datového skladu je projekt, týkající
+se pandemie viru SARS-COV-2. V článku \citetitle{Agapito2020} \parencite{Agapito2020},
 autoři popisují implementaci datového skladu vytvořeného za účelem monitorování
 šíření viru v Itálii. Zajímavé je, že datový sklad zahrnuje kromě informací týkajících se přímo
-samotného viru i další, zdánlivě nesouvisející, informace, které zahrnují i klimatické informace
+samotného viru i další, zdánlivě nesouvisející, informace, které zahrnují například také klimatické informace
 jako je znečistěni ovzduší a nebo síla a směr větru. Výzkumné výstupy z tohoto projektu se tak mohou zabývat i vlivem počasí na
 šíření nákazy. 
 
 \chapter{ITSM}
 Jak již bylo zmíněno v úvodní kapitole, velký rozmach informačních technologií a služeb v 60. letech 20. století si vyžádal vznik patřičných standardizovaných procesů, postupů a pravidel pro řízení služeb v prostředí podniků a organizací. Souhrnně je tento obor označován jako ITSM, neboli Information Technology Service Management, což je pojem, který se původně objevil pouze v rámci metodiky ITIL, ale postupně se rozšířil a zobecnil tak, že v současné době obecně pokrývá problematiku řízení IT služeb.\parencite[s.~20]{Matula2017} 
 
-Matula definuje ITSM jako \textit{souhrn nejlepších praxí a referenčních modelů procesů řízení služeb IT organizace}, přičemž právě přístup, kdy se k IT projektu přistupuje jako k službě znamená, že se daný IT projekt dodává s potřebným personálním a technologickým zajištěním a samotný klient se na chodu dané služby nepodílí a jen využívá její výstupy.\parencite[s.~20-22]{Matula2017}
+Matula definuje ITSM jako \textit{souhrn nejlepších praxí a referenčních modelů procesů řízení služeb IT organizace}, přičemž právě přístup, kdy se k IT projektu přistupuje jako k službě znamená, že se daný IT projekt dodává s potřebným personálním a technologickým zajištěním a samotný klient se na chodu dané služby nepodílí a využívá pouze její výstupy.\parencite[s.~20-22]{Matula2017}
 
 \section{Základní terminologie ITSM}
-Před samotným vysvětlením základních principů fungování ITSM je nutné nejprve zavést alespoň základní pojmy, které jsou v jeho rámci využívány. Matula ve své publikaci \citetitle{Matula2017} uvádí jako základní následující pojmy, jejichž definice jsou převzaty z \citetitle{SyFvQA11lk1OaIec} z roku \citeyear{SyFvQA11lk1OaIec}:
+Před samotným vysvětlením základních principů fungování ITSM je nutné nejprve zavést alespoň základní pojmy, které jsou v jeho rámci využívány. Matula ve své publikaci \citetitle{Matula2017} uvádí jako základní tyto následující pojmy, jejichž definice jsou převzaty z \citetitle{SyFvQA11lk1OaIec} z roku \citeyear{SyFvQA11lk1OaIec}:
 \paragraph{Nejlepší praktiky (Best practices)}
 Osvědčené postupy, které byly využívány ve více organizacích a které se prokázaly jako účinné, efektivní a udržitelné a které vedou k zlepšení výsledků v oblasti kvality, flexibility, nákladů a konkurenceschopnosti.
 \paragraph{Služba (Service)}
-Prostředek který zajišťuje doručování hodnoty zákazníkovy, bez nutnosti zapojení zákazníka do řízení nákladů a rizik. Pojem služba může být chápán několika způsoby a to buď jako obecná služba, IT služba anebo balíček několika služeb. 
+Prostředek, který zajišťuje doručování hodnoty zákazníkovi, bez nutnosti zapojení zákazníka do řízení nákladů a rizik. Pojem služba může být chápán několika způsoby a to buď jako obecná služba, IT služba, anebo balíček několika služeb. 
 \paragraph{Správa (Governance)}
-Zajišťuje aby byly procesy vykonávány správně dle nastavených politik a strategií. Správa zároveň vymezuje role a odpovědnosti, reaguje na zjištěné problémy.
+Zajišťuje, aby byly procesy vykonávány správně dle nastavených politik a strategií. Správa zároveň vymezuje role a odpovědnosti, reaguje na zjištěné problémy.
 \paragraph{Proces (Process)}
 Soubor aktivit, které je třeba vykonat pro dosažení cíle. Aktivity přijímají definované vstupy, které následně za pomoci nástrojů transformují na požadované výstupy.
 \paragraph{Funkce (Function)}
-Pojem funkce má několik významů. Primárně se jedná o skupinu lidí, nástrojů a jiných zdrojů, které zainteresované osoby využívají k provádění procesů a činností. Dále se pak může jednat o zamýšlený účel konfigurační položky, osoby, týmu nebo procesu. Posledním významem pojmu funkce je pak vyjádření toho, zda je zamýšlený úkol vykonáván správně. 
+Pojem funkce má několik významů. Primárně se jedná o skupinu lidí, nástrojů a jiných zdrojů, které zainteresované osoby využívají k provádění procesů a činností. Dále se pak může jednat o zamýšlený účel konfigurační položky, osoby, týmu nebo procesu. Posledním významem pojmu je pak vyjádření toho, zda je zamýšlený úkol vykonáván správně. 
 \paragraph{Role (Role)}
-Soubor činností, povinností a pravomocí přidělených konkrétní osobě a nebo skupině osob. Jednotlivec nebo skupina může mít více rolí.
+Soubor činností, povinností a pravomocí přidělených konkrétní osobě, anebo skupině osob. Jednotlivec, nebo skupina může mít více rolí.
 \paragraph{Kvalita (Quality)}
-Schopnost služby, výrobku a nebo procesu poskytnout požadovanou hodnotu. Kvalita je ukazatel účinnosti a efektivity procesů.
+Schopnost služby, výrobku nebo procesu poskytnout požadovanou hodnotu. Kvalita je ukazatel účinnosti a efektivity procesů.
 \section{Základní principy ITSM}
-V úvodu této kapitoly již byly využity termíny jako je proces a nebo kvalita výstupu, které patří do základní terminologie ITSM a které je potřeba nejdříve definovat. Zde uvedené definice vychází zejména z frameworků, které jsou na ITSM postaveny
+V úvodu této kapitoly již byly využity termíny, jako je proces a nebo kvalita výstupu, které patří do základní terminologie ITSM, a které je potřeba nejdříve definovat. Zde uvedené definice vychází zejména z frameworků, které jsou na ITSM postaveny
 
 Management IT služeb se dle ITSM věnuje několika oblastem, které ovlivňují výslednou kvalitu výstupu a které jsou:
 \begin{compactitem}
   \item Lidé, což je oblast zahrnující veškeré lidské zdroje, které jsou potřeba k implementaci a provozu samotné služby, přičemž zahrnuje i uživatele, kteří službu využívají.
   \item Procesy, což je oblast zahrnující veškerou procesní metodiku a postupy, které jsou využívány k řízení a implementaci služeb a to včetně jejich vstupů, výstupů a zodpovědných osob.
-  \item Nástroje, které zahrnují veškeré softwarové i hardwarové vybavení, které je umožňuje dané procesy zefektivnit či zautomatizovat.
+  \item Nástroje, které zahrnují veškeré softwarové i hardwarové vybavení, které umožňuje dané procesy zefektivnit či zautomatizovat.
 \end{compactitem}
 
-V rámci poskytování služeb je také důležité hlídat kvalitu výstupů, za tímto účelem definuje ITSM základní indikátory, které umožňují kvalitu služby měřit a následně vyhodnotit, konkrétně se pak jedná o tyto složky IT služeb \parencite[s.~20]{Matula2017}:
+V rámci poskytování služeb je také důležité hlídat kvalitu výstupů. Za tímto účelem definuje ITSM základní indikátory, které umožňují kvalitu služby měřit a následně vyhodnotit. Konkrétně se pak jedná o tyto složky IT služeb \parencite[s.~20]{Matula2017}:
 \begin{compactitem}
 \item Růst a hodnota jsou ukazatele, které se zabývají změnou výnosů před a po zavedení dané služby.
-\item Rozpočet a jeho dodržování jakožto ukazatelů zabývajících se optimalizací projektového rozpočtu s cílem eliminovat zbytečné výdaje.
+\item Rozpočet a jeho dodržování, jakožto ukazatelů zabývajících se optimalizací projektového rozpočtu s cílem eliminovat zbytečné výdaje.
 \item Riziko dopadu, které indikuje a vyhodnocuje následky případných rizik.
 \item Efektivita a komunikace, vyhodnocující zpětnou vazbu od zákazníků a jejich spokojenost s poskytovanými službami.
 \end{compactitem}
 
-ITSM je v současnosti popsán normou ISO 20000 Informační technologie - Management služeb IT a na jejímž základě existuje mnoho různých frameworků a knihoven nejlepších praktik, jako jsou například COBIT, FitSM a zejména pak ITIL.\parencite[s.~25]{Matula2017}
+ITSM je v současnosti popsán normou ISO 20000 Informační technologie - Management služeb IT a na jejímž základě existuje mnoho různých frameworků a knihoven nejlepších praktik. Patří mezi ně například COBIT, FitSM a zejména pak ITIL.\parencite[s.~25]{Matula2017}
 
 \begin{figure}[h]
   \begin{center}
@@ -375,22 +373,22 @@ ITSM je v současnosti popsán normou ISO 20000 Informační technologie - Manag
   \label{fig:itsmDiag}
 \end{figure} 
 
-Souhrnné schéma ITSM pak je pak vyobrazené na obrázku \ref{fig:itsmDiag}, ze kterého je patrné, že samotné ITSM je postaveno na čtyřech základních pilířích. Základní dvojici tvoří vstupy a výstupy. Díky vstupům může poskytovatel dodat zákazníkovi potřebné výstupy, neboli hodnotu, tento proces je pak ovlivňován prostředím, ve kterém je služba realizována a které do značné míry ovlivňuje způsob realizace, poslední částí je pak řízení, které určuje metodiku, kterou je služba realizována. 
+Souhrnné schéma ITSM je vyobrazené na obrázku \ref{fig:itsmDiag}, ze kterého je patrné, že samotné ITSM je postaveno na čtyřech pilířích. Základní dvojici tvoří vstupy a výstupy. Díky vstupům může poskytovatel dodat zákazníkovi potřebné výstupy, neboli hodnotu. Tento proces je pak ovlivňován prostředím, ve kterém je služba realizována, a které do značné míry ovlivňuje způsob realizace. Poslední částí je pak řízení určující metodiku, kterou je služba realizována. 
 
 
 \section{ITIL}
-Jednou z nejrozšířenějších knihoven v oblasti ITSM je knihovna ITIL \footnote{z angl. Information Technology Infrastructure Library}, která je v současnosti spravována britskou společností Axelos Ltd. \parencite[s.~31]{Matula2017}. Tato knihovna byla dle průzkumu Forbes Insight z roku 2017 alespoň částečně implementována alespoň ve 47\% zkoumaných organizací\parencite{Watts3082017} a byla využita i v případě zavádění datového skladu na Masarykově univerzitě. 
+Jednou z nejrozšířenějších knihoven v oblasti ITSM je knihovna ITIL \footnote{z angl. Information Technology Infrastructure Library}, která je v současnosti spravována britskou společností Axelos Ltd. \parencite[s.~31]{Matula2017}. Tato knihovna byla dle průzkumu Forbes Insight z roku 2017 částečně implementována alespoň ve 47\% zkoumaných organizací\parencite{Watts3082017} a byla využita i při  zavádění datového skladu na Masarykově univerzitě. 
 
-ITIL vznikl v 80. letech 20. století na objednávku britské vlády a původně byl nazýván GITIM \footnote{z angl. Government Information Technology Infrastructure}, během 90. let byl pak velmi dobře přijímán velkými organizacemi a vládami, což z něj učinilo standard na poli ITSM knihoven a frameworků a i nadále slouží jako základ pro nové frameworky, které jsou z něj odvozeny, jako je například MOF\footnote{z angl. Microsoft Operations Framework} od společnosti Microsoft. \parencite[s. ~31]{Matula2017}
+ITIL vznikl v 80. letech 20. století na objednávku britské vlády a původně byl nazýván GITIM \footnote{z angl. Government Information Technology Infrastructure}. Během 90. let byl dobře přijímán velkými organizacemi a vládami, což z něj učinilo standard na poli ITSM knihoven a frameworků, a i nadále slouží jako základ pro nové frameworky, které jsou z něj odvozeny, jako je například MOF\footnote{z angl. Microsoft Operations Framework} od společnosti Microsoft. \parencite[s. ~31]{Matula2017}
 
-Knihovna ITIL je průběžně aktualizována a momentálně nejrozšířenější jsou verze 3 z roku 2007 a ve verzi V4 z toku 2017. Mezi těmito verzemi došlo k velké změně pojetí. 
+Knihovna ITIL je průběžně aktualizována a momentálně nejrozšířenější jsou verze 3 z roku 2007 a verze V4 z roku 2017. Mezi těmito verzemi došlo k velké změně pojetí. 
 
-Třetí verze frameworku se ITIL se věnuje převážně samotnému procesu zavádění služby, od jejího návrhu, přes realizaci, až po každodenní využití služby a jejím základním cílem je je optimalizace procesů IT oddělení společností a organizací tak, aby byly v souladu s jejich obchodními cíli, primárně má tedy za úkol zajistit, aby byly realizované služby řízeny právě obchodními požadavky a samotné IT oddělení má za cíl pouze jejich implementaci.\parencite[s.~8]{Carlidge2007} Oproti tomu ITIL ve verzi V4 se primárně věnuje doručované kvalitě, nákladů a rizikům. 
+Třetí verze frameworku se ITIL se věnuje převážně samotnému procesu zavádění služby, od jejího návrhu, přes realizaci, až po každodenní využití služby. Jejím základním cílem je optimalizace procesů IT oddělení společností a organizací tak, aby byly v souladu s jejich obchodními cíli. Primárně má za úkol zajistit, aby byly realizované služby řízeny právě obchodními požadavky a samotné IT oddělení má za cíl pouze jejich implementaci.\parencite[s.~8]{Carlidge2007} Oproti tomu ITIL ve verzi V4 se primárně věnuje doručované kvalitě, nákladům a rizikům. 
 
-Zjednodušeně řečeno ITIL ve verzi 3 cílí na fungování dodavatele, coby pouhého realizátora služby a na proces vedoucí k jejímu poskytování, zatímco ve ITIL verzi 4 se zaobírá především důvody a cíli, které ke vzniku služby vedli.\footnote{https://www.alvao.com/cs/blog/dlouha-cesta-k-itil4-jak-nam-historie-itil-pomuze-lepe-ridit-it se pak rozhodni jestli to chceš ocitovat a jak}
+Zjednodušeně řečeno ITIL ve verzi 3 cílí na fungování dodavatele, coby pouhého realizátora služby a na proces vedoucí k jejímu poskytování. Oproti tomu ITIL verzi 4 se zaobírá především důvody a cíli, které ke vzniku služby vedly.\footnote{https://www.alvao.com/cs/blog/dlouha-cesta-k-itil4-jak-nam-historie-itil-pomuze-lepe-ridit-it se pak rozhodni jestli to chceš ocitovat a jak}
 Z tohoto důvodu jsou obě verze detailně popsány v následujících kapitolách.  
 \subsection{ITIL V3/ITIL 2011}
-Jak již bylo uvedeno v předchozí kapitole, knihovna ITIL ve verzi 3 byla představena v roce 2007, v roce 2011 však prošla aktualizací a bývá tak označována jako ITIL 2011. Aktualizace se týkala především zavedení nových procesů a prohloubení definic stávajících procesů a pojmů. Nicméně i přes tuto aktualizaci zůstávají verze V3 a 2011 kompatibilní.\parencite{Kempter2722013}
+Jak již bylo uvedeno v předchozí kapitole, knihovna ITIL ve verzi 3 byla představena v roce 2007. V roce 2011 však prošla aktualizací a bývá tak označována jako ITIL 2011. Aktualizace se týkala především zavedení nových procesů a prohloubení definic stávajících procesů a pojmů. Nicméně i přes tuto aktualizaci zůstávají verze V3 a 2011 kompatibilní.\parencite{Kempter2722013}
 
 Jak je znázorněno na obrázku \ref{fig:itil3_lifecycle}, knihovna ITIL 2011 se věnuje celistvému procesu managementu služeb, od stanovení obchodní strategie, přes její vývoj a nasazení do provozu až po kontinuální vylepšování. 
   
@@ -402,7 +400,7 @@ Jak je znázorněno na obrázku \ref{fig:itil3_lifecycle}, knihovna ITIL 2011 se
   \label{fig:itil3_lifecycle}
 \end{figure}  
 
-Na obrázku \ref{fig:itil3_schema} je znázorněno schéma celé knihovny ITIL 2011, která je členěna na pět fází, které se postupně věnují celému procesu managementu služeb, od obchodní analýzy a strategie, přes design její design, nasazení a správu až po její následný rozvoj. Ze schématu je také patrné, že jednotlivé fáze se skládají z jednotlivých procesů a funkcí, které slouží k samotné realizaci.
+Na obrázku \ref{fig:itil3_schema} je znázorněno schéma celé knihovny ITIL 2011, která je členěna na pět fází, které se postupně věnují celému procesu managementu služeb - od obchodní analýzy a strategie, přes její design, nasazení a správu až po její následný rozvoj. Ze schématu je také patrné, že fáze se skládají z jednotlivých procesů a funkcí, které slouží k samotné realizaci.
 
 \begin{figure}[h]
   \begin{center}
@@ -413,7 +411,7 @@ Na obrázku \ref{fig:itil3_schema} je znázorněno schéma celé knihovny ITIL 2
 \end{figure} 
 
 
-Každá fáze, která je vyobrazena na obrázku \ref{fig:itil3_schema} je v knihovně ITIL 2011 zastoupena samostatnou publikací, která problematiku dané fáze do detailu rozebírá a popisuje jednotlivé procesy a funkce a je v rámci knihovny ITIL 2011 zastoupena samostatnou publikací. 
+Každá fáze, která je vyobrazena na obrázku \ref{fig:itil3_schema} je v knihovně ITIL 2011 zastoupena samostatnou publikací. Ta problematiku dané fáze do detailu rozebírá a popisuje jednotlivé procesy a funkce. V rámci knihovny ITIL 2011 je zastoupena samostatnou publikací. 
 \paragraph{Strategie služeb}
 První publikace se zabývá návrhem strategie nové služby tak, aby primárně řešila daný obchodní problém s důrazem na kvalitu výstupu. Tato kvalita musí vycházet z požadavků klienta, pro kterého je služba navrhována a poskytována, ale zároveň musí nové služby být plně kompatibilní s interními procesy jak poskytovatele služby, tak i s procesy samotného klienta.\parencite[s.~12-13]{Carlidge2007}
 
@@ -429,7 +427,7 @@ Pro nastavení kvalitní strategie služby je nutné správně určit odpovědi 
   \item Jakým způsobem se bude měřit efektivita a výkon dané služby
 \end{compactitem}
 
-Po zodpovězeni těchto základních otázek, je následně při návrhu služeb dodržet princip tz. čtyř P, který je realizován pomocí následující bodů:\parencite[s.~13]{Carlidge2007}
+Po zodpovězení těchto základních otázek, je následně při návrhu služeb nutné dodržet princip tz. čtyř P, který je realizován pomocí následující bodů:\parencite[s.~13]{Carlidge2007}
 \begin{compactitem}
     \item Perspektiva - určuje charakteristické vize a směr dané strategie
     \item Pozice - udává základ, ze kterého má poskytovatel služby vycházet
@@ -441,9 +439,9 @@ Kvalitní zpracování konceptu čtyř P zaručuje, dostatečně kvalitní zákl
 
 
 \paragraph{Design služeb}
-Druhá publikace se zabývá metodikami návrhu a změn samotných služeb, a to tak aby byla zajištěna správná funkcionalita služby s ohledem na požadované obchodní cíle a jejich případnou změnu. Za tímto účelem poskytuje publikace dva základní postupy. Prvním je správné vedení designu a vývoje služeb a praktik určených k jejich managementu a druhým jsou pak základní metody a principy konverze strategických cílů v samotné služby.\parencite[s.~21]{Carlidge2007}
+Druhá publikace se zabývá metodikami návrhu a změn samotných služeb, a to tak aby byla zajištěna správná funkcionalita služby s ohledem na požadované obchodní cíle a jejich případnou změnu. Za tímto účelem poskytuje publikace dva základní postupy. Prvním je správné vedení designu, vývoje služeb a praktik určených k jejich managementu. Druhým jsou pak základní metody a principy konverze strategických cílů v samotné službě.\parencite[s.~21]{Carlidge2007}
 
-Za tímto účelem publikace definuje několik základních aspektů a principů. Prvním z nich je petice základních aspektů designu služeb, které jsou: \parencite[s.~22]{Carlidge2007}
+Za tímto účelem publikace definuje několik aspektů a principů. Prvním z nich je petice základních aspektů designu služeb, které jsou: \parencite[s.~22]{Carlidge2007}
 \begin{compactitem}
     \item Řešení nově vznikajících a měnících se služeb
     \item Management informačních systémů a nástrojů
@@ -456,18 +454,18 @@ Pomocí těchto klíčových aspektů je zaručen holistický přístup a konzis
 Druhým klíčovým principem jsou čtyři P designu služeb, jejcihž cílem je zajistit dobrou efektivitu služeb. Mezi tyto klíčové body patří:\parencite[s.~22]{Carlidge2007}
 \begin{compactitem}
     \item Lidé (People), kteří jsou zainteresování v poskytování dané služby
-    \item Produkty které zastupují technologie a manažované systémy, které slouží k doručení služby
+    \item Produkty které zastupují technologie a spravované systémy, které slouží k doručení služby
     \item Procesy, role a aktivity, které slouží k poskytování služby
     \item Partneři, kteří zastupují dodavatele, výrobce a prodejce, kteří zajišťují dané službě podporu
 \end{compactitem}
 
-Posledním základním principem, které jsou v publikace definovány je pak \emph{Balíček designu služeb} (z angl. Service Design Package, zkráceně SDP), který na základě dříve zmíněných aspektů a principů definuje všechny aspekty služby a požadavků na ni v každé fázi jejího životního cyklu. SDP je vytvářeno s každou novou IT službou, aktualizací a nebo ukončením jejího poskytování.\parencite[s.~23]{Carlidge2007}
+Posledním základním principem, které jsou v publikaci definovány je  \emph{Balíček designu služeb} (z angl. Service Design Package, zkráceně SDP), který na základě dříve zmíněných hledisek a principů, definuje všechny aspekty služby a požadavků na ni v každé fázi jejího životního cyklu. SDP je vytvářeno s každou novou IT službou, aktualizací a nebo ukončením jejího poskytování.\parencite[s.~23]{Carlidge2007}
 \paragraph{Přechod služeb}
-Obsahem třetího svazku je popis správné metodiky, která má za úkol zajistit doručení nových a upravených služeb a služeb, u kterých bylo poskytování již ukončeno a to s ohledem na naplněni obchodních cílů vycházeních ze strategie a designu služeb ustanovených dle první a druhé publikace.\parencite[s.~30]{Carlidge2007}
+Obsahem třetího svazku je popis správné metodiky, která má za úkol zajistit doručení nových a upravených služeb a služeb, u kterých bylo poskytování již ukončeno, a to s ohledem na naplněni obchodních cílů vycházeních ze strategie a designu služeb ustanovených dle první a druhé publikace.\parencite[s.~30]{Carlidge2007}
 
-klíčovým aspektem této fáze životního cyklu služeb je tedy nastavení správných manažerských procesů, které se zabývají nasazením služby do provozu, rizikového managementu, nastavení očekávaných výstupů, testování, přenosu znalostí týkajících se služeb atp.\parencite[s.~30]{Carlidge2007}
+Klíčovým prvkem této fáze životního cyklu služeb je tedy nastavení správných manažerských procesů, které se zabývají nasazením služby do provozu, rizikového managementu, nastavení očekávaných výstupů, testování, přenosu znalostí týkajících se služeb atp.\parencite[s.~30]{Carlidge2007}
 
-V rámci přechodu služby je tam nutné zadefinovat základní parametry, které umožňují službu správně zrealizovat. Tyto jsou zastoupeny následujícími body:\parencite[s.~30]{Carlidge2007}
+V rámci přechodu služby je nutné zadefinovat základní parametry, které umožňují službu správně zrealizovat. Tyto jsou zastoupeny následujícími body:\parencite[s.~30]{Carlidge2007}
 \begin{compactitem}
     \item Potenciální obchodní hodnota, kdo jí doručuje a vyhodnocuje
     \item Identifikace všech zainteresovaných osob, které mají na úspěšný přechod vliv
@@ -478,7 +476,7 @@ Na základě těchto tří parametrů je následně možné realizovat přechod,
 \begin{compactitem}
     \item Správné pochopení všech aspektů, principů, záruk a výstupů podpory služby
     \item Dobře zmapovaná komplexita technologických změna  procesů služby
-    \item Ustavení manažerského rámce zavádění změn a to za účelem zajištění správného doručení výstupů a zvážení všech rizik
+    \item Ustavení manažerského rámce zavádění změn za účelem zajištění správného doručení výstupů a zvážení všech rizik
     \item Podpora přenosu znalostí a rozhodovacích kritérií týkající se všech procesů a funkcí služby a jejich správný přenos mezi všemi zainteresovanými stranami
     \item Ustanovení procesů které mají za úkol předvídat potřebné změny a jejich správné načasování
     \item zajištění zapojení veškerých stran zapojených do přechodu služby a jejich zaškolení do všech aspektů týkajících se přechodu služby
@@ -496,7 +494,7 @@ Tato fáze je oproti předchozím mírně specifická, a to jednak tím, že se 
     \item Řízení provozu IT - spravuje IT infrastrukturu služeb. Výše zmíněný technický management se nevěnuje primárně IT infrastruktuře, nýbrž obecně technickému zajištění služby. Tato funkce má zadefinovány také dvě podružné funkce, které se věnují personálnímu zajištění a správě fyzických zařízení, jako jsou typicky například data centra.
 \end{compactitem}
 \paragraph{Průbežné zlepšování služby}
-Pátý a polední svazek se zabývá průběžným vylepšováním služeb tak, aby byla vždy doručená požadovaná hodnota, která se může v průběhu času měnit. Vzhledem k tomu, že tyto změny probíhají na již fungující službě, je v rámci jejich návrhu, vývoje a nasazení využíván mechanismus PDCA\footnote{Zkratka prvních písmen anglických slov Plan, Do, Check a Act} neboli Demingův cyklus. Ten proces zavádění průběžných změn dělí do čtyřech následujících fází: \parencite[s.~38]{Matula2017}
+Pátý a poslední svazek se zabývá průběžným vylepšováním služeb tak, aby byla vždy doručená požadovaná hodnota, která se může v průběhu času měnit. Vzhledem k tomu, že tyto změny probíhají na již fungující službě, je v rámci jejich návrhu, vývoje a nasazení využíván mechanismus PDCA\footnote{Zkratka prvních písmen anglických slov Plan, Do, Check a Act} neboli Demingův cyklus. Ten proces zavádění průběžných změn dělí do čtyřech následujících fází: \parencite[s.~38]{Matula2017}
 \begin{compactitem}
     \item Plánuj - Určení strategie, která má vést k zlepšení a definování potřebných metrik
     \item Dělej - Sběr a zpracovaní potřebných dat
