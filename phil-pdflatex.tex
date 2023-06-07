@@ -508,7 +508,7 @@ Tyto publikace dohromady tvoří základní korpus samostatné knihovny a jsou d
 \subsection{ITIL V4}
 Nejnovější verze frameworku ITIL, tedy verze 4, byla uvedena v roce 2019. Jak již bylo uvedeno úvodu kapitoly, mezi verzemi V3 respektive 2011 a verzí 4 došlo k velmi výrazným změnám. Čtvrtá verze knihovny ITIL, je oproti svým předchůdcům založená velmi holisticky a její primárním zaměřením není samotný proces, kterým je služba realizována a poskytována, ale zaměřuje se primárně doručenou hodnotu a její kvalitu a to zejména z hlediska uživatele uživatele služeb. Tato verze knihovny již také implementuje moderní metody vývoje, jako je Lean, Agile a nebo DevOps.\footnote{Tohle možná nějak rozveď, nebo alespoň prolinkuj na nějakej slovník} \parencite[s.~7]{Cartlidge2020}
 
-ITIL V4 na rozdíl od předchozí verze nepracuje s jednotlivými fázemi realizace služby a místo toho zavádí nový koncept zvaný \emph{Service Value System}\footnote{zkráceně SVS}, který se skládá ze čtyř částí, které jsou definovány v další části této kapitoly. SVS vychází ze čtyři základních dimenzí managementu služeb, jejižch schéíma je zobrazeno na obrázku \ref{fig:itil4_dimension}. Tyto základní dimenze poskytují holistický přístup k celému managementu služeb a ovlivňují všechny aspekty SVS.\parencite[s.~10]{Cartlidge2020} Definice jednotlivých dimenzí je pak následovná:
+ITIL V4 na rozdíl od předchozí verze nepracuje s jednotlivými fázemi realizace služby a místo toho zavádí nový koncept zvaný \emph{Service Value System}\footnote{zkráceně SVS}, který se skládá ze čtyř vrstev, které jsou definovány v další části této kapitoly. SVS vychází ze čtyři základních dimenzí managementu služeb, jejichž schéma je zobrazeno na obrázku \ref{fig:itil4_dimension}. Tyto základní dimenze poskytují holistický přístup k celému managementu služeb a ovlivňují všechny aspekty SVS.\parencite[s.~10]{Cartlidge2020} Definice jednotlivých dimenzí je pak následovná:
 
 \begin{figure}[h]
   \begin{center}
@@ -528,12 +528,119 @@ ITIL V4 na rozdíl od předchozí verze nepracuje s jednotlivými fázemi realiz
 
 Mimo tyto hlavní dimenze je, vzhledem k tomu, že služby nejsou provozovány v uzavřeném prostředí, nutné zohlednit i externí faktory, které samotný design, vývoj i provoz ovlivňují a které se v určitém ohledu dají brát jako jedna ze základních dimenzí, jelikož je nikdy není možné úplně vyloučit. Na schématu \ref{fig:itil4_dimension} jsou vyznačeny jako vnější obálka zahrnující politické, ekonomické, sociální, technologické, právní a enviromentální faktory, zkráceně se pro tyto faktory používá zratka PESTLE.\footnote{z angl. Political, Economic, Social, Technological, Legal and Enviroment}
 
+\vspace{5}
+Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je postaven nový systém správy služeb, který se nazývá Service Value System, neboli SVS. Tento systém se skládá z několika vrstev, jejichž schéma je znázorněno na obrázku \ref{fig:SVS_schema}. Ze schématu vyplývá, že prvotními vstupy jsou požadavky nebo příležitosti, které postupně procházejí jednotlivými vrstvami přes hlavní principy managementu služby, její správu, řídící postupy až po průběžné vylepšení, ústřední části je pak \emph{Service value chain}. Na konci toho procesu je výstupem hodnota v požadované kvalitě. \parencite[s.~14]{Cartlidge2020} Významy a obsah jednotlivých vrstev, je detailně rozepsán níže. 
+
+    \begin{figure}[b]
+        \begin{center}
+            \includegraphics[width=11cm]{img/SVS_schmea.png}
+        \end{center}
+        \caption{Schéma SVS \parencite[s.~21]{Cartlidge2020}}
+        \label{fig:SVS_schema}
+    \end{figure} 
 \begin{compactitem}
-    \item Hlavní principy (Guiding principles)
-    \item Správa (Governance)
-    \item Postupy (Practices)
-    \item Průběžné vylepšené (Continual improvement)
+    \item Hlavní principy (Guiding principles) - První vrstva se zabývá komplexním řízením celé organizace a za všech situací a vytváří základy pro interní kulturu poskytovatele, rozhodovací mechanismy a celkově proces pro řízení poskytování služeb. Tato vrstva je rozdělena na sedm klíčových principů, které pokrývají celý proces poskytování služeb. 
+    \begin{compactitem}
+      \item Zaměř se na hodnotu - Nejdůležitější je doručená hodnota a její kvalita, ať pro uživatele služby, tak pro samotného dodavatele. Dáležitým ukazatelem kvality služby je v tomto případě tzv. Customer Experience\footnote{zkráceně CX}, který udává jak je uřivatel s danou službou spokojený.
+      \item Začínej v aktuální situaci - není nutné vždy začít vyvýjet slubu od začátku, je vhodné stavět na již existujích prostředcích, prostředcích, službách atp., neboť vývoj od samého začátku je velmi náročný na zdroje a z pravidla zahrnuje i již jednou řešené situace. 
+      \item Postupuj iterativně a s ohledem na odezvu - Velké úkoly je nutné rozdělit do menších celků, které se dají lépe managovat a to jednak v ohledech kontroly jejich samotné realizace, tak s ohledem na snazší řešení případných problémů. Jednotlivé úkoly by měly být zaváděny postupně a s ohledem na odezvu, neboť se v průbehu vývoje či poskytování mouhou požadavky na službu lišit. 
+      \item Collaborate and promote visibility - Personál musí spolupracovat a zajišťovat, aby kažný, kdo je zainteresovaný do procesu poskytování služby, měl přiřazenou patřičnou roli, která odpovídá jeho schopnostem. Je důležité, aby byla pracovní náplň jednotlivců či týmů známá, neboť je tak možné snáze hledat chyby a případně změny v projektu a zjednat jejich nápravu.
+      \item Mysli a pracuj holisticky - Žádný ze zdrojů potřebných pro realizace a poskytování služby není od ostatních izolován a nejedná samostatně. Cílem je, aby v celém procesu nevznikala slepá a neznámá místa, celý procest musí přesně zmapován od požadavku do doručení kvality.
+      \item Udrž to jednoduché a praktické - Cílem je využívat co nejjednodušší postupy a zdroje. Je důležité uchovávat v provozu pouze ty zdroje, procesy, metriky atp., které přinášejí požadovaný výstup. 
+      \item Optimalizuj a automatizuj - V rámci organizace je důležité automatizovat rurinní úkoly v co největší míře, což vede k úposře nákladů a zpravidla i k menší chybovosti. Zautomatizované úkoly je nutnbé udržovat v optimalizované formě, neboť neoptimalizované procesy mohou naopak oraganizaci zatěžovat.
+    \end{compactitem} 
+    \item Správa (Governance) - Druhá vrstva se věnuje nastavení potřebných procesů pro evaluaci, monitoring a directs \footnote{jak to přeložit?} uvnitř organizace poskytující služby. Může se jednat o celou organizaci a nebo jen její dílčí části, cílem je zajištění správného směřování vůči cílům a prioritám organizace. 
+    \item Hodnotový řetězec služby (?) - Jak již bylo zmíněno výše, jedná se o soubor kroků, které je třeba provést, aby z dodaných vstupů vznikla požadovaná hodnota. Tento řetězec se skládá z šesti samostatných aktivit a celé schéma hodnotového řetězce je vyobrazeno na obrázku \ref{fig:value_chain}, jeho jednotlivé části jsou pak definovány následovně:
+    \begin{compactitem}
+        \item Plan - Zajišťuje sdílení jednotné vize, stavu a směru dalšího vývoje produktu či služby.
+        \item Zlepšení - Věnuje se postupnému zlepšování služby, nebo produktu.
+        \item Zapojení - Zajišťuje správné pochopení potřeb všech zainteresovaných stran, jejich transparentnost a kontinuální zapojení. 
+        \item Design a přechod - Zprostředkovává kontrolu kvality výsledného produktu/služby, nákladů a jejich uvedení na trh.
+        \item Obtain/Build(?) - Zabezpečuje, že jsou jednotlivé komponenty služby/produktu dostupné, když jsou potřeba a dle potřebných specifikací.
+        \item Doručení a podpora - Zaručuje doručení produktu/služby dle domluvených specifikací a očekávání zainteresovaných stran.
+    \end{compactitem}
+    Hodnotový řetězec služby je značně flexibilní a umožňuje nasazení v rámci nejrůznějších vývojových přístupů. Díky této flexibilitě umožňuje velmi snadno, rychle a efektivně reagovat na případné změnové požadavky zainteresovaných stran. Spolu s praktikami ITIL tak tvoří velmi komplexní sadu nástrojů pro správu IT služeb.\parencite[s.~21]{Cartlidge2020}
+
+    \begin{figure}[b]
+        \begin{center}
+            \includegraphics[width=11cm]{img/value_chain.png}
+        \end{center}
+        \caption{Service Value Chain \parencite[s.~21]{Cartlidge2020}}
+        \label{fig:value_chain}
+    \end{figure} 
+    
+    \item Postupy (Practices) - V rámci třetí vrstvy je definována řada postupů, které jsou designovány dle čtyř základních dimenzí managementu služeb a každá podporuje více hodnotových řetězců. Tyto postupy se dělí do tří kategorií a to \emph{Obecné manažerské postupy}, \emph{Postupy managementu služeb} a \emph{Postupy technického managementu}, jejich kompletní seznam je pak uveden v tabulce \ref{tab:management_practices_ITIL}.
+    Tyto postupy jsou navrženy tak, aby zajistili správné pochopení a ukotvení celkového přehledu tykajícího se struktury, obsahu a klíčových konceptů uživateli služby nebo produktu. Z tohoto jsou všechny vystavěny dle následujícího schématu: \parencite[s.~23]{Cartlidge2020}
+    \begin{compactitem}
+        \item Obecné informace
+        \begin{compactitem}
+            \item Účel a popis
+            \item Termíny a pojmy
+            \item Rozsah/záběr
+            \item Faktory úspěšné praxe
+            \item Klíčové metriky
+        \end{compactitem}
+        \item Hodnotové proudy a procesy
+        \begin{compactitem}
+            \item Jak praxe přispívá k činnostem hodnotového řetězce služeb
+            \item Procesy a činnosti praxe
+        \end{compactitem}
+        \item Organizace a lidé
+            \begin{compactitem}
+                \item Role, kompetence a zodpovědnosti
+                \item Organizační struktury a týmy
+            \end{compactitem}
+        \item Informace a technologie
+        \begin{compactitem}
+            \item Výměna informací: vstupy a výstupy
+            \item Automatizace a nástroje
+        \end{compactitem}
+        \item Partněři a dodavatelé
+        \begin{compactitem}
+            \item Vztahy s třetími stranami zapojenými do praxe
+            \item Zohlednění zdrojů
+        \end{compactitem}
+    \end{compactitem}
+    
+    \item Průběžné vylepšení (Continual improvement) - Model kontinuálního vylepšování je v rámci SVS definován jako cyklický řetězec otázek, které jsou úzce propojeny s jednotlivými procesy a metrikami, díky kterým je možné tyto otázky zodpovědět a provést případná vylepšení. Schéma celého řetězce je znázorněno na obrázku \ref{fig:svs_continual_improvement}.
+
+    \begin{figure}[b]
+        \begin{center}
+            \includegraphics[width=11cm]{img/continual_improvement.png}
+        \end{center}
+        \caption{Model průběžného vylepšování dle ITIL \parencite[s.~24]{Cartlidge2020}}
+        \label{fig:svs_continual_improvement}
+    \end{figure} 
 \end{compactitem}
+
+    \begin{table}[b]
+        \scriptsize
+        \begin{tabularx}{\textwidth}{100X}
+            \toprule
+                Obecné manažerské postupy & Postupy managementu služeb & Postupy technického managementu \\
+             \midrule
+                Architecture management & Availability management & Deployment management \\
+                Continual improvement & Business analysis & Infrastructure and platform management \\
+                Information security management & Capacity and performance & Software development and management \\
+                Knowledge management & Change enablement  \\
+                Measurement and reporting & Incident management  \\
+                Organizational change management & IT asset management  \\
+                Portfolio management & Monitoring and event management  \\
+                Project management & Problem management  \\
+                Relationship management & Release management \\
+                Risk management & Service catalogue management \\
+                Service financial management & Service configuration management \\
+                Strategy management & Service continuity management \\
+                Supplier management & Service design \\
+                Workforce and talent management & Service desk \\
+                Service level management \\
+                Service request management \\
+                Service validation and testing \\
+            \bottomrule
+        \end{tabularx}
+        \caption{Manažerské postupy dle ITIL \parencite[s.~22]{Cartlidge2020}}
+        \label{tab:management_practices_ITIL}
+    \end{table}
 
 \chapter{DWH v rámci Masarykovy univerzity}
 \section{Specifikace, výhody}
