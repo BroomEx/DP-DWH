@@ -108,37 +108,39 @@
 \begin{document}
 %% The \chapter* command can be used to produce unnumbered chapters:
 \chapter{Úvod}
-Velký rozmach informačních technologií v druhé polovině dvacátého století vedl k rozsáhle automatizaci a zjednodušení mnoha procesů, u kterých čím dál více úkonů přecházelo z lidských zdrojů na informační systémy. Procesy, které jsou realizovány za pomoci informačních systémů umožňují lepší optimalizaci, nepřetržitý provoz a také z velké části eliminují chyby, které jsou způsobeny lidským faktorem. Z těchto důvodů se postupně IT služby prosadili ve všech aspektech lidské společnosti, která je nyní na jejich bezchybném fungování a dostatečné dostupnosti de facto závislá. 
+Velký rozmach informačních technologií v druhé polovině dvacátého století vedl k rozsáhlé automatizaci a zjednodušení mnoha procesů, u kterých čím dál více úkonů přecházelo z lidských zdrojů na informační systémy. Procesy, které jsou realizovány za pomoci informačních systémů umožňují lepší optimalizaci, nepřetržitý provoz a také z velké části eliminují chyby, které jsou způsobeny lidským faktorem. Z těchto důvodů se postupně IT služby prosadily ve všech aspektech lidské společnosti, která je nyní na jejich bezchybném fungování a dostatečné dostupnosti de facto závislá. 
 
 Informační služby za nás dnes vykonávají velké množství činností, z nichž by velká část nebyla nebyla ani realizovatelná, pokud bychom k realizaci využili pouze lidské zdroje. Díky informačním službám je dnes také možné uchovávat a zpracovávat obrovské množství dat, které následně můžeme využívat jako znalostní bázi pro naše rozhodování, ať co se světa velkých organizací a korporací týče, tak i v běžném životě jednotlivců.
 
 Spolu s tímto rozmachem byl nutný i vznik patřičných standardizovaných postupů, za pomoci kterých můžeme tyto služby v rámci organizací zavádět a udržovat, neboť samotný vývoj IT služeb je značně odlišný od jejich implementace a údržby. 
 
-Tato diplomová práce se zabývá rozborem procesu zavádění IT služeb v rámci Ústavu výpočetní techniky (ÚVT) Masarykovy univerzity, a to konkrétně na příkladu zavádění služby datového skladu. Diplomová práce postupně danou problematiku rozebírá jak z teoretického, tak z aplikačního hlediska. Teoretická část zahrnuje potřebné ukotvení v problematice datových skladů a managementu informačních služeb, jejich historický vývoj, kategorizaci, základní popise a charakteristiku. Velká část je pak věnována popisu procesu zavádění datového skladu a konkrétního případu využití. Tento proces následně prochází teoretickou evaluací a případnou optimalizací. 
+Tato diplomová práce se zabývá rozborem procesu zavádění IT služeb v rámci Ústavu výpočetní techniky \footnote{zkráceně ÚVT} Masarykovy univerzity, a to konkrétně na příkladu zavádění služby datového skladu. Diplomová práce postupně danou problematiku rozebírá jak z teoretického, tak z aplikačního hlediska. Teoretická část zahrnuje potřebné ukotvení v problematice datových skladů a managementu informačních služeb, jejich historický vývoj, kategorizaci, základní popis a charakteristiku. Velká část je pak věnována popisu procesu zavádění datového skladu a konkrétního případu využití. Tento proces následně prochází teoretickou evaluací a případnou optimalizací. 
 
 V aplikační části se pak diplomová práce věnuje samotnému technickému řešení datového skladu a jednoho ukázkového případu jeho využití. Na základě výsledků evaluace zaváděcího procesu z teoretické části, je pak navržen zaváděcí proces pro ukázkový případ, který je pak v rám diplomové práce nasazen. 
 
 Cílem diplomové práce je náhled na proces zavádění nové IT služby v rámci ÚVT MUNI a to jak z technického hlediska, tak z hlediska managementu služeb z pohledu frameworku ITIL. Praktickým výstupem pak je uživatelský report, který je vytvořen anonymizovanými daty z datového skladu a nasazen za pomocí procesu, který splňuje požadavky frameworku ITIL.
-\chapter{Datový sklad}
 
+\subsection{Data a datová věda}
 V dnešní společnosti se každý den vygeneruje ohromné množství dat a informací a
 toto množství neustále roste. Zatímco ve starém Římě dosahovaly, při přepočtu na dnešní
 jednotky, největší sbírky svitků velikosti okolo 100Mb \parencite[p.~157]{Smil2021}, v roce 2016 již
 lidstvo dokázalo vygenerovat 16Zb dat každý rok\parencite[p.~160]{Smil2021}, což je nárůst
 o celých 14 řádů.
 
-Spolu s velkým množstvím nově vygenerovaných informací se ale mění jejich
-forma. Ve zmíněných římských sbírkách, bychom nalezli zejména písemnosti, ty však v současné době představují s
-píše marginální čast uložených informací. Například v repozitářích Kongresové knihovny ve Spojených státech amerických, zabírají písemnosti
-pouze 1 \% ze všech uchovaných informačních artefaktů. \parencite[p.~158]{Smil2021}
-Vzhledem k takto velkému množství dostupných informací, je jejich zpracovaní značně
-komplikované, a to i na úrovni menších celků, jako jsou například obchodní společnosti, univerzity a další podobné organizace.Pokud však chceme na základě informací dělat jakékoliv analýzy čí rozhodnutí, je velmi vhodné informace zkonsolidovat do jednoho úložiště,
-provést základní očištění a data alespoň základně standardizovat.
+Spolu s velkým množstvím nově vygenerovaných informací a dat, se ale také mění jejich
+forma. Ve zmíněných římských sbírkách bychom nalezli data zejména ve formě písemností, ty však v současné době představují s
+píše marginální část uložených informací. Například v repositářích Kongresové knihovny ve Spojených státech amerických, zabírají písemnosti
+pouze 1 \% ze všech uchovávaných informačních artefaktů \parencite[p.~158]{Smil2021} a většina dat je tak uchovávána v digitální podobě.
 
-Jednou z možností, jak tohoto docílit, je vytvoření datového skladu. Pojem datový
-sklad může mít vícero definic. Je možné na něj nahlížet například pouze jako na proces, který má
-zjednodušit přístup k datům a kdy je technické řešení datového skladu pouze podpůrný prvek celého procesu.
-Nejčastěji se však na datový sklad pohlíží jako na systém, který \emph{extrahuje, čistí, upravuje a dodává zdrojová data do dimenzionálního
+Právě díky digitalizaci je dnes velmi snadné data a informace ukládat a tak dnes archivujeme data v enormním a dříve nepředstavitelném množství, díky čemuž je možné archivovat i data, která se zdají být v danou chvíli neužitečná a triviální. Vzhledem k tomu, že tímto způsobem vznikají obří datové sety obsahující velké množství formátů a typů dat, které na první pohled nemusí obsahovat užitečné informace, neboť jejich analýza je díky jejich rozsahu velmi komplikovaná, díky čemuž postupně došlo k vzniku a rozvoji vědního oboru zvaného \emph{Datová věda}\footnote{angl. Data Science}, což je interdisciplinární vědní obor postavený zejména na matematice, statistice a informačních technologiích a který nachází uplatnění ve velkém spektru lidských činností, počínaje vědou jako takovou a dnes velmi hojně využívanými \emph{systémy na podporu rozhodování} konče.
+
+ Datová věda je termín, který se poprvé objevuje v 60. letech 20. století a je spojen s rozmachem výpočetních technologií, čímž je odlišena od běžné statistiky, neboť  oproti ní zahrnuje nejen matematický aparát, ale má i velmi velký přesah do počítačové vědy \footnote{angl. Computer Science
+ }.   \parencite{Foote2021} Americký vědec zabývající se především informatikou Jim Gray dokonce označuje datovou vědu za čtvrté paradigma vědy, kdy k empirickému, teoretickému a výpočetnímu paradigmatu přidává právě čtvrté paradigma a to \emph{data based\footnote{výzkum založen na datech}} \parencite{hey2009fourth}, čímž zavádí nový vědecký přístup, který je schopen zahrnout velké množství aspektů, což ostatní paradigmata zvládají velmi komplikovaně. Data based přístup je tak velmi často využívám například v sociologii a více aplikovaně zejména v marketingu, kde je například možné ze změn nákupních zvyklostí vysledovat například změny rodinného stavu zákazníků.\parencite{Zeleny2015}
+ 
+Vzhledem k tomu, že datová věda se zabývá komplexně celým procesem zpracování dat a nejen jejich analýzou, je v rámci datové vědy zahrnuta i problematika uložení a transformace dat. Tato práce se zaměřuje primárně na zpracování dat za pomoci datového skladu. 
+
+\chapter {Datový sklad}
+Jak již bylo zmíněno, datový sklad je jedna z možností, jak uchovat data ve formě, která umožňuje jejich snadnou analýzu. Pojem datový sklad může mít vícero definic. Je možné na něj nahlížet například pouze jako na proces, který má zjednodušit přístup k datům a kdy je technické řešení datového skladu pouze podpůrný prvek celého procesu. Nejčastěji se však na datový sklad pohlíží jako na systém, který \emph{extrahuje, čistí, upravuje a dodává zdrojová data do dimenzionálního
 datového úložiště a poté podporuje a zavádí dotazování a analýzu dat za účelem
 rozhodování.} \parencite[s.~23]{Kimballc2004}
 
@@ -152,6 +154,18 @@ s pouhým datový úložištěm. \parencite[s.~24]{Kimballc2004}
 Využití datových skladů je pak velmi rozmanité, jednou z nejčastějších aplikací je ale
 jejich využití ve spojení se systémy podpory rozhodování \footnote{zkráceně DSS z angl. Decision support
 systém}, kde často slouží jako primární znalostní báze. \parencite[s.~2]{Inmon2005}
+
+Obecné schéma datového skladu je znázorněno na obrázku \ref{fig:dwh_schema}, na kterém je patrné, že primárním vstupem jsou data z různých zdrojů a typů. Jednotlivé druhy vstupních dat potřebují specifickou úpravu, za tím to účelem je zde již zmíněný ETL proces, který následně uloží zpracovaná data do datového skladu. finálním výstupem jsou pak strukturovaná data, která typicky slouží pro business inteligence \footnote{zkráceně BI}, nebo jako přehledové dashboardy vizualizující provozní data, jako mohou být například přehledy spotřebovávané energie nebo obsazenosti kanceláři.
+
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=12cm]{img/dwh_schma.png}
+  \end{center}
+  \caption{Obecné schéma datového skladu. Vlastní zpracování}
+  \label{fig:dwh_schema}
+\end{figure}  
+
+
 
 \section{Historický vývoj datových skladů}
 Datové sklady se spolu se systémy podpory rozhodování začaly vyvíjet v 60. letech,
@@ -167,14 +181,14 @@ správu dat.\parencite{Foote19042018} Vzhledem k primitivnímu systému uložen�
 však tyto systémy neposkytovali data v takové kvalitě jako je známe dnes.
 
 Velkým milníkem byly relační databáze, které začaly vznikat v osmdesátých letech
-a které pomocí dotazovacích jazyků, jako je například SQL \footnote{z angl. Structured Query
+a které pomocí dotazovacích jazyků, jako je například jazyk SQL \footnote{z angl. Structured Query
 Language} umožňovaly, v porovnání s předchozím stavem, velmi snadnou práci s daty.\parencite{Foote19042018}
 
 Spolu s nástupem osobních počítačů a rostoucí velikostí firemních sítí, stoupala i
 potřeba skutečného datového skladu. Vzájemně propojené osobní počítače měly oproti
 architektuře centrálních počítačů velkou nevýhodu v roztříštěnosti dat, kdy data byla uložena
 na více míst a bylo složité udržovat data aktuální a konzistentní. Souhrnně se
-tento problém nazývá \emph{spider web}. \cite[s.~6]{Inmon2005} Nástup osobních počítačů, a s 
+tento problém nazývá \emph{spider web}. \parencite[s.~6]{Inmon2005} Nástup osobních počítačů, a s 
 ním spojený rozvoj specializovaných programů jako byl například Microsoft Excel, Microsoft Access atp., 
 přinesl další problém a to neustále se zvětšující množství datových formátů, ve kterých byla data uložena.\parencite{Foote19042018}
 
@@ -195,11 +209,37 @@ Koncept data cube je odlišný. Ukládá data ve třech a vícerozměrných mati
 data v dimenzích následně relačně propojíme, je možné snadno filtrovat data dle
 jednotlivých dimenzí, bez nutnosti propojovat tabulky mezi sebou.\parencite{Foote19042018}
 
-Všechny tři zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále využívány. S ohledem na již zmíněný masivní nárůst zpracovávaných informací, a s tím spojenými nároky na rychlost jejich zpracování, se však začíná prosazovat nový koncept, a to koncept data lakehouse. Jak již název napovídá, koncept data lakehouse kombinuje výhody úložišť typu data lake a data warehouse. Data lakehouse je schopné, stejně jako data lake, zpracovávat surová data velkou rychlostí a flexibilně, zároveň však poskytuje úložiště i pro vyčištěná a strukturovaná data, stejně jako data warehouse. U data lakehouse se také počítá s přímým napojením analytických nástrojů sloužících například pro BI\footnote{z angl. Business Intelligence}, či jako informační báze pro AI\footnote{z angl. Artificial Intelligence}.
+Všechny tři zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále využívány. S ohledem na již zmíněný masivní nárůst zpracovávaných informací, a s tím spojenými nároky na rychlost jejich zpracování, se však začíná prosazovat nový koncept, a to koncept data lakehouse. Jak již název napovídá, koncept data lakehouse kombinuje výhody úložišť typu data lake a data warehouse. Data lakehouse je schopné, stejně jako data lake, zpracovávat surová data flexibilně a zároveň velmi rychle, zároveň však také poskytuje úložiště i pro vyčištěná a strukturovaná data, stejně jako data warehouse. U data lakehouse se také počítá s přímým napojením analytických nástrojů sloužících například pro BI\footnote{z angl. Business Intelligence}, či jako informační báze pro AI\footnote{z angl. Artificial Intelligence}.
 
-V rámci Masarykovy univerzity byl nasazen koncept datového skladu, tak jak byl definován v úvodní kapitole. Práce se tedy zabývá pouze tímto konceptem.
+V rámci Masarykovy univerzity byl nasazen koncept datového skladu, tak jak byl definován v úvodní kapitole. Práce se tedy dále zabývá pouze tímto konceptem.
+
+Datové sklady nebyly z počátky přijímány ze strany IT oddělení, jelikož práce s daty v té době nebyla nikterak masivně rozšířená, za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství již zpracovaných, strukturalizovaných dat. \parencite{Inmon2021}
+
+
+Za velkým rozmachem datových skladů pak stál rozvoj mobilních telefonů, díky kterým získaly marketingové s obchodní oddělení telefoniích společností, jako je například AT&T, přístup k velkému množství dat, která se týkala koncových uživatelů, což značně usnadňovalo rozhodovací proces.\parencite{Inmon2021}
+
+Jednou z velmi významných společností, které se zasadili o velký rozmach datový skladů, pak byla společnost Wal-Mart, provozující největší síť obchodů na světě Jejich systém \emph{Retail Link} uvedený do provozu v roce 1991 dodnes patří mezi největší známé datové sklady.\parencite{Gallaugher2018}
+
+Tento systém měl za úkol ukládat veškeré pohyby zboží v rámci celé společnosti a byl postupně napojen na systémy WMS\footnote{z angl. Warehouse management system}, takže na základě uložených dat bylo možné například automaticky objednávat vyprodané zboží, což, vzhledem k tomu, že společnost Wal-Mart zvládne své sklady vyprodat více jak osmkrát v každém roce, znamenalo značné zefektivnění procesu objednávek a také velké zefektivnění hodnocení dodavatelů, které mohou být hodnoceny podle velkého množství parametrů, jako je doba doručení, spolehlivost dodávek atp, díky čemuž má Wal-Mart sedmý nejlepší dodavatelský řetězec ve spojených státech.\parencite{Gallaugher2018}  
+
+Samotné množství dat, které datový sklad zpracovává je naprosto enormní a dle \citeauthor{Marr2017} se v roce 2017 pohybovalo okolo 40 peta bytů. Skladem každou hodinu proteče přibližně 2.5pB dat z 200 vnitro firemních datových streamů, které jsou následně transformovány a ukládány pro pozdější použití.\parencite{Marr2017} Vzhledem k tomu, že se jedná o velké množství datových zdrojů, formátů, typů atp., bylo by jejich zpracování bez datového skladu velmi obtížné.
+
+Na příkladu datového skladu společnosti Wal-Mart je vidět, jaký přínos mají datové sklady v korporátních procesech velkých společností. Kromě zkvalitňování vnitro firemních procesů, slouží datové sklady i k mnoha dalším různým účelům jako je například zefektivnění produktového zacílení společnosti a to za pomoci například zákaznických profilů, které je na základě dat za datového skladu možné sestavit a které obsahují uživatelské chování, a to jak specifické skupiny, tak každého jednotlivce. Uživatelské profily pak také mohou poskytovat cenná data, která slouží k jejich ochraně, jako je tomu například v případě bankovních transakcí, kde je díky nim možné vysledovat podvodné převody peněz, které neodpovídají běžnému chování uživatele, díky čemuž je možné je zastavit ještě před vznikem škody.\parencite{Inmon2008}
+
+
+Vzhledem k tomu, že datové sklady typicky zpracovávají a následně drží velké množství dat, je zbytečné, poskytovat všechna data všem uživatelům, z tohoto je běžné, že na základě velkým datový skladů vznikají malé specializované sklady tzv. \emph{data marts} viz. \ref{dwh_types}, které využívají datovou bázi "mateřského" datového skladu a následně poskytují pouze přesně zacílené informace, které jsou relevantní pro dané uživatele, typicky firemní oddělení, čímž došlo ke vzniku tzv. \emph{the corporate information factory}.\parencite{Inmon2021} Tento koncept je znázorněn na obrázku \ref{fig:data_marts_schema}, ze kterého je zřejmé, že pro chod celé informační infrastruktury je využíváno více datových skladů, na jejichž základě jsou pak vytvářeny jednotlivé specializované sklady.
+
+
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/data_marts_schema.png}
+  \end{center}
+  \caption{Korporátní informační struktura \parencite[s.12]{Inmon2008}}
+  \label{fig:data_marts_schema}
+\end{figure}  
 
 \section{Typy datových skladů}
+\label{dwh_types}
 Datové sklady se dají rozdělit na několik druhů dle různých kritérií. \citeauthor{Inmon2005}
 v knize \citetitle{Inmon2005} z roku \citeyear{Inmon2005} dělí datové sklady podle způsobu a rozsahu,
 v jakém data shromažďují a dle prostředí, ve kterém je datový sklad nasazen.
@@ -225,14 +265,17 @@ Datový sklad, který je určen k provozním potřebám organizace, pro kterou j
 \paragraph{Enterprise data warehouse}
 Datový sklad, který centralizuje všechna data z celé organizace a slouží jako hlavní znalostní báze pro její řízení.
 \paragraph{Data marts}
-Malé datové sklady, typicky se budují pro jednotlivá oddělení organizací a na základě jejich specifických potřeb. Tento typ také někdy bývá realizován pouze jako podmnožina velkých datových skladů, jako je Operational Data Store nebo Enterprise data warehouse.
+Malé datové sklady, typicky se budují pro jednotlivá oddělení organizací a na základě jejich specifických potřeb. Tento typ také někdy bývá realizován pouze jako podmnožina velkých datových skladů, jako je Operational Data Store nebo Enterprise data warehouse.\parencite{Inmon2021}
 \paragraph{Virtual data warehouse}
 Specifický typ datového skladu, který funguje pouze jako transportní a translační vrstva nad různými datovými 
 zdroji a pro uživatele tak vytváří jeden přístupový bod. Data tedy nejsou uložena na jednom místě a ve strukturalizované
 podobě, ale jsou nahrávána z více externích zdrojů, následně dle potřeby přetransformovaná a doručena uživateli. 
 
 \vspace{5mm}
-Každý z těchto typů datových skladů vyžaduje specifický přístup, a to jak
+Uvedené typy datových skladů je možné dále rozšířit o další poddruhy, jako je například koncept \emph{Data vault}, který se vyznačuje velmi vysokou mírou přesnosti dat a důslednou kontrolou jejich integrity, kdy je například udržována i informace o jejich původu a je kladen velký důraz na jejich verifikaci a i následné využití. Tento typ datového sklad nachází uplatnění například v bankovním, armádním a nemocničním sektoru a z tohoto důvodu se většinou jedná o vysoce zabezpečené datové sklady.\parencite{Inmon2021}
+
+
+Všechny zmíněné typy datových skladů vyžadují specifický přístup, a to jak
 k architektuře samotného skladu, zpracování dat, tak i k technickému vybavení. Z tohoto
 důvodu je důležité zvolit správný typ datového skladu již ve fázi návrhu, protože
 možnost konverze mezi jednotlivými druhy datových skladů nemusí být vždy možná.
@@ -323,6 +366,32 @@ autoři popisují implementaci datového skladu vytvořeného za účelem monito
 samotného viru i další, zdánlivě nesouvisející, informace, které zahrnují například také klimatické informace
 jako je znečistěni ovzduší a nebo síla a směr větru. Výzkumné výstupy z tohoto projektu se tak mohou zabývat i vlivem počasí na
 šíření nákazy. 
+
+\subsection{Big Data}
+V souvislosti s datovými sklady bývá také často spojován termín "Big Data", který je například dle Národního Institutu pro standardy a technologie definován jako \emph{jako velkoobjemová, rychlá a různorodá a informační aktiva, která vyžadují nákladově efektivní a inovativní formy zpracování informací, které následně umožňují lepší přehled v rozhodování a automatizaci procesů.  } \parencite{Gartner} 
+
+Konkrétněji pak lze Big Data definovat za pomoci tak zvaných pěti V, které označují základní vlastnosti takového data setu.  Těchto pět V značí následující termíny: \parencite{big_data}
+\paragraph{Objem (Volume) }
+Datové sety v rámci Big Data dosahují obřích rozměrů.
+
+\paragraph{Rychlost (Velocity)}
+Data jsou generovány velmi rychle a jejich zpracování probíhá velmi často v reálném čase. Datové sklady oproti tomu fungují většinou sekvenčně.
+
+\paragraph{Hodnota (Value)}
+Big Data mají svoji hodnotu, která je z velké části odvozena od jejich velikosti. i minoritní data mohou mít ve velkém objemu velkou hodnotu. 
+
+\paragraph{Věrohodnost (Veracity)}
+Data jsou sbírána z různých zdrojů a v různých formách, mohou tedy obsahovat různý šum, zkreslení atp. které je nejprve nutné odstranit.
+
+\paragraph{Rozmanitost (Variety)}
+Data jsou zpracovávána ve velkém množství formátů, struktur a typů.
+
+
+Dle předchozích definic se za Big Data tedy označují velké a různorodé sestavy dat, které je velmi komplikované vyhodnotit klasickými postupy a pro jejich vyhodnocuje třeba využívat nestandardních a vysoce výkoných nástrojů a postupů, čímž se zásadně odlišuje od datového skladu, neboť ten je naopak vždy stavěn tak, aby byla analýza dat co nejsnazší.  Big Data dle pěti V svým přístupem více připomínají kombinaci konceptů Data lake (nezpracovaná a nestrukturovaná data) a Datového skladu (transformace dat do snadno analyzovatelné podoby), avšak se zásadním rozdílem, kterým je mnohonásobně větší objem dat zpracovávaných v rámci Big Data, přičemž data jsou v případě zmíněných konceptů mnohem více relevantní k požadovaným výstupům, zatímco v případě Big Data nejdříve dochází k akvizici dat a až pak k následnému hledání využitelných usecasů.
+
+William H. Inmon pak ve své přednášce na Escuela Colombiana de Ingeniería týkající se historie datových skladů definuje rozdíl mezi datovým skladem a "velkými daty" tak, že o datových skladech mluví jako architektuře, která je nezávislá na implementaci a která má za úkol poskytovat relevantní data ve strukturované podobě, zatímco Big Data definuje jako technologii zpracování dat, bez jasně dané architektury a vstupů či výstupů. \parencite{Inmon2021}
+
+V praxi se pak Big Data někdy využívají jako znalostní báze pro datové sklady a data lakes, které jsou nad nimi stavěny jako subsety, které poskytují již zpracovaná data. takto postavené datové sklady pak mají velkou výhodu v aktuálnosti dat a jejich velkému rozsahu, ze kterých vycházejí. 
 
 \chapter{ITSM}
 Jak již bylo zmíněno v úvodní kapitole, velký rozmach informačních technologií a služeb v 60. letech 20. století si vyžádal vznik patřičných standardizovaných procesů, postupů a pravidel pro řízení služeb v prostředí podniků a organizací. Souhrnně je tento obor označován jako ITSM, neboli Information Technology Service Management, což je pojem, který se původně objevil pouze v rámci metodiky ITIL, ale postupně se rozšířil a zobecnil tak, že v současné době obecně pokrývá problematiku řízení IT služeb.\parencite[s.~20]{Matula2017} 
@@ -643,8 +712,31 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
     \end{table}
 
 \chapter{DWH v rámci Masarykovy univerzity}
-\section{Specifikace, výhody}
-dasdasd
+Masarykova univerzita generuje, jako každá srovnatelně velká instituce, velké množství provozních dat, které jsou však roztříštěna mezi jednotlivými odděleními a to v různých, často vzájemně nekompatibilních formátech. Vzhledem k tomuto stavu, je velmi komplikované tato data jakkoliv využívat , což vedlo k rozhodnutí  vybudovat v rámci univerzity datový sklad, jehož cílem bylo vytvoření jednotného úložiště již zpracovaných dat,  které lze následně využít pro analytické nástroje, které následně pomocí automaticky vytvářených reportů umožňují a zefektivnění  procesů souvisejících s řízením univerzity a poskytnutí dobré startovní pozice k dosáhnutí stavu daty řízené univerzity \footnote{Data Driven University} , zlepšení jejího běžného provozu a v neposlední řadě také poskytnutí lepší podpory podpory výuky.
+
+\section{Technické řešení}
+Příslušný datový sklad byl implementován na jaře 2022 za pomocí externí dodavatelské společnosti specializující se na implementaci datových skladů  a je postaven zejména na technologií společnosti Microsoft a jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/dwh_muni.png}
+        \end{center}
+        \caption{Schéma datového sklad MUNI. Vlastní zpracování}
+        \label{fig:dwh_muni}
+    \end{figure} 
+
+Jak je vidět na zmíněném schématu, prvotní sběr dat probíhá pomocí nástroje \emph{Azure data factory \footnote{https://azure.microsoft.com/en-us/products/data-factory/}}, což je nástroj určený k automatizovanému sběru dat z vícero zdrojů. Za tímto účelem je připojen ke všem potřebným zdrojům, mezi které patří například databázový systém Oracle DB, informační systém Magion a nebo například excelové soubory generované jednotlivými odděleními. Data z těchto zdrojů jsou pomocí tohoto nástroje pravidelně ve 24 hodinových intervalech extrahována a ukládána na STAGE server, který je realizován jako on premise server\footnote{Jedná se o server zpravovaný samotnou univerzitou} přímo v prostředí Masarykovi univerzity. Na tomto serveru jsou data uložena v nezpracované formě ve formátu takzvaných snímků \footnote{angl. snapshot}.
+
+Ze schématu dále vyplývá, že dalším krokem je pak pak proces samotného zpracování dat, což zajišťuje ETL proces, který data patřičně vyčistí a filtruje a to tak, aby byla uložena pouze relevantní data v dostatečné kvalitě. Data jsou následně transformována do podoby, kterou je možné uložit do cloudového úložiště, kterým je v tomto případě Azure SQL databáze\footnote{https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/}, což je relační databáze obohacená o inteligentní funkce, které jsou schopny automaticky automaticky upravovat její výkon.
+
+Data jsou v tomto případě uložena ve formě datového schématu zvaného hvězda, který pracuje se třemi druhy tabulek, kterými jsou tabulky obsahují samotná fakta, která obsahují informace o jednotlivých záznamech, tabulky obsahující jednotlivé dimenze, dle kterých je možné data třídit a dále pak takzvané můstkové tabulky, které propojují fakta s dimenzemi. 
+
+Data v této podobě je pak již možné přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI\footnote{https://powerbi.microsoft.com/cs-cz/}, který se připojí přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí PowerBI lze následně vytvářet přehledné uživatelské reporty, jejichž výhodou je, vyjma již zmíněné aktuálnosti,  velmi snadná modifikace dle aktuálních potřeb a dále pak například snadné sdílení, neboť tyto reporty je možné sdílet ve formě webových stránek. 
+
+Na tomto datovém skladě je v současnosti již implementováno několik uživatelských aplikací, jako je například interaktivní report využití studoven, který na základě dostupných dat pocházejících z Oracle DB a dále pak z například interních monitorovacích turniketů, vizualizuje ve formě takzvané heatmapy vytíženost jednotlivých studoven  a je z něj tak možné vysledovat, které studovny jsou nejvíce vytížené a v kterou dobu. 
+
+Dalším z příkladu využití datového skladu v rámci Masarykovy univerzity je pak managerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému Magion, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou. Automatická tvorba tohoto reportu šetří přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
+
 
 \section{Zpracovávaný usecase - provozně ekonomická data}
 dasdasd
