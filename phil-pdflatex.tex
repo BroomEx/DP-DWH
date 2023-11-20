@@ -116,7 +116,7 @@ Spolu s tímto rozmachem byl nutný i vznik patřičných standardizovaných pos
 
 Tato diplomová práce se zabývá rozborem procesu zavádění IT služeb v rámci Ústavu výpočetní techniky \footnote{zkráceně ÚVT} Masarykovy univerzity, a to konkrétně na příkladu zavádění služby datového skladu. Diplomová práce postupně danou problematiku rozebírá jak z teoretického, tak z aplikačního hlediska. Teoretická část zahrnuje potřebné ukotvení v problematice datových skladů a managementu informačních služeb, jejich historický vývoj, kategorizaci, základní popis a charakteristiku. Podstatná část je pak věnována popisu procesu zavádění datového skladu a konkrétního případu jeho využití. Tento proces následně prochází teoretickou evaluací a případnou optimalizací. 
 
-V aplikační části se pak diplomová práce věnuje samotnému technickému řešení datového skladu a jednoho ukázkového případu jeho využití. Na základě výsledků evaluace zaváděcího procesu z teoretické části, je pak navržen zaváděcí proces pro ukázkový případ, který je pak v rám diplomové práce nasazen. 
+V aplikační části se pak diplomová práce věnuje samotnému technickému řešení datového skladu a jednoho ukázkového případu jeho využití. Na základě výsledků evaluace zaváděcího procesu z teoretické části, je pak navržen zaváděcí proces pro ukázkový případ, který je pak v rámci diplomové práce implementován. 
 
 Cílem diplomové práce je náhled na proces zavádění nové IT služby v rámci ÚVT MUNI a to jak z technického hlediska, tak z hlediska managementu služeb z pohledu frameworku ITIL. Praktickým výstupem pak je uživatelský report, který je vytvořen anonymizovanými daty z datového skladu a nasazen za pomocí procesu, který splňuje požadavky frameworku ITIL.
 
@@ -134,7 +134,113 @@ Díky tomu postupně došlo k vzniku a rozvoji vědního oboru zvaného \emph{Da
  
 Vzhledem k tomu, že datová věda se zabývá komplexně celým procesem zpracování dat a nejen jejich analýzou, je v rámci datové vědy zahrnuta i problematika uložení a transformace dat. Tato práce se zaměřuje primárně na zpracování dat za pomoci datového skladu. 
 
-\chapter {Datový sklad}
+\chapter {Historie vývoje jednotných úložišť dat}
+Jednotná datová úložiště se spolu se systémy podpory rozhodování začaly vyvíjet v 60. letech, kdy z důvodu ukládání dat na magnetické pásky bylo problematické data zpětně procházet a analyzovat. Data se tak postupně začala pročišťovat a ukládat v již zpracované formě, což by se dalo označit za prvopočátek datových skladů.\parencite[s.~2]{Inmon2005}
+
+V polovině 60. let, se postupně začala rozšiřovat technologie diskových úložišť. Ta na rozdíl od magnetický pásků, umožňovala přímý přístup k datům bez nutnosti jejich kompletního nahrání do pamětí počítače. Díky této technologii začali vznikat první systémy, které lze označit za DBMS \footnote{z angl. Database management system}, které umožňovaly lepší správu dat.\parencite{Foote19042018} Vzhledem k primitivnímu systému uložení dat a jejich nízké strukturalizaci však tyto systémy neposkytovaly data v takové kvalitě, jako je v současnosti běžné.
+
+Velkým milníkem byl vznik relačních databází, které se začaly objevovat v osmdesátých letech a které pomocí dotazovacích jazyků, jako je například jazyk SQL \footnote{z angl. Structured Query Language} umožňovaly, v porovnání s předchozím stavem, velmi snadnou práci s daty.\parencite{Foote19042018}
+
+Spolu s nástupem osobních počítačů a rostoucí velikostí firemních sítí, stoupala i potřeba skutečného datového skladu. Vzájemně propojené osobní počítače měly oproti architektuře centrálních počítačů velkou nevýhodu v roztříštěnosti dat, kdy data byla uložena na více míst a bylo složité udržovat data aktuální a konzistentní. Souhrnně se tento problém nazývá \emph{spider web}. \parencite[s.~6]{Inmon2005} Problém spider webu se ještě prohloubil s nástupem osobních počítačů a s ním spojeným rozvojem specializovaných programů, jako byl například Microsoft Excel, Microsoft Access atp., který přinesl další problém a to neustále se zvětšující množství datových formátů, ve kterých byla data uložena.\parencite{Foote19042018}
+
+V devadesátých letech, tak všechny tyto skutečnosti vyvrcholily v potřebu vzniku jednotného úložiště, které by umožňovalo data snadno udržet v aktualizované a konzistentní podobě. Za tímto účelem vzniklo několik konceptů, jako je například koncept data lake, data cube, nebo datový sklad, které jsou rozebrány v samostatných sekcích.
+
+Jednotné datové úložiště nebyly z počátku přijímány ze strany IT oddělení jako relevantní požadavek, jelikož práce s daty v té době nebyla nikterak masivně rozšířená. Za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství dat, jejichž zpracování bylo možné využít pro podporu rozhodování. \parencite{Inmon2021}
+
+Jedním z velkých impulsů stojícím za rozmachem vývoje jednotných úložišť dat a zejména datových skladů, byl například rozvoj mobilních telefonů. Který umožnil marketingový a obchodním oddělením telefonních společností, jako je například AT\&T, přístup k velkému množství dat, která se týkala koncových uživatelů, což značně usnadňovalo rozhodovací proces a obchodní zacílení.\parencite{Inmon2021}
+
+Další z významných společností, které se zasadily o velký rozmach datový skladů, pak byla společnost Wal-Mart, provozující největší síť obchodů na světě. Jejich systém \emph{Retail Link}, který byl uveden do provozu v roce 1991, dodnes patří mezi největší známé datové sklady.\parencite{Gallaugher2018}
+
+Tento systém měl za úkol ukládat veškeré pohyby zboží v rámci celé společnosti a byl postupně napojen na systémy WMS\footnote{z angl. Warehouse management system}, takže na základě uložených dat bylo možné například automaticky objednávat vyprodané zboží, což, vzhledem k tomu, že společnost Wal-Mart zvládne své sklady vyprodat více jak osmkrát v každém roce, znamenalo značné zefektivnění procesu objednávek a také velké zefektivnění hodnocení dodavatelů, které mohou být hodnoceny podle velkého množství parametrů, jako je doba doručení, spolehlivost dodávek atp, díky čemuž má Wal-Mart sedmý nejlepší dodavatelský řetězec ve spojených státech.\parencite{Gallaugher2018}  
+
+Samotné množství dat, které datový sklad zpracovává je naprosto enormní a dle \citeauthor{Marr2017} se v roce 2017 pohybovalo okolo 40 peta bytů. Skladem každou hodinu proteče přibližně 2.5pB dat z 200 vnitro firemních datových streamů, které jsou následně transformovány a ukládány pro pozdější použití.\parencite{Marr2017} Vzhledem k tomu, že se jedná o velké množství datových zdrojů, formátů, typů atp., bylo by jejich zpracování bez datového skladu velmi obtížné.
+
+Na příkladu datového skladu společnosti Wal-Mart je vidět, jaký přínos mají datové sklady v korporátních procesech velkých společností. Kromě zkvalitňování vnitro firemních procesů, slouží datové sklady i k mnoha dalším různým účelům jako je například zefektivnění produktového zacílení společnosti a to za pomoci například zákaznických profilů, které je na základě dat za datového skladu možné sestavit a které obsahují uživatelské chování, a to jak specifické skupiny, tak každého jednotlivce. Uživatelské profily pak také mohou poskytovat cenná data, která slouží k jejich ochraně, jako je tomu například v případě bankovních transakcí, kde je díky nim možné vysledovat podvodné převody peněz, které neodpovídají běžnému chování uživatele, díky čemuž je možné je zastavit ještě před vznikem škody.\parencite{Inmon2008}
+
+Všechny zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále využívány. S ohledem na již zmíněný masivní nárůst zpracovávaných informací, a s tím spojenými nároky na rychlost jejich zpracování, se však postupně prosazují nové koncepty a přístupy, jako je například koncept \emph{data lakehouse}, který funguje na principu kombinace konceptů datového skladu a data lake, datové sety typu \emph{Big Data}, které jsou specializovány na uchování a zpracování velkých datových objemů v reálném čase a nebo typově poněkud odlišných specializovaných platforem, které v sobě sdružují jak samotné datové úložiště, tak analytické a vizualizační nástroje pro práci s daty, jako je například Azure Fabric. Velmi skloňovaným termínem je v současnosti také využití AI a deep learningu, sloužící ke strojovému zpracování dat v téměř libovolné podobě.  
+
+Detailnějšímu popisu jednotlivých konceptů se pak věnují následující sekce, přičemž konceptu datového skladu je následně z důvodu jeho implementace na Masarykově univerzitě věnována samostatná kapitola.
+
+\subsection{Data lake}
+Koncept data lake, se od datového sklad odlišuje převážně tím, že data nepřevádí do jednotné struktury, ale udržuje je v jejich původní formě. Tzn. jedná se primárně o jednotné úložiště, kde mohou být data uložena ve všech možných souborových i datových formátech a kde jsou k datům doplněny detailní anotace, které usnadňují jejich následné zpracování.\parencite{Foote19042018} Data tedy v tomto případě neprochází žádnou transformací, což komplikuje jejich využití, velkou výhodou však je, že  díky chybějící  transformaci dosahuje mnohem vyšších rychlostí při manipulaci s daty, díky čemuž je tento koncept vhodnější pro aplikace, zpracovávající velké množství dat s ohledem na čas.\parencite[s.~1]{Harby20221217}
+
+\subsection{Datový sklad}
+
+\subsection{Data cube}
+Koncept data cube je od předchozích dvou odlišný. Ukládá data ve třech a vícerozměrných maticích, kde každá matice představuje jednu datovou dimenzi. Když data v dimenzích následně relačně propojíme, je možné snadno filtrovat data dle jednotlivých dimenzí, bez nutnosti propojovat tabulky mezi sebou.\parencite{Foote19042018}
+
+
+\subsection{Big Data}
+V souvislosti s datovými sklady bývá také často spojován termín \emph{Big Data}, který je například dle Národního Institutu pro standardy a technologie definován jako \emph{jako velkoobjemová, rychlá a různorodá a informační aktiva, která vyžadují nákladově efektivní a inovativní formy zpracování informací, které následně umožňují lepší přehled v rozhodování a automatizaci procesů.  } \parencite{Gartner} 
+
+Konkrétněji pak lze Big Data definovat za pomoci tak zvaných pěti V, které označují základní vlastnosti takového data setu.  Těchto pět V značí následující termíny: \parencite{big_data}
+\paragraph{Objem (Volume) }
+Datové sety v rámci Big Data dosahují obřích rozměrů.
+
+\paragraph{Rychlost (Velocity)}
+Data jsou generovány velmi rychle a jejich zpracování probíhá velmi často v reálném čase. Datové sklady oproti tomu fungují většinou sekvenčně.
+
+\paragraph{Hodnota (Value)}
+Big Data mají svoji hodnotu, která je z velké části odvozena od jejich velikosti. I minoritní data mohou mít ve velkém objemu velkou hodnotu. 
+
+\paragraph{Věrohodnost (Veracity)}
+Data jsou sbírána z různých zdrojů a v různých formách, mohou tedy obsahovat různý šum, zkreslení atp. které je nejprve nutné odstranit.
+
+\paragraph{Rozmanitost (Variety)}
+Data jsou zpracovávána ve velkém množství formátů, struktur a typů.
+
+
+Dle předchozích definic se za Big Data tedy označují velké a různorodé sestavy dat, které je velmi komplikované vyhodnotit klasickými postupy a pro jejich vyhodnoceni a analýzu je  třeba využívat nestandardních a vysoce výkoných nástrojů a postupů, čímž se zásadně odlišuje od datového skladu, neboť ten je naopak vždy stavěn tak, aby byla analýza dat co nejsnazší.  Big Data dle pěti V svým přístupem více připomínají kombinaci konceptů Data lake (nezpracovaná a nestrukturovaná data) a Datového skladu (transformace dat do snadno analyzovatelné podoby), avšak se zásadním rozdílem, kterým je mnohonásobně větší objem dat zpracovávaných v rámci Big Data, přičemž data jsou v případě zmíněných konceptů mnohem více relevantní k požadovaným výstupům, zatímco v případě Big Data nejdříve dochází k akvizici dat a až pak k následnému hledání využitelných usecasů.
+
+William H. Inmon pak ve své přednášce na Escuela Colombiana de Ingeniería týkající se historie datových skladů definuje rozdíl mezi datovým skladem a Big Data tak, že o datových skladech mluví jako architektuře, která je nezávislá na implementaci a která má za úkol poskytovat relevantní data ve strukturované podobě, zatímco Big Data definuje jako technologii zpracování dat, bez jasně dané architektury, vstupů či výstupů. \parencite{Inmon2021}
+
+V praxi se pak Big Data někdy využívají jako znalostní báze pro datové sklady a data lakes, které jsou nad nimi stavěny jako subsety, které následně poskytují již zpracovaná data. Takto postavené datové sklady pak mají velkou výhodu v aktuálnosti dat a jejich velkému rozsahu, ze kterých vycházejí. 
+
+\subsection{Data Lakehouse}
+Data lakehouse, jak již název napovídá, je koncept který kombinuje výhody úložišť typu data lake a datového skladu. Data lakehouse je schopné, stejně jako data lake, zpracovávat surová data flexibilně a velmi rychle, zároveň však také poskytuje úložiště i pro vyčištěná a strukturovaná data, stejně jako data warehouse. U data lakehouse se také počítá s přímým napojením analytických nástrojů sloužících například pro BI\footnote{z angl. Business Intelligence}, či s využitími jako informační báze pro AI\footnote{z angl. Artificial Intelligence}.
+
+\subsection{Azure Fabric}
+Všechny předchozí rozebrané koncepty, s výjimkou Big data, se zabývají primárně ukládáním dat. Jejich analýza a následně využití, tak předpokládá, využití dalších specifických znalostí a služeb, za pomoci kterých je dané řešení implementováno a provozováno, což může v určitých ohledech komplikovat přistup k datům a práci s nimi. Pro co největší centralizaci a usnadnění přístupu a zpracování, tak začaly vznikat specializované služby, které oproti dříve zmíněným konceptům nabízejí holistický přístup ke zpracování dat, tzn. je možné s jejich pomocí data nejen sbírat a ukládat, ale též analyzovat a vizualizovat. Částečně  tento přístup pokrývá služba například  Google BigQuery, která ale neposkytuje nástroje po vizualizaci výsledků datové analýzy,\parencite{googleBigQuery} z tohoto hlediska je pak plnohodnotným nástrojem tohoto typu služba Microsoft Fabric, která poskytuje vše potřebné, včetně zmíněné vizualizace.\parencite{Buck2023}
+
+Platforma Microsoft Fabric je cloudová služba provozovaná v prostředí Azure a skládá se z několika základních komponent, které jsou mezi s sebou hluboce integrovány, což umožňuje jejich snadné využití bez hlubokých odporných znalostí, týkajících se jednotlivých komponent. Výhodou také je, že služba je provozována ve formě SaaS \footnote{z angl. Software as a service}, díky čemuž nemusí uživatelé řešit infrastrukturu, potřebnou k jejímu provozování.\parencite{Buck2023}
+
+Samotná platforma se skládá z několika samostatných komponent, které jsou mezi sebou hluboce integrovány a k jejich vzájemnému propojení tak není potřeba detailní znalost jejich technických aspektů. Celá architektura je vyobrazena na schématu \ref{fig:fabric_architecture}, ze kterého je patrné, že celý ekosystém platformy je vystavěn nad jednotném datovém úložišti, ke kterému jsou následně připojeny všechny zbývající komponenty, jejichž účel a funkce jsou popsány níže:
+
+
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=12cm]{img/fabric.png}
+  \end{center}
+  \caption{Architektura platformy Microsoft Fabric \parencite{Buck2023}}
+  \label{fig:fabric_architecture}
+\end{figure}  
+
+\paragraph{Jednotné datové úložiště Onelake}
+Jedná se o základní stavební kámen platformy, který poskytuje jednotné datové úložiště typu Dala Lake. Služba OneLake má v rámci platformy Microsoft Fabric za úkol poskytovat jedinou datovou bázi, pro všechny procesy a výstupy z platformy. Tato centralizace pak přináší řadu výhod. Z hlediska samotných analytických dat se jedná zejména o udržování pouze jedné kopie dat a tím i jejich konzistence napříč všemi analytickými procesy a výstupy, dále je pak například značná výhoda v jednotném přístupu k datům, který je možný dle potřeby realizovat za pomocí analytického enginu Apache Spark, dotazovacího jazyků T-SQL a nebo KQL.\parencite{OneLake}
+
+\paragraph{Data Factory}
+Tato služba poskytuje škálovatelný nástroj, jehož účel je integrace a transformace dat. Primárně tedy slouží k poskytnutí tzv. ETL procesu, který je zodpovědný za extrakci, transformaci a nahrání dat k analytickému zpracování\footnote{Samotný proces je detailně  popsán v kapitole \ref{dwh}}. V rámci služby je možné vyfiltrovat potřebná data a poskytnout je dalším službám ke zpracování.\parencite{DataFactory}
+
+\paragraph{Synapse Data Engineering}
+Služba Data Engineering je určena pro návrh, tvorbu a údržbu potřebných infrastruktur, které umožňují sbírat, ukládat a zpracovávat velké objemy dat. Na rozdíl od služby Data Factory, je však navržena tak, že její výstupem je koncept jednotného datového úložiště Datalakehouse, který je možné pro tento účel vytvořit v rámci služby OneLake, dále pak služba samotná již poskytuje analytické nástroje a je hluboce integrována s analytickým enginem Apache Spark.\parencite{DataEngineering}
+
+\paragraph{Synapse Data Warehousing}
+Data Warehouse je služba, která má za cíl vytvoření datového skladu, pomocí který následně poskytuje rozhraní pro práci s uloženými daty za pomocí dotazovacího jazyka SQL. V rámci platformy Microsoft Fabric se tak děje pomocí tzv. virtuálního datového skladu postaveného na úložištěm OneLake, kterém jsou po zpracování data uložena ve formátu open Data Lake\footnote{viz. https://delta.io/} \parencite{DataWarehousing}
+
+\paragraph{Synapse Data Science}
+V rámci služby Data Science a jejímu propojení se službou Azure Machine Learning lze vytvářet modely určené pro strojové učení. Díky této službě je tak možné doplnit požadované výstupy o vylepšené predikce, kterých by bez strojového učení bylo komplikované dosáhnout.\parencite{DataScience}
+
+\paragraph{Synapse Data Real Time Analytics}
+Úkolem této služby je zpracování a analýza tzv. observačních dat, tedy dat, která jsou ve velkém objemu generována velkým množstvím zdrojů a která z principu ukazují aktuální stav sledované situace. Vzhledem k proměnlivým schématům a atypickým formátů bývají tato data komplikovaně zpracovatelná klasickým datovým uložištěm.\parencite{RealTimeAnalytics}
+
+\paragraph{Power BI}
+Power BI je služba jejímž primární účel je vizualizace zpracovaných dat. Primárním výstupem služby jsou interaktivní nástěnky, které je možné nasadit například ve formátu webové stránky a tím je velmi snadno zpřístupnit uživatelům.\parencite{PowerBi}\\
+
+Za pomocí výše zmíněných komponent poskytuje platforma Microsoft Fabric velmi silný a univerzální nástroj, díky kterému je možné velmi efektivně vytvářet analytické nástroje a přehledy, které mohou čerpat data z velkého množství zdrojů, tato data následně integrovat, zanalyzovat a vyhodnotit. Díky integraci nástrojů určených pro strojové učení, umožňuje platforma i tvorbu pokročilých predikčních modelů.
+
+
+\chapter{Datový sklad}
+\label{dwh}
 Jak již bylo zmíněno, datový sklad je jedna z možností, jak uchovat data ve formě, která umožňuje jejich snadnou analýzu. Pojem datový sklad může mít vícero definic. Je možné na něj nahlížet například pouze jako na proces, který má zjednodušit přístup k datům a kdy je technické řešení datového skladu pouze podpůrný prvek celého procesu. Nejčastěji se však na datový sklad pohlíží jako na systém, který \emph{extrahuje, čistí, upravuje a dodává zdrojová data do dimenzionálního datového úložiště a poté podporuje a zavádí dotazování a analýzu dat za účelem rozhodování.} \parencite[s.~23]{Kimballc2004}
 
 Z této definice jasně vyplývá, že primárním účelem datového skladu je centralizace a standardizace dat, díky které je pak přístup k datům značně usnadněn. Zároveň je zde důležité uvést, že každý datový sklad se skládá z několika komponent, z nichž pravděpodobně nejdůležitější je proces extrakce, čištění a úpravy dat. Tento proces se ve spojitosti s datovými sklady nazývá \emph{ETL proces \footnote{z angl. Extract, Transform and Load} }a je hlavním důvodem proč pojem datový sklad nelze zaměňovat s pouhým datový úložištěm. \parencite[s.~24]{Kimballc2004}
@@ -152,50 +258,7 @@ Obecné schéma datového skladu je znázorněno na obrázku \ref{fig:dwh_schema
   \label{fig:dwh_schema}
 \end{figure}  
 
-
-
-\section{Historický vývoj datových skladů}
-Datové sklady se spolu se systémy podpory rozhodování začaly vyvíjet v 60. letech, kdy z důvodu ukládání dat na magnetické pásky bylo problematické data zpětně procházet a analyzovat. Data se tak postupně začala pročišťovat a ukládat v již zpracované formě, což by se dalo označit za prvopočátek datových skladů.\parencite[s.~2]{Inmon2005}
-
-V polovině 60. let, se postupně začala rozšiřovat technologie diskových úložišť. Ta na rozdíl od magnetický pásků, umožňovala přímý přístup k datům bez nutnosti jejich kompletního nahrání do pamětí počítače. Díky této technologii začali vznikat první systémy, které lze označit za DBMS \footnote{z angl. Database management system}, které umožňovaly lepší správu dat.\parencite{Foote19042018} Vzhledem k primitivnímu systému uložení dat a jejich nízké strukturalizaci však tyto systémy neposkytovaly data v takové kvalitě jako je v současnosti běžné.
-
-Velkým milníkem byly relační databáze, které začaly vznikat v osmdesátých letech a které pomocí dotazovacích jazyků, jako je například jazyk SQL \footnote{z angl. Structured Query Language} umožňovaly, v porovnání s předchozím stavem, velmi snadnou práci s daty.\parencite{Foote19042018}
-
-Spolu s nástupem osobních počítačů a rostoucí velikostí firemních sítí, stoupala i potřeba skutečného datového skladu. Vzájemně propojené osobní počítače měly oproti architektuře centrálních počítačů velkou nevýhodu v roztříštěnosti dat, kdy data byla uložena na více míst a bylo složité udržovat data aktuální a konzistentní. Souhrnně se tento problém nazývá \emph{spider web}. \parencite[s.~6]{Inmon2005} Problém spider webu se ještě prohloubil s nástupem osobních počítačů a s ním spojeným rozvojem specializovaných programů, jako byl například Microsoft Excel, Microsoft Access atp., který přinesl neustále se zvětšující množství datových formátů, ve kterých byla data uložena.\parencite{Foote19042018}
-
-V devadesátých letech, tak všechny tyto skutečnosti vyvrcholily v potřebu vzniku jednotného úložiště, které by umožňovalo data snadno udržet v aktualizované a konzistentní podobě. Za tímto účelem vzniklo několik konceptů, z nichž nejrozšířenější je právě zmíněný koncept datového skladu a následně koncepty data lake a data cube.
-
-Koncept data lake, se od datového sklad odlišuje převážně tím, že data nepřevádí do jednotné struktury, ale udržuje je v jejich původní formě. Tzn. jedná se primárně o jednotné úložiště, kde mohou být data uložena ve všech možných souborových i datových formátech a kde jsou k datům doplněny detailní anotace, které usnadňují jejich následné zpracování.\parencite{Foote19042018} Data tedy v tomto případě neprochází žádnou transformací, což komplikuje jejich využití, velkou výhodou však je, že  díky chybějící  transformaci dosahuje mnohem vyšších rychlostí při manipulaci s daty, díky čemuž je tento koncept vhodnější pro aplikace, zpracovávající velké množství dat s ohledem na čas.\parencite[s.~1]{Harby20221217}
-
-Koncept data cube je odlišný. Ukládá data ve třech a vícerozměrných maticích, kde každá matice představuje jednu datovou dimenzi. Když data v dimenzích následně relačně propojíme, je možné snadno filtrovat data dle jednotlivých dimenzí, bez nutnosti propojovat tabulky mezi sebou.\parencite{Foote19042018}
-
-Všechny tři zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále využívány. S ohledem na již zmíněný masivní nárůst zpracovávaných informací, a s tím spojenými nároky na rychlost jejich zpracování, se však začíná prosazovat nový koncept, a to koncept data lakehouse. Jak již název napovídá, koncept data lakehouse kombinuje výhody úložišť typu data lake a datového skladu. Data lakehouse je schopné, stejně jako data lake, zpracovávat surová data flexibilně a velmi rychle, zároveň však také poskytuje úložiště i pro vyčištěná a strukturovaná data, stejně jako data warehouse. U data lakehouse se také počítá s přímým napojením analytických nástrojů sloužících například pro BI\footnote{z angl. Business Intelligence}, či s využitími jako informační báze pro AI\footnote{z angl. Artificial Intelligence}.
-
-V rámci Masarykovy univerzity byl nasazen koncept datového skladu, tak jak byl definován v úvodní kapitole. Práce se tedy dále zabývá pouze tímto konceptem.
-
-Vzhledem k tomu, ze datové sklady nebyly z počátku přijímány ze strany IT oddělení, jelikož práce s daty v té době nebyla nikterak masivně rozšířená, za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství již zpracovaných, strukturalizovaných dat. \parencite{Inmon2021}
-
-Za velkým rozmachem datových skladů pak stál rozvoj mobilních telefonů, díky kterým získaly marketingové s obchodní oddělení telefoniích společností, jako je například AT\&T, přístup k velkému množství dat, která se týkala koncových uživatelů, což značně usnadňovalo rozhodovací proces.\parencite{Inmon2021}
-
-Jednou z velmi významných společností, které se zasadili o velký rozmach datový skladů, pak byla společnost Wal-Mart, provozující největší síť obchodů na světě. Jejich systém \emph{Retail Link}, ktery byl uveden do provozu v roce 1991, dodnes patří mezi největší známé datové sklady.\parencite{Gallaugher2018}
-
-Tento systém měl za úkol ukládat veškeré pohyby zboží v rámci celé společnosti a byl postupně napojen na systémy WMS\footnote{z angl. Warehouse management system}, takže na základě uložených dat bylo možné například automaticky objednávat vyprodané zboží, což, vzhledem k tomu, že společnost Wal-Mart zvládne své sklady vyprodat více jak osmkrát v každém roce, znamenalo značné zefektivnění procesu objednávek a také velké zefektivnění hodnocení dodavatelů, které mohou být hodnoceny podle velkého množství parametrů, jako je doba doručení, spolehlivost dodávek atp, díky čemuž má Wal-Mart sedmý nejlepší dodavatelský řetězec ve spojených státech.\parencite{Gallaugher2018}  
-
-Samotné množství dat, které datový sklad zpracovává je naprosto enormní a dle \citeauthor{Marr2017} se v roce 2017 pohybovalo okolo 40 peta bytů. Skladem každou hodinu proteče přibližně 2.5pB dat z 200 vnitro firemních datových streamů, které jsou následně transformovány a ukládány pro pozdější použití.\parencite{Marr2017} Vzhledem k tomu, že se jedná o velké množství datových zdrojů, formátů, typů atp., bylo by jejich zpracování bez datového skladu velmi obtížné.
-
-Na příkladu datového skladu společnosti Wal-Mart je vidět, jaký přínos mají datové sklady v korporátních procesech velkých společností. Kromě zkvalitňování vnitro firemních procesů, slouží datové sklady i k mnoha dalším různým účelům jako je například zefektivnění produktového zacílení společnosti a to za pomoci například zákaznických profilů, které je na základě dat za datového skladu možné sestavit a které obsahují uživatelské chování, a to jak specifické skupiny, tak každého jednotlivce. Uživatelské profily pak také mohou poskytovat cenná data, která slouží k jejich ochraně, jako je tomu například v případě bankovních transakcí, kde je díky nim možné vysledovat podvodné převody peněz, které neodpovídají běžnému chování uživatele, díky čemuž je možné je zastavit ještě před vznikem škody.\parencite{Inmon2008}
-
-Vzhledem k tomu, že datové sklady typicky zpracovávají a následně drží velké množství dat, je zbytečné, poskytovat všechna data všem uživatelům, z tohoto je běžné, že na základě velkým datový skladů vznikají malé specializované sklady tzv. \emph{data marts} viz. \ref{dwh_types}, které využívají datovou bázi \emph{mateřského} datového skladu a následně poskytují pouze přesně zacílené informace, které jsou relevantní pro dané uživatele, typicky firemní oddělení, čímž došlo ke vzniku tzv. \emph{the corporate information factory}.\parencite{Inmon2021} Tento koncept je znázorněn na obrázku \ref{fig:data_marts_schema}, ze kterého je zřejmé, že pro chod celé informační infrastruktury je využíváno více datových skladů, na jejichž základě jsou pak vytvářeny jednotlivé specializované sklady.
-
-\begin{figure}[h]
-  \begin{center}
-          \includegraphics[width=10cm]{img/data_marts_schema.png}
-  \end{center}
-  \caption{Korporátní informační struktura \parencite[s.12]{Inmon2008}}
-  \label{fig:data_marts_schema}
-\end{figure}  
-
-\section{Typy datových skladů}
+\subsection{Typy datových skladů}
 \label{dwh_types}
 Datové sklady se dají rozdělit na několik druhů dle různých kritérií. \citeauthor{Inmon2005}
 v knize \citetitle{Inmon2005} z roku \citeyear{Inmon2005} dělí datové sklady podle způsobu a rozsahu,
@@ -234,7 +297,7 @@ k architektuře samotného skladu, zpracování dat, tak i k technickému vybave
 důvodu je důležité zvolit správný typ datového skladu již ve fázi návrhu, protože
 možnost konverze mezi jednotlivými druhy datových skladů nemusí být vždy možná.
 
-\section{Zpracování dat v datových skladech}
+\subsubsection{Zpracování dat v datových skladech}
 Vzhledem k tomu, že datový sklad většinou slouží jako koncentrátor dat z mnoha různých zdrojů, prochází data při nahrávání transformačním procesem, jehož výstupem jsou strukturovaná data. Celý tento proces bývá zpravidla automatický, byť to není nikterak podmíněno.
 
 Proces nahrávání dat do datového skladu se nazývá ETL \footnote{z angl. Exract, Transform and Load} a jedná se o esenciální součást datového skladu. Celý proces se skládá, jak již název napovídá, ze tří fází, a to fáze extrakce, transformace a finálního nahrání dat do datového skladu.
@@ -267,7 +330,7 @@ Výstupem této fáze je tedy patřičně setříděný a provázaný soubor dat
 
 Díky ETL procesu jsou ve výsledku v datovém skladu data uložena v jednoduché a snadno dovažovatelně formě, což značně usnadňuje a urychluje přístup a následnou práci s těmito daty.
 
-\section{Využití datových skladů}
+\subsubsection{Využití datových skladů}
 Datové sklady nacházejí velké využití zejména u velkých organizací a společností, ale i u tak velkých celků, jako jsou například samostatné státy. Velkou výhodou datových skladů je jejich perzistentní struktura, kdy data můžeme shromažďovat po dlouhou dobu a jejich analýzu provést až ve chvíli, kdy nastane její potřeba. Díky tomu se hodí na analýzu dat dlouhodobého charakteru.
 
 Jedním z typických zástupců tohoto typu nasazení je pak sdílení dat mezi vědeckými pracovišti. Například v případové studii \citetitle{Seneviratne20180124} \parencite{Seneviratne20180124} se autoři zabývali propojením vědeckých pracovišť Stanford University, Stanford Cancer Institute a California Cancer Registry za účelem vytvoření společného datového skladu obsahujícího elektronické zdravotní záznamy pacientů postižených rakovinou prostaty. Díky tomuto datovému skladu vědci mají přístup k tisícům reálných případů, napříč těmito třemi institucemi.
@@ -276,31 +339,18 @@ Další zajímavou aplikací, je například optimalizace a analýza mléčné f
 
 Zvláštním příkladem jednoúčelově zaměřeného datového skladu je projekt, týkající se pandemie viru SARS-COV-2. V článku \citetitle{Agapito2020} \parencite{Agapito2020}, autoři popisují implementaci datového skladu vytvořeného za účelem monitorování šíření viru v Itálii. Zajímavé je, že datový sklad zahrnuje kromě informací týkajících se přímo samotného viru i další, zdánlivě nesouvisející, informace, které zahrnují například také aktuálním stavu klimatu, jako je znečistěni ovzduší a nebo síla a směr větru. Výzkumné výstupy z tohoto projektu se tak mohou zabývat i vlivem počasí na šíření nákazy. 
 
-\subsection{Big Data}
-V souvislosti s datovými sklady bývá také často spojován termín \emph{Big Data}, který je například dle Národního Institutu pro standardy a technologie definován jako \emph{jako velkoobjemová, rychlá a různorodá a informační aktiva, která vyžadují nákladově efektivní a inovativní formy zpracování informací, které následně umožňují lepší přehled v rozhodování a automatizaci procesů.  } \parencite{Gartner} 
 
-Konkrétněji pak lze Big Data definovat za pomoci tak zvaných pěti V, které označují základní vlastnosti takového data setu.  Těchto pět V značí následující termíny: \parencite{big_data}
-\paragraph{Objem (Volume) }
-Datové sety v rámci Big Data dosahují obřích rozměrů.
+Vzhledem k tomu, že datové sklady typicky zpracovávají a následně drží velké množství dat, je zbytečné, poskytovat všechna data všem uživatelům, z tohoto je běžné, že na základě velkým datový skladů vznikají malé specializované sklady tzv. \emph{data marts} viz. \ref{dwh_types}, které využívají datovou bázi \emph{mateřského} datového skladu a následně poskytují pouze přesně zacílené informace, které jsou relevantní pro dané uživatele, typicky firemní oddělení, čímž došlo ke vzniku tzv. \emph{the corporate information factory}.\parencite{Inmon2021} Tento koncept je znázorněn na obrázku \ref{fig:data_marts_schema}, ze kterého je zřejmé, že pro chod celé informační infrastruktury je využíváno více datových skladů, na jejichž základě jsou pak vytvářeny jednotlivé specializované sklady.
 
-\paragraph{Rychlost (Velocity)}
-Data jsou generovány velmi rychle a jejich zpracování probíhá velmi často v reálném čase. Datové sklady oproti tomu fungují většinou sekvenčně.
-
-\paragraph{Hodnota (Value)}
-Big Data mají svoji hodnotu, která je z velké části odvozena od jejich velikosti. I minoritní data mohou mít ve velkém objemu velkou hodnotu. 
-
-\paragraph{Věrohodnost (Veracity)}
-Data jsou sbírána z různých zdrojů a v různých formách, mohou tedy obsahovat různý šum, zkreslení atp. které je nejprve nutné odstranit.
-
-\paragraph{Rozmanitost (Variety)}
-Data jsou zpracovávána ve velkém množství formátů, struktur a typů.
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/data_marts_schema.png}
+  \end{center}
+  \caption{Korporátní informační struktura \parencite[s.12]{Inmon2008}}
+  \label{fig:data_marts_schema}
+\end{figure}  
 
 
-Dle předchozích definic se za Big Data tedy označují velké a různorodé sestavy dat, které je velmi komplikované vyhodnotit klasickými postupy a pro jejich vyhodnoceni a analýzu je  třeba využívat nestandardních a vysoce výkoných nástrojů a postupů, čímž se zásadně odlišuje od datového skladu, neboť ten je naopak vždy stavěn tak, aby byla analýza dat co nejsnazší.  Big Data dle pěti V svým přístupem více připomínají kombinaci konceptů Data lake (nezpracovaná a nestrukturovaná data) a Datového skladu (transformace dat do snadno analyzovatelné podoby), avšak se zásadním rozdílem, kterým je mnohonásobně větší objem dat zpracovávaných v rámci Big Data, přičemž data jsou v případě zmíněných konceptů mnohem více relevantní k požadovaným výstupům, zatímco v případě Big Data nejdříve dochází k akvizici dat a až pak k následnému hledání využitelných usecasů.
-
-William H. Inmon pak ve své přednášce na Escuela Colombiana de Ingeniería týkající se historie datových skladů definuje rozdíl mezi datovým skladem a Big Data tak, že o datových skladech mluví jako architektuře, která je nezávislá na implementaci a která má za úkol poskytovat relevantní data ve strukturované podobě, zatímco Big Data definuje jako technologii zpracování dat, bez jasně dané architektury, vstupů či výstupů. \parencite{Inmon2021}
-
-V praxi se pak Big Data někdy využívají jako znalostní báze pro datové sklady a data lakes, které jsou nad nimi stavěny jako subsety, které následně poskytují již zpracovaná data. Takto postavené datové sklady pak mají velkou výhodu v aktuálnosti dat a jejich velkému rozsahu, ze kterých vycházejí. 
 
 \chapter{ITSM}
 Jak již bylo zmíněno v úvodní kapitole, velký rozmach informačních technologií a služeb v 60. letech 20. století si vyžádal vznik patřičných standardizovaných procesů, postupů a pravidel pro řízení služeb v prostředí podniků a organizací. Souhrnně je tento obor označován jako ITSM, neboli Information Technology Service Management, což je pojem, který se původně objevil pouze v rámci metodiky ITIL, ale postupně se rozšířil a zobecnil tak, že v současné době obecně pokrývá problematiku řízení IT služeb.\parencite[s.~20]{Matula2017} 
