@@ -143,9 +143,9 @@ Velkým milníkem byl vznik relačních databází, které se začaly objevovat 
 
 Spolu s nástupem osobních počítačů a rostoucí velikostí firemních sítí, stoupala i potřeba skutečného datového skladu. Vzájemně propojené osobní počítače měly oproti architektuře centrálních počítačů velkou nevýhodu v roztříštěnosti dat, kdy data byla uložena na více míst a bylo složité udržovat data aktuální a konzistentní. Souhrnně se tento problém nazývá \emph{spider web}. \parencite[s.~6]{Inmon2005} Problém spider webu se ještě prohloubil s nástupem osobních počítačů a s ním spojeným rozvojem specializovaných programů, jako byl například Microsoft Excel, Microsoft Access atp., který přinesl další problém a to neustále se zvětšující množství datových formátů, ve kterých byla data uložena.\parencite{Foote19042018}
 
-V devadesátých letech, tak všechny tyto skutečnosti vyvrcholily v potřebu vzniku jednotného úložiště, které by umožňovalo data snadno udržet v aktualizované a konzistentní podobě. Za tímto účelem vzniklo několik konceptů, jako je například koncept data lake, data cube, nebo datový sklad, které jsou rozebrány v samostatných sekcích.
+V devadesátých letech, tak všechny tyto skutečnosti vyvrcholily v potřebu vzniku jednotného úložiště, které by umožňovalo data snadno udržet v aktualizované a konzistentní podobě. Z tohoto důvodu vzniklo několik konceptů, jako jsou například koncepty Data Lake a Datový sklad, oba koncepty jsou detailněji popsány níže.
 
-Jednotné datové úložiště nebyly z počátku přijímány ze strany IT oddělení jako relevantní požadavek, jelikož práce s daty v té době nebyla nikterak masivně rozšířená. Za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství dat, jejichž zpracování bylo možné využít pro podporu rozhodování. \parencite{Inmon2021}
+Jelikož interfiremní datová analýza nebyla v té době nikterak masivně rozšířená, nebyli z počátku požadavky na vznik jednotných úložišť brány IT odděleními v potaz, jako relevantní. Za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství dat, jejichž zpracování bylo možné využít pro podporu rozhodování. \parencite{Inmon2021}
 
 Jedním z velkých impulsů stojícím za rozmachem vývoje jednotných úložišť dat a zejména datových skladů, byl například rozvoj mobilních telefonů. Který umožnil marketingový a obchodním oddělením telefonních společností, jako je například AT\&T, přístup k velkému množství dat, která se týkala koncových uživatelů, což značně usnadňovalo rozhodovací proces a obchodní zacílení.\parencite{Inmon2021}
 
@@ -161,13 +161,15 @@ Všechny zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále
 
 Detailnějšímu popisu jednotlivých konceptů se pak věnují následující sekce, přičemž konceptu datového skladu je následně z důvodu jeho implementace na Masarykově univerzitě věnována samostatná kapitola.
 
-\subsection{Data lake}
-Koncept data lake, se od datového sklad odlišuje převážně tím, že data nepřevádí do jednotné struktury, ale udržuje je v jejich původní formě. Tzn. jedná se primárně o jednotné úložiště, kde mohou být data uložena ve všech možných souborových i datových formátech a kde jsou k datům doplněny detailní anotace, které usnadňují jejich následné zpracování.\parencite{Foote19042018} Data tedy v tomto případě neprochází žádnou transformací, což komplikuje jejich využití, velkou výhodou však je, že  díky chybějící  transformaci dosahuje mnohem vyšších rychlostí při manipulaci s daty, díky čemuž je tento koncept vhodnější pro aplikace, zpracovávající velké množství dat s ohledem na čas.\parencite[s.~1]{Harby20221217}
-
 \subsection{Datový sklad}
+Koncept Datového skladu byl poprvé představen v koncem 80-tých let dvacátého století společností IBM a to s cílem vytvořit architekturu pro zpracování a integraci dat sloužících pro podporu rozhodování. Datový sklad ukládá data v integrované, ne-volatilní podobě v časově závislých kolekcích. Data jsou periodicky extrahována, dle potřeby transformována a následně v tomto tvaru uložena. Cílem je udržovat data v jednotném tvaru, který usnadňuje jejich následnou analýzu a využití.\parencite[s.~3]{Nambiar2022}
 
-\subsection{Data cube}
-Koncept data cube je od předchozích dvou odlišný. Ukládá data ve třech a vícerozměrných maticích, kde každá matice představuje jednu datovou dimenzi. Když data v dimenzích následně relačně propojíme, je možné snadno filtrovat data dle jednotlivých dimenzí, bez nutnosti propojovat tabulky mezi sebou.\parencite{Foote19042018}
+Vzhledem k tomu, že tento typ jednotného datového úložiště je nasazen i v rámci MU, je jeho detailnímu popisu věnována kapitola č. 
+ \ref{dwh}.
+
+\subsection{Data lake}
+Koncept Data lake, se od datového sklad odlišuje převážně tím, že data nepřevádí do jednotné struktury, ale udržuje je v jejich původní formě. Tzn. jedná se primárně o jednotné úložiště, kde mohou být data uložena ve všech možných souborových i datových formátech a kde jsou k datům doplněny detailní anotace, které usnadňují jejich následné zpracování.\parencite{Foote19042018} Data tedy v tomto případě neprochází žádnou transformací, což komplikuje jejich využití, velkou výhodou však je, že  díky chybějící  transformaci dosahuje mnohem vyšších rychlostí při manipulaci s daty, díky čemuž je tento koncept vhodnější pro aplikace, zpracovávající velké množství dat s ohledem na čas.\parencite[s.~1]{Harby20221217}
+
 
 
 \subsection{Big Data}
@@ -231,7 +233,7 @@ Data Warehouse je služba, která má za cíl vytvoření datového skladu, pomo
 V rámci služby Data Science a jejímu propojení se službou Azure Machine Learning lze vytvářet modely určené pro strojové učení. Díky této službě je tak možné doplnit požadované výstupy o vylepšené predikce, kterých by bez strojového učení bylo komplikované dosáhnout.\parencite{DataScience}
 
 \paragraph{Synapse Data Real Time Analytics}
-Úkolem této služby je zpracování a analýza tzv. observačních dat, tedy dat, která jsou ve velkém objemu generována velkým množstvím zdrojů a která z principu ukazují aktuální stav sledované situace. Vzhledem k proměnlivým schématům a atypickým formátů bývají tato data komplikovaně zpracovatelná klasickým datovým uložištěm.\parencite{RealTimeAnalytics}
+Úkolem této služby je zpracování a analýza tzv. observačních dat, tedy dat, která jsou ve velkém objemu generována velkým množstvím zdrojů a která z principu ukazují aktuální stav sledované situace. Vzhledem k proměnlivým schématům a atypickým formátů bývají tato data komplikovaně zpracovatelná klasickým datovým úložištěm.\parencite{RealTimeAnalytics}
 
 \paragraph{Power BI}
 Power BI je služba jejímž primární účel je vizualizace zpracovaných dat. Primárním výstupem služby jsou interaktivní nástěnky, které je možné nasadit například ve formátu webové stránky a tím je velmi snadno zpřístupnit uživatelům.\parencite{PowerBi}\\
@@ -480,6 +482,7 @@ Za tímto účelem publikace definuje několik aspektů a principů. Prvním z n
 Pomocí těchto klíčových aspektů je zaručen holistický přístup a konzistence navrhovaných služeb v rámci organizace a správná integrace procesu v rámci IT oddělení a celé organizace, která dané služby poskytuje. \parencite[s.~22]{Carlidge2007}
 
 Druhým klíčovým principem jsou čtyři P designu služeb, jejichž cílem je zajistit dobrou efektivitu služeb. Mezi tyto klíčové body patří:\parencite[s.~22]{Carlidge2007}
+
 \begin{compactitem}
     \item Lidé (People), kteří jsou zainteresování v poskytování dané služby
     \item Produkty které zastupují technologie a spravované systémy, které slouží k doručení služby
@@ -521,6 +524,7 @@ Tato fáze je oproti předchozím mírně specifická, a to jednak tím, že se 
     \item Aplikační management - zajišťuje správu všech aplikací, které služba využívá, často je tato funkce využívána napříč různými službami, neboť samotné aplikace mohou být využívaný více službami.
     \item Řízení provozu IT - spravuje IT infrastrukturu služeb. Výše zmíněný technický management se nevěnuje primárně IT infrastruktuře, nýbrž obecně technickému zajištění služby. Tato funkce má zadefinovány také dvě podružné funkce, které se věnují personálnímu zajištění a správě fyzických zařízení, jako jsou typicky například data centra.
 \end{compactitem}
+
 \paragraph{Průbežné zlepšování služby}
 Pátý a poslední svazek se zabývá průběžným vylepšováním služeb tak, aby byla vždy doručená požadovaná hodnota, která se může v průběhu času měnit. Vzhledem k tomu, že tyto změny probíhají na již fungující službě, je v rámci jejich návrhu, vývoje a nasazení využíván mechanismus PDCA\footnote{Zkratka prvních písmen anglických slov Plan, Do, Check a Act} neboli Demingův cyklus. Ten proces zavádění průběžných změn dělí do čtyřech následujících fází: \parencite[s.~38]{Matula2017}
 \begin{compactitem}
