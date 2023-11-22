@@ -120,7 +120,7 @@ V aplikační části se pak diplomová práce věnuje samotnému technickému �
 
 Cílem diplomové práce je náhled na proces zavádění nové IT služby v rámci ÚVT MUNI a to jak z technického hlediska, tak z hlediska managementu služeb z pohledu frameworku ITIL. Praktickým výstupem pak je uživatelský report, který je vytvořen anonymizovanými daty z datového skladu a nasazen za pomocí procesu, který splňuje požadavky frameworku ITIL.
 
-\subsection{Data a datová věda}
+\section{Data a datová věda}
 V dnešní společnosti se každý den vygeneruje ohromné množství dat a informací a toto množství neustále roste. Zatímco ve starém Římě dosahovaly, při přepočtu na dnešní jednotky, největší sbírky svitků velikosti okolo 100MB \parencite[p.~157]{Smil2021}, v roce 2016 již lidstvo dokázalo vygenerovat 16ZB dat každý rok\parencite[p.~160]{Smil2021}, což je nárůst o celých 14 řádů.
 
 Spolu s velkým množstvím nově vygenerovaných informací a dat, se ale také mění jejich forma. Ve zmíněných římských sbírkách bychom nalezli data zejména ve formě písemností, ty však v současné době představují spíše marginální část uložených informací. Například v repositářích Kongresové knihovny ve Spojených státech amerických, zabírají písemnosti pouze 1 \% ze všech uchovávaných informačních artefaktů \parencite[p.~158]{Smil2021} a většina dat je tak uchovávána v digitální podobě.
@@ -134,7 +134,7 @@ Díky tomu postupně došlo k vzniku a rozvoji vědního oboru zvaného \emph{Da
  
 Vzhledem k tomu, že datová věda se zabývá komplexně celým procesem zpracování dat a nejen jejich analýzou, je v rámci datové vědy zahrnuta i problematika uložení a transformace dat. Tato práce se zaměřuje primárně na zpracování dat za pomoci datového skladu. 
 
-\chapter {Historie vývoje jednotných úložišť dat}
+\chapter {Jednotná úložiště dat}
 Jednotná datová úložiště se spolu se systémy podpory rozhodování začaly vyvíjet v 60. letech, kdy z důvodu ukládání dat na magnetické pásky bylo problematické data zpětně procházet a analyzovat. Data se tak postupně začala pročišťovat a ukládat v již zpracované formě, což by se dalo označit za prvopočátek datových skladů.\parencite[s.~2]{Inmon2005}
 
 V polovině 60. let, se postupně začala rozšiřovat technologie diskových úložišť. Ta na rozdíl od magnetický pásků, umožňovala přímý přístup k datům bez nutnosti jejich kompletního nahrání do pamětí počítače. Díky této technologii začali vznikat první systémy, které lze označit za DBMS \footnote{z angl. Database management system}, které umožňovaly lepší správu dat.\parencite{Foote19042018} Vzhledem k primitivnímu systému uložení dat a jejich nízké strukturalizaci však tyto systémy neposkytovaly data v takové kvalitě, jako je v současnosti běžné.
@@ -161,25 +161,25 @@ Všechny zmíněné koncepty mají dodnes své opodstatnění a jsou i nadále
 
 Detailnějšímu popisu jednotlivých konceptů se pak věnují následující sekce, přičemž konceptu datového skladu je následně z důvodu jeho implementace na Masarykově univerzitě věnována samostatná kapitola.
 
-\subsection{Datový sklad}
+\section{Datový sklad}
 Koncept Datového skladu byl poprvé představen v koncem 80-tých let dvacátého století společností IBM a to s cílem vytvořit architekturu pro zpracování a integraci dat sloužících pro podporu rozhodování. Datový sklad ukládá data v integrované, ne-volatilní podobě v časově závislých kolekcích. Data jsou periodicky extrahována, dle potřeby transformována a následně v tomto tvaru uložena. Cílem je udržovat data v jednotném tvaru, který usnadňuje jejich následnou analýzu a využití.\parencite[s.~3]{Nambiar2022}
 
 Vzhledem k tomu, že tento typ jednotného datového úložiště je nasazen i v rámci MU, je jeho detailnímu popisu věnována kapitola č.  \ref{dwh}.
 
-\subsection{Data lake}
+\section{Data lake}
 Koncept Data Lake, se od datového sklad odlišuje převážně tím, že data nepřevádí do jednotné struktury, ale udržuje je v jejich původní formě. Tzn. jedná se primárně o jednotné úložiště, kde mohou být data uložena ve všech možných souborových i datových formátech a kde jsou z pravidla k datům doplněny detailní anotace, které usnadňují jejich následné zpracování.\parencite{Foote19042018} Vzhledem k tomu, že data během nahrávání do úložiště neprochází žádnou transformací a jsou uložena v jejich původní formě, dosahuje úložiště mnohem vyšších rychlostí, díky čemuž jsou úložiště Data Lake vhodnější pro aplikace, generující velké množství dat.\parencite[s.~1]{Harby20221217}
 
 Z faktu, že data jsou uložena v jejich původní formě plyne další základní rozdíl mezi Data Lake a Datovým skladem a to ten, že Datový Sklad ukládá pouze data, která prošla transformačním procesem a jsou žádaná a potřebná pro výsledné analýzy, úložiště Data Lake oproti tomu ukládá všechna data, která jsou do něj nahrána a jejich transformaci nechává na aplikacích, které úložiště využívají. Z těchto důvodů dosahují úložiště typu Data Lake mnohem vyšších kapacit, než úložiště typu datový sklad.\parencite[s.~4]{Nambiar2022} 
 
 Data Lake a jeho primární funkce pouhého úložiště anotovaných dat je v současnosti jedním z velmi využívaných konceptů, neboť klesající náklady na úložiště a výkon umožňují dlouhodobě skladovat data a jejich analýzu provést až v době, kdy k ní bude existovat relevantní důvod. Obliba úložišť Data Lake je v současnosti umocněna stále narůstajícím množstvím generovaných dat, jež by v případě klasického datového skladu, mohlo způsobovat výkonnostní problémy, další výhodou ukládání dat v původní formě je také fakt, že jejich transformací zpravidla část dat ztrácíme.\parencite[s.~ 5]{Nambiar2022}
 
-\subsection{Data Lakehouse}
+\section{Data Lakehouse}
 Data Lakehouse, jak již název napovídá, je koncept který kombinuje výhody úložišť typu Data Lake a Datového skladu. Tedy nízkonákladového úložiště typu Data Lake, které umožňuje velmi rychlé nahrávání a čtení originálních dat, které jsou následně využívány úložištěm typu Datový Sklad, který bývá typicky tvořen databázovým systémem, do kterého jsou z úložiště Data Lake ukládány strukturovaná data, které jsou vhodnější pro přímé napojení analytických nástrojů, např. typu BI\footnote{z angl. Business Intelligence}.\parencite[s.~3]{Harby20221217}
 
 Toto propojení umožňuje eliminovat hlavní nevýhody obou konceptů a to vzájemně se vylučující požadavek, na předzpracovaná data, která by měla ale být dostupná rychle a v co nejvyšší kvalitě, což vzhledem ke komplexnosti ETL procesu datového skladu nebývá možné. Vzhledem k tomu, že data jsou uložena jak standardizované, tak v surové podobě, může uživatel dle potřeby využít data již standardizovaná, jejichž analýza je tak značně usnadněna a snížení jejich přesnosti nebo například granularity nemusí v mnohých aplikacích znamenat problém Stejně tak lze v případě potřeby co nejaktuálnějších  a nejpřesnějších dat využít data surová z Data Lake Vrstvy, jejichž zpracování je sice náročnější, ale výsledná data mohou produkována v reálném čase a s vyšší přesností.\parencite[s.~3]{Harby20221217} 
 
 
-\subsection{Big Data}
+\section{Big Data}
 V souvislosti s datovými úložišti bývá také často spojován termín \emph{Big Data}, který je například dle Národního Institutu pro standardy a technologie definován jako \emph{jako velkoobjemová, rychlá a různorodá a informační aktiva, která vyžadují nákladově efektivní a inovativní formy zpracování informací, které následně umožňují lepší přehled v rozhodování a automatizaci procesů.  } \parencite{Gartner} 
 
 Konkrétněji pak lze Big Data definovat za pomoci tak zvaných pěti V, které označují základní vlastnosti takového data setu.  Těchto pět V značí následující termíny: \parencite{big_data}
@@ -206,7 +206,7 @@ William H. Inmon pak ve své přednášce na Escuela Colombiana de Ingeniería t
 V praxi se pak Big Data někdy využívají jako znalostní báze pro datové sklady a data lakes, které jsou nad nimi stavěny jako subsety, které následně poskytují již zpracovaná data. Takto postavené datové sklady pak mají velkou výhodu v aktuálnosti dat a jejich velkému rozsahu, ze kterých vycházejí. 
 
 
-\subsection{Azure Fabric}
+\section{Azure Fabric}
 Všechny předchozí rozebrané koncepty, s výjimkou Big data, se zabývají primárně ukládáním dat. Jejich analýza a následně využití, tak předpokládá, využití dalších specifických znalostí a služeb, za pomoci kterých je dané řešení implementováno a provozováno, což může v určitých ohledech komplikovat přistup k datům a práci s nimi. Pro co největší centralizaci a usnadnění přístupu a zpracování, tak začaly vznikat specializované služby, které oproti dříve zmíněným konceptům nabízejí holistický přístup ke zpracování dat, tzn. je možné s jejich pomocí data nejen sbírat a ukládat, ale též analyzovat a vizualizovat. Částečně  tento přístup pokrývá služba například  Google BigQuery, která ale neposkytuje nástroje po vizualizaci výsledků datové analýzy,\parencite{googleBigQuery} z tohoto hlediska je pak plnohodnotným nástrojem tohoto typu služba Microsoft Fabric, která poskytuje vše potřebné, včetně zmíněné vizualizace.\parencite{Buck2023}
 
 Platforma Microsoft Fabric je cloudová služba provozovaná v prostředí Azure a skládá se z několika základních komponent, které jsou mezi s sebou hluboce integrovány, což umožňuje jejich snadné využití bez hlubokých odporných znalostí, týkajících se jednotlivých komponent. Výhodou také je, že služba je provozována ve formě SaaS \footnote{z angl. Software as a service}, díky čemuž nemusí uživatelé řešit infrastrukturu, potřebnou k jejímu provozování.\parencite{Buck2023}
@@ -243,12 +243,14 @@ V rámci služby Data Science a jejímu propojení se službou Azure Machine Lea
 \paragraph{Power BI}
 Power BI je služba jejímž primární účel je vizualizace zpracovaných dat. Primárním výstupem služby jsou interaktivní nástěnky, které je možné nasadit například ve formátu webové stránky a tím je velmi snadno zpřístupnit uživatelům.\parencite{PowerBi}\\
 
-Za pomocí výše zmíněných komponent poskytuje platforma Microsoft Fabric velmi silný a univerzální nástroj, díky kterému je možné velmi efektivně vytvářet analytické nástroje a přehledy, které mohou čerpat data z velkého množství zdrojů, tato data následně integrovat, zanalyzovat a vyhodnotit. Díky integraci nástrojů určených pro strojové učení, umožňuje platforma i tvorbu pokročilých predikčních modelů.
+Za pomocí výše zmíněných komponent poskytuje platforma Microsoft Fabric velmi silný a univerzální nástroj, díky kterému je možné velmi efektivně vytvářet analytické nástroje a přehledy, které mohou čerpat data z velkého množství zdrojů, tato data následně integrovat, zanalyzovat a vyhodnotit. Díky integraci nástrojů určených pro strojové učení, umožňuje platforma i tvorbu pokročilých predikčních modelů.\\
+
+Všechny výše zmíněné koncepty jednotných datových úložišť mají stále své opodstatnění a jsou stále hojně využívány. Volba správného typu úložiště vždy závisí na konkrétním případě pro které má být úložiště nasazeno, kdy například pro dlouhodobá statistická data je lepší úložiště typu Datový sklad, zatímco pro velké množství dat v reálném čase spíše využijeme Data Lake. Klesající náklady na provoz úložišť, však čím dál častěji umožňují firemní nasazení úložiště Data Lakehouse, které následně může sloužit jako primární datový bod pro celou organizaci a jehož data se dají následně dle potřeby analyzovat.
 
 
 \chapter{Datový sklad}
 \label{dwh}
-Jak již bylo zmíněno, datový sklad je jedna z možností, jak uchovat data ve formě, která umožňuje jejich snadnou analýzu. Pojem datový sklad může mít vícero definic. Je možné na něj nahlížet například pouze jako na proces, který má zjednodušit přístup k datům a kdy je technické řešení datového skladu pouze podpůrný prvek celého procesu. Nejčastěji se však na datový sklad pohlíží jako na systém, který \emph{extrahuje, čistí, upravuje a dodává zdrojová data do dimenzionálního datového úložiště a poté podporuje a zavádí dotazování a analýzu dat za účelem rozhodování.} \parencite[s.~23]{Kimballc2004}
+Jak je uvedeno v předchozí kapitole, jednou z možností uložení dat je využití tzv. Datového skladu, který umožňuje jejich snadnou analýzu. Pojem datový sklad může mít vícero definic. Je možné na něj nahlížet například pouze jako na proces, který má zjednodušit přístup k datům a kdy je technické řešení datového skladu pouze podpůrný prvek celého procesu. Nejčastěji se však na datový sklad pohlíží jako na systém, který \emph{extrahuje, čistí, upravuje a dodává zdrojová data do dimenzionálního datového úložiště a poté podporuje a zavádí dotazování a analýzu dat za účelem rozhodování.} \parencite[s.~23]{Kimballc2004}
 
 Z této definice jasně vyplývá, že primárním účelem datového skladu je centralizace a standardizace dat, díky které je pak přístup k datům značně usnadněn. Zároveň je zde důležité uvést, že každý datový sklad se skládá z několika komponent, z nichž pravděpodobně nejdůležitější je proces extrakce, čištění a úpravy dat. Tento proces se ve spojitosti s datovými sklady nazývá \emph{ETL proces \footnote{z angl. Extract, Transform and Load} }a je hlavním důvodem proč pojem datový sklad nelze zaměňovat s pouhým datový úložištěm. \parencite[s.~24]{Kimballc2004}
 
@@ -265,16 +267,13 @@ Obecné schéma datového skladu je znázorněno na obrázku \ref{fig:dwh_schema
   \label{fig:dwh_schema}
 \end{figure}  
 
-\subsection{Typy datových skladů}
+\section{Typy datových skladů}
 \label{dwh_types}
 Datové sklady se dají rozdělit na několik druhů dle různých kritérií. \citeauthor{Inmon2005}
 v knize \citetitle{Inmon2005} z roku \citeyear{Inmon2005} dělí datové sklady podle způsobu a rozsahu,
 v jakém data shromažďují a dle prostředí, ve kterém je datový sklad nasazen.
 
-Pro první rozdělovací kritérium, tedy dle rozsahu shromažďovaných dat zavádí Inmon
-postupně tři kategorie: hluboký datový sklad \footnote{angl. Deep Data Warehouse}, široký
-datový sklad \footnote{angl. Wide Data Warehouse} a hybridní datový sklad \footnote{angl. Hybrid Data
-Warehouse}. Tyto jednotlivé kategorie jsou pak definovány takto:
+Pro první rozdělovací kritérium, tedy dle rozsahu shromažďovaných dat zavádí Inmon postupně tři kategorie: hluboký datový sklad \footnote{angl. Deep Data Warehouse}, široký datový sklad \footnote{angl. Wide Data Warehouse} a hybridní datový sklad \footnote{angl. Hybrid Data Warehouse}. Tyto jednotlivé kategorie jsou pak definovány takto:
 \paragraph{Hluboký datový sklad}
 Shromažďovaná data jsou převážně historická a velmi detailní. Slouží primárně k analýze vývoje a trendů.
 \paragraph{Široký datový sklad}
