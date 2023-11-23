@@ -560,14 +560,6 @@ ITIL V4 na rozdíl od předchozí verze nepracuje s jednotlivými fázemi realiz
     \item Partneři a dodavatelé (Partners and suppliers) - V rámci třetí dimenze jsou řešeny vztahy mezi partnery a dodavateli, na kterých bývá realizace většiny služeb závislá, jelikož málo kdy jsou služby absolutně nezávislé na externích subjektech. V rámci těchto externích subjektů je nutné definovat hloubku propojení a integrace mezi nimi. Klíčovými faktory je pak správná kooperace těchto subjektů a to z hlediska nákladů, sdílení vědomostí a požadavků.
     \item Hodnotové proudy a procesy (Value streams and processes) - Čtvrtá dimenze definuje činnosti, pracovní postupy, procesy a jejich kontrolu tak, aby došlo k dosažení požadovaných cílů. Primárním oborem zájmu je tak v tomto případě hlavně zajištění komunikace a kolaborace mezi jednotlivými částmi organizace, která má za úkol poskytování dané služby, dále se pak dimenze zabývá tzv. hodnotovým tokem, který je definován jako \emph{řada kroků, které je třeba vykonat aby došlo k vytvoření a dodání požadované hodnoty klientům.}
 \end{compactitem}
-
-    \begin{figure}[t]
-        \begin{center}
-            \includegraphics[width=11cm]{img/dwh_muni.png}
-        \end{center}
-        \caption{Schéma datového sklad MUNI. Vlastní zpracování}
-        \label{fig:dwh_muni}
-    \end{figure} 
     
 Mimo tyto hlavní dimenze je, vzhledem k tomu, že služby nejsou provozovány v uzavřeném prostředí, nutné zohlednit i externí faktory, které samotný design, vývoj i provoz ovlivňují a které se v určitém ohledu dají brát jako jedna ze základních dimenzí, jelikož je nikdy není možné úplně vyloučit. Na schématu \ref{fig:itil4_dimension} jsou vyznačeny jako vnější obálka zahrnující politické, ekonomické, sociální, technologické, právní a enviromentální faktory, zkráceně se pro tyto faktory používá zkratka PESTLE.\footnote{z angl. Political, Economic, Social, Technological, Legal and Enviroment}
 
@@ -685,18 +677,35 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
     \end{table}
 
 \chapter{DWH v rámci Masarykovy univerzity}
-Masarykova univerzita generuje, jako každá srovnatelně velká instituce, velké množství provozních dat, která jsou však roztříštěna mezi jednotlivými odděleními a to v různých, často vzájemně nekompatibilních formátech. Vzhledem k tomuto stavu, je velmi komplikované tato data jakkoliv využívat , což vedlo k rozhodnutí  vybudovat v rámci univerzity datový sklad, jehož cílem bylo vytvoření jednotného úložiště již zpracovaných dat,  které lze následně využít pro analytické nástroje, které následně pomocí automaticky vytvářených reportů umožňují a zefektivnění  procesů souvisejících s řízením univerzity a poskytnutí dobré startovní pozice k dosáhnutí stavu daty řízené univerzity \footnote{Data Driven University} , zlepšení jejího běžného provozu a v neposlední řadě také poskytnutí lepší podpory podpory výuky.
+Masarykova univerzita generuje, jako každá srovnatelně velká instituce, velké množství provozních dat, která jsou však roztříštěna mezi jednotlivými odděleními a to v různých, často vzájemně nekompatibilních formátech. Vzhledem k tomuto stavu, je velmi komplikované tato data jakkoliv využívat , což vedlo k rozhodnutí  vybudovat v rámci univerzity datový sklad, jehož cílem bylo vytvoření jednotného úložiště již zpracovaných dat,  které lze následně využít pro analytické nástroje, které následně pomocí automaticky vytvářených reportů umožňují a zefektivnění  procesů souvisejících s řízením univerzity a poskytnutí dobré startovní pozice k dosáhnutí stavu daty řízené univerzity \footnote{Data Driven University}, zlepšení jejího běžného provozu a v neposlední řadě také poskytnutí lepší podpory podpory výuky.
+
+\section{Služba datového skladu (?)}
+Datový sklad je na univerzitě provozován jako služba, která je dle frameworku ITIL v3 definována jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}
+
+
 
 \section{Technické řešení}
-Příslušný datový sklad byl implementován na jaře 2022 za pomocí externí dodavatelské společnosti specializující se na implementaci datových skladů  a je postaven zejména na technologií společnosti Microsoft a jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
+Z výše uvedených konceptů jednotných datových úložišť byl jako nejvhodnější zvolen koncept klasického datového skladu. Ten je v rámci již fungující organizace implementačně jednodušší, neboť se do datového skladu nahrávají jen potřebná data, zatímco například v případě konceptu Data lake, by bylo nutné řešit extrakci dat ze všech podružných systému a pracovišť mnohem komplexněji, neboť cílem většinou bývá centralizace dat ze všech podružných systémů, pracovišť atp. do jednoho místa, což je v případě tak velké organizace jako je Masarykova univerzita velmi problematické. 
 
-Jak je vidět na zmíněném schématu, prvotní sběr dat probíhá pomocí nástroje \emph{Azure data factory \footnote{https://azure.microsoft.com/en-us/products/data-factory/}}, což je nástroj určený k automatizovanému sběru dat z vícero zdrojů. Za tímto účelem je připojen ke všem potřebným zdrojům, mezi které patří například databázový systém Oracle DB, informační systém Magion a nebo například excelové soubory generované jednotlivými odděleními. Data z těchto zdrojů jsou pomocí tohoto nástroje pravidelně ve 24 hodinových intervalech extrahována a ukládána na STAGE server, který je realizován jako on premise server\footnote{Jedná se o server zpravovaný samotnou univerzitou} přímo v prostředí Masarykovi univerzity. Na tomto serveru jsou data uložena v nezpracované formě ve formátu takzvaných snímků \footnote{angl. snapshot}.
+Klasický datový sklad není problém postupně rozšiřovat o další data, která jsou požadovaná pro analýzu a případně není problém postupně přecházet na komplexnější architekturu, jako je například Data Lakehouse.
 
-Ze schématu dále vyplývá, že dalším krokem je pak pak proces samotného zpracování dat, což zajišťuje ETL proces, který data patřičně vyčistí a filtruje a to tak, aby byla uložena pouze relevantní data v dostatečné kvalitě. Data jsou následně transformována do podoby, kterou je možné uložit do cloudového úložiště, kterým je v tomto případě Azure SQL databáze\footnote{https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/}, což je relační databáze obohacená o inteligentní funkce, které jsou schopny automaticky automaticky upravovat její výkon.
+Příslušný datový sklad byl implementován na jaře 2022 za pomocí externí dodavatelské společnosti specializující se na implementaci datových skladů a je postaven zejména na technologií společnosti Microsoft, jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
 
-Data jsou v tomto případě uložena ve formě datového schématu zvaného hvězda, který pracuje se třemi druhy tabulek, kterými jsou tabulky obsahují samotná fakta, která obsahují informace o jednotlivých záznamech, tabulky obsahující jednotlivé dimenze, dle kterých je možné data třídit a dále pak takzvané můstkové tabulky, které propojují fakta s dimenzemi. 
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/dwh_muni.png}
+        \end{center}
+        \caption{Schéma datového skladu MUNI. Vlastní zpracování}
+        \label{fig:dwh_muni}
+    \end{figure} 
+    
+Jak je vidět na zmíněném schématu, prvotní sběr dat probíhá pomocí nástroje \emph{Azure data factory}, což je nástroj určený k automatizovanému sběru dat z vícero zdrojů. Za tímto účelem je připojen ke všem potřebným zdrojům, mezi které patří například databázový systém Oracle DB, informační systém Magion a nebo například excelové soubory generované jednotlivými odděleními univerzity. Data z těchto zdrojů jsou pomocí tohoto nástroje pravidelně ve 24 hodinových intervalech extrahována a ukládána na STAGE server, který je realizován v režimu \emph{on premise server}\footnote{Jedná se o server zpravovaný samotnou univerzitou} přímo v prostředí Masarykovy univerzity. Na tomto serveru jsou data uložena v nezpracované formě ve formátu takzvaných snímků \footnote{angl. snapshot}.
 
-Data v této podobě je pak již možné přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI\footnote{https://powerbi.microsoft.com/cs-cz/}, který se připojí přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí PowerBI lze následně vytvářet přehledné uživatelské reporty, jejichž výhodou je, vyjma již zmíněné aktuálnosti,  velmi snadná modifikace dle aktuálních potřeb a dále pak například snadné sdílení, neboť tyto reporty je možné sdílet ve formě webových stránek. 
+Jak je vyobrazeno na schématu, dalším krokem je pak pak proces samotného zpracování dat, což zajišťuje ETL proces, který data patřičně vyčistí a vyfiltruje a to tak, aby byla uložena pouze relevantní data v dostatečné kvalitě. Data jsou následně transformována do podoby, kterou je možné uložit do cloudového úložiště, kterým je v tomto případě Azure SQL databáze\footnote{https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/}, což je relační databáze obohacená o inteligentní funkce, které jsou schopny automaticky automaticky upravovat její výkon.
+
+Data jsou v tomto případě uložena ve formě datového schématu zvaného hvězda, který pracuje se třemi druhy tabulek, kterými jsou tabulky obsahující samotná fakta, tedy informace o jednotlivých záznamech, dále tabulky obsahující jednotlivé dimenze, dle kterých je možné data třídit a takzvané můstkové tabulky, které propojují fakta s dimenzemi. 
+
+Data v této podobě je pak již možné přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI, který je možné připojit přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí nástroje PowerBI lze následně data dále upravovat, vytvářet kontingenční tabulky nebo filtry a následně výsledky vizualizovat pomocí vhodných tabulek, grafů atp. ve formě uživatelských reportů. Tyto reporty lze následně velmi snadno sdílet, neboť je možné je uveřejnit například ve formě webové stránky.
 
 Na tomto datovém skladě je v současnosti již implementováno několik uživatelských aplikací, jako je například interaktivní report využití studoven, který na základě dostupných dat pocházejících z Oracle DB a dále pak z například interních monitorovacích turniketů, vizualizuje ve formě takzvané heatmapy vytíženost jednotlivých studoven  a je z něj tak možné vysledovat, které studovny jsou nejvíce vytížené a v kterou dobu. 
 
