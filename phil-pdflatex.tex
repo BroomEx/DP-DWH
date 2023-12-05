@@ -700,18 +700,54 @@ V neposlední řadě je pak součástí zakládací listiny též definice cílo
 
 Účel služby datového skladu je dle její webové stránky \footnote{viz. https://it.muni.cz/sluzby/datovy-sklad-na-mu} poskytnutí nástroje, který je schopen sbírat data z různých zdrojů, provést jejich standardizaci a následně je tranformované poskytnout buď ve formě prostých dat, které si může uživatel - zákazník dále dle potřeby zpracovat a nebo ve formě již zpracovaných reportů, které poskytují informace. 
 
-
-
-\paragraph{Procesy správce}
+\subsection{Procesy}
+Nedílnou součástí služby jsou také její procesy, které slouží k jejímu úspěšnému provozování a rozvoji. Procesy, které jsou v rámci datového skladu využívány, mají za úkol zajištění její dostupnosti a postupné zlepšování. Za tímto účelem je tedy již přímo v zakládací listině částečně definován proces sloužící k žádosti o nový usecase, dále je pak nutné definovat proces pro nahlášení nefunkční služby a neposlední řadě proces týkající se aktivní akvizice nový usecasů prostřednictví nabízení datového skladu jako služby přímo koncovým uživatelům. Všechny tyto procesy jsou detailněji popsány níže.
 \begin{itemize}
-  \item Nefunkční služba
-  \item \begin{itemize}
-  \item Žádost o tvorbu nového reportu.
-  \item Nahlášení nefunkční služby.
-\end{itemize}
+  \item Žádost o nový usecase - Proces požadavku na tvorbu nového reportu má několik fází, které jsou vyobrazeny na obr. \ref{fig:new_report}. 
+        \begin{itemize}
+            \item První fází je kontaktování správce datového skladu s novým požadavkem a to skrze webový formulář dostupný na stránkách datového skladu. V tuto chvíli by měl uživatel již mít rozmyšlen konkrétní požadavek a to včetně potřebných dat. 
+            \item Následuje konzultace se správcem datového skladu, během které se posoudí vhodnost navrhovaných dat pro tvorbu požadovaného reportu a celkovou možnost realizace.
+            \item V případě, že je požadovaný report realizovatelný, musí žadatel přidělit přístup k požadovaným datům správci DWH a detailní popis dat, které jsou pro daný usecase třeba. Následně správce zvolí vhodné tabulky, které jsou v reportu využity.
+            \item Finální fází je pak nahrání dat do datového skladu, jejich transformace do požadovaného tvaru a tvorba samotného výstupu, kterým z pravidla bývá report vytvořený pomocí PowerBI, toto však nemusí být nutností a výstup může mít i jinou podobu. 
+        \end{itemize}
+  \item Nahlášení nefunkční služby - Pro nahlášení nefunkční služby slouží formulář uvedený na stránkách datového skladu v katalogu služeb Masarykovy univerzity, tento proces je vyobrazen na schématu \ref{fig:service_fail}
+        \begin{itemize}
+            \item Nahlášení nefunkční služby
+            \item Magie
+            \item Profit
+        \end{itemize}
+  \item Aktivní nabízení služby datového skladu - Cílem procesu je pro aktivní přístup k rozšiřování reportů, využívajících datový sklad, díky čemuž by měl být co nejvíce využit jeho potenciál i v rámci dat, jejich majitelé o existenci datového skladu nevědí, popřípadě jeji z nějakého důvodu nevyužívají. Jednotlivé procesní fáze jsou vyobrazeny na \ref{fig:active_offer}
+        \begin{itemize}
+            \item Nabídka služby DWH
+            \item Magie
+            \item Profit
+        \end{itemize}
 \end{itemize}
 
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/new_usecase.png}
+        \end{center}
+        \caption{Proces požadavku na nový report. Vlastní zpracování}
+        \label{fig:new_report}
+    \end{figure} 
+    
+        \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/service_failure_process.png}
+        \end{center}
+        \caption{Proces nahlášení problému se službou. Vlastní zpracování}
+        \label{fig:service_fail}
+    \end{figure} 
 
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/active_aquisition.png}
+        \end{center}
+        \caption{Proces aktivního nabízení DWH. Vlastní zpracování}
+        \label{fig:active_offer}
+    \end{figure} 
+    
 \section{Technické řešení}
 Datový sklad je postaven zejména na technologií společnosti Microsoft, jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
 
@@ -731,6 +767,7 @@ Data jsou v tomto případě uložena ve formě datového schématu zvaného hv�
 
 V této podobě je pak již možné data přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI, který je možné připojit přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí nástroje PowerBI lze následně data dále upravovat, vytvářet kontingenční tabulky nebo filtry a následně výsledky vizualizovat pomocí vhodných tabulek, grafů atp. ve formě uživatelských reportů. Tyto reporty lze následně velmi snadno sdílet, neboť je možné je uveřejnit například ve formě webové stránky.
 
+\section{Současný stav}
 Na tomto datovém skladě je v současnosti již implementováno několik uživatelských aplikací, jako je například interaktivní report využití studoven, který na základě dostupných dat pocházejících z Oracle DB a dále pak z například interních monitorovacích turniketů, vizualizuje ve formě takzvané heatmapy vytíženost jednotlivých studoven  a je z něj tak možné vysledovat, které studovny jsou nejvíce vytížené a v kterou dobu. 
 
 Dalším z příkladu využití datového skladu v rámci Masarykovy univerzity je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému ERP, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou. Automatická tvorba tohoto reportu šetří přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
