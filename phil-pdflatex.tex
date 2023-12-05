@@ -677,19 +677,79 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
     \end{table}
 
 \chapter{DWH v rámci Masarykovy univerzity}
-Masarykova univerzita generuje, jako každá srovnatelně velká instituce, velké množství provozních dat, která jsou však roztříštěna mezi jednotlivými odděleními a to v různých, často vzájemně nekompatibilních formátech. Vzhledem k tomuto stavu, je velmi komplikované tato data jakkoliv využívat , což vedlo k rozhodnutí  vybudovat v rámci univerzity datový sklad, jehož cílem bylo vytvoření jednotného úložiště již zpracovaných dat,  které lze následně využít pro analytické nástroje, které následně pomocí automaticky vytvářených reportů umožňují a zefektivnění  procesů souvisejících s řízením univerzity a poskytnutí dobré startovní pozice k dosáhnutí stavu daty řízené univerzity \footnote{Data Driven University}, zlepšení jejího běžného provozu a v neposlední řadě také poskytnutí lepší podpory podpory výuky.
+Masarykova univerzita generuje, jako každá srovnatelně velká instituce, velké množství provozních dat, která jsou však roztříštěna mezi jednotlivými odděleními a to v různých, často vzájemně nekompatibilních formátech. Vzhledem k tomuto stavu, je velmi komplikované tato data jakkoliv využívat , což vedlo k rozhodnutí  vybudovat v rámci univerzity jednotného datové úložiště, které by sloužilo jako datová báze pro analytické nástroje, díky kterým je následně možné takto shromážděná data analyzovat a dále využívat, další velkým benefitem je možnost automatizovat některé procesy, které je nutné v rámci činnosti univerzity vykonávat, jako jsou například tvorby různých reportů provozně ekonomického typu. Optimalizace a zefektivnění procesů souvisejících s chodem a řízením univerzity je také dobrá startovní pozice k dosáhnutí stavu daty řízené univerzity \footnote{Data Driven University}, zlepšení jejího běžného provozu a v neposlední řadě také poskytnutí lepší podpory podpory výuky.
 
-\section{Služba datového skladu (?)}
-Datový sklad je na univerzitě provozován jako služba, která je dle frameworku ITIL v3 definována jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}
+\section{Služba datového skladu}
+Prioritními cíli při výběru správného konceptu jednotného úložiště byla podpora rozhodovacích a automatizace rutinních procesů. 
+\paragraph{Podpora rozhodovacích procesů} v rámci které je má poskytnout možnosti sesbírat a zpracovat data, které je následně možné využít pro tzv. business inteligence\footnote{zkráceně BI}, neboli sběr a analýzu dat potřebných pro strategická rozhodnutí.
+\paragraph{Automatizace rutinních procesů} kdy je možné velmi zefektivnit pravidelně generovaná data a reporty, jejichž tvorba může být vzhledem k fragmentaci dat časově náročná. 
 
+Pro tyto cíle byl jako nejvhodnější zvolen koncept datového skladu. Jeho hlavními výhodami oproti ostatním konceptům je zejména jeho jasně definovaná datová struktura, která umožňuje snadnou datovou analýzu, neboť data již prošla ETL procesem a není tedy nutné je dále zpracovávat, což značně usnadňuje tvorbu nových analytických reportů.
 
+Další výhodou tohoto konceptu je možnost jeho počátečního využití pouze v malé části univerzity a dle potřeby připojovat nové datové zdroje. Toto je sice možné i v případě ostatních konceptů, nicméně například v případě konceptu Data Lake existuje určitý předpoklad, že obsahuje všechna data z celé organizace/oddělení, což je v případě již zavedené a fungující organizace typu Masarykova Univerzita implementačně komplikované. Další nevýhodou je pak například ona surovost dat, kdy sice je možné data do úložiště velmi snadno nahrát, ale pro jejich zpracování je již potřeba specializovaného procesu. Ostatní koncepty jako je Lakehouse či služby Typu Azure Fabric pak mohou být v případě potřeby implementovány na stávajícím datovém skladu a nic tak nebrání jejich případnému zavedení.
 
+Samotný datový sklad byl implementován na jaře 2022 za pomoci externí dodavatelské společnosti, která se na implementaci datových skladů specializuje. \footnote{přidat nákres s časovou osou} Datový sklad byl implementován jako služba dle rámce ITIL v3 s určitými modifikacemi směrem k zákazníkovi, které jsou převzaté z ITIL v4. 
+
+Framework ITIL v3 definuje službu jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}, přičemž v tomto konkrétním případě se dle zakládací listiny jedná o službu typu CFS \footnote{z angl. Customer Facing Service}, což je z definice ITIL služba, \emph{která přímo přináší přidanou hodnotu pro uživatele, který s ní může vědomě nebo přímo interagovat.}\parencite{SyFvQA11lk1OaIec} Zakládací listina též definuje výstupní hodnotu jako již zmíněné automaticky generované reporty, jejichž cílem je usnadnit rozhodovací procesy a také poskytovat podporu ve vzdělávání. \footnote{odcitovat zakládací listinu jako neveřejný dokument?}
+
+Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, kterým je v tomto případě Bc. Filip Švaříček\footnote{uvádět jménem?}, který spolu s Mgr Tomášem Bártkem tvoří tým zodpovědný za provoz a rozvoj datového skladu.
+
+Dále pak zakládací listina obsahuje definované základní KPI\footnote{z angl. Key Performance Indicator}, neboli klíčové ukazatele výkonosti, které byly v tomto případě nastaveny na počet uživatelů datového skladu, kdy uživateli jsou v tomto případě myšleny spíše jednotlivé usecasy, které jsou na datovém skladu postaveny. Jako prvotní cíl bylo stanoveno dosáhnutí alespoň deseti usecasů.
+
+V neposlední řadě je pak součástí zakládací listiny též definice cílové skupiny, kterou jsou zejména manažeři rektorátu Masarykovy univerzity spolu s managementem ÚVT, obecně má ale datový sklad sloužit jako podpůrný prostředek pro uživatele potřebující vyhodnotit velké množství dat.
+
+Účel služby datového skladu je dle její webové stránky \footnote{viz. https://it.muni.cz/sluzby/datovy-sklad-na-mu} poskytnutí nástroje, který je schopen sbírat data z různých zdrojů, provést jejich standardizaci a následně je tranformované poskytnout buď ve formě prostých dat, které si může uživatel - zákazník dále dle potřeby zpracovat a nebo ve formě již zpracovaných reportů, které poskytují informace. 
+
+\subsection{Procesy}
+Nedílnou součástí služby jsou také její procesy, které slouží k jejímu úspěšnému provozování a rozvoji. Procesy, které jsou v rámci datového skladu využívány, mají za úkol zajištění její dostupnosti a postupné zlepšování. Za tímto účelem je tedy již přímo v zakládací listině částečně definován proces sloužící k žádosti o nový usecase, dále je pak nutné definovat proces pro nahlášení nefunkční služby a neposlední řadě proces týkající se aktivní akvizice nový usecasů prostřednictví nabízení datového skladu jako služby přímo koncovým uživatelům. Všechny tyto procesy jsou detailněji popsány níže.
+\begin{itemize}
+  \item Žádost o nový usecase - Proces požadavku na tvorbu nového reportu má několik fází, které jsou vyobrazeny na obr. \ref{fig:new_report}. 
+        \begin{itemize}
+            \item První fází je kontaktování správce datového skladu s novým požadavkem a to skrze webový formulář dostupný na stránkách datového skladu. V tuto chvíli by měl uživatel již mít rozmyšlen konkrétní požadavek a to včetně potřebných dat. 
+            \item Následuje konzultace se správcem datového skladu, během které se posoudí vhodnost navrhovaných dat pro tvorbu požadovaného reportu a celkovou možnost realizace.
+            \item V případě, že je požadovaný report realizovatelný, musí žadatel přidělit přístup k požadovaným datům správci DWH a detailní popis dat, které jsou pro daný usecase třeba. Následně správce zvolí vhodné tabulky, které jsou v reportu využity.
+            \item Finální fází je pak nahrání dat do datového skladu, jejich transformace do požadovaného tvaru a tvorba samotného výstupu, kterým z pravidla bývá report vytvořený pomocí PowerBI, toto však nemusí být nutností a výstup může mít i jinou podobu. 
+        \end{itemize}
+  \item Nahlášení nefunkční služby - Pro nahlášení nefunkční služby slouží formulář uvedený na stránkách datového skladu v katalogu služeb Masarykovy univerzity, tento proces je vyobrazen na schématu \ref{fig:service_fail}
+        \begin{itemize}
+            \item Nahlášení nefunkční služby
+            \item Magie
+            \item Profit
+        \end{itemize}
+  \item Aktivní nabízení služby datového skladu - Cílem procesu je pro aktivní přístup k rozšiřování reportů, využívajících datový sklad, díky čemuž by měl být co nejvíce využit jeho potenciál i v rámci dat, jejich majitelé o existenci datového skladu nevědí, popřípadě jeji z nějakého důvodu nevyužívají. Jednotlivé procesní fáze jsou vyobrazeny na \ref{fig:active_offer}
+        \begin{itemize}
+            \item Nabídka služby DWH
+            \item Magie
+            \item Profit
+        \end{itemize}
+\end{itemize}
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/new_usecase.png}
+        \end{center}
+        \caption{Proces požadavku na nový report. Vlastní zpracování}
+        \label{fig:new_report}
+    \end{figure} 
+    
+        \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/service_failure_process.png}
+        \end{center}
+        \caption{Proces nahlášení problému se službou. Vlastní zpracování}
+        \label{fig:service_fail}
+    \end{figure} 
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/active_aquisition.png}
+        \end{center}
+        \caption{Proces aktivního nabízení DWH. Vlastní zpracování}
+        \label{fig:active_offer}
+    \end{figure} 
+    
 \section{Technické řešení}
-Z výše uvedených konceptů jednotných datových úložišť byl jako nejvhodnější zvolen koncept klasického datového skladu. Ten je v rámci již fungující organizace implementačně jednodušší, neboť se do datového skladu nahrávají jen potřebná data, zatímco například v případě konceptu Data lake, by bylo nutné řešit extrakci dat ze všech podružných systému a pracovišť mnohem komplexněji, neboť cílem většinou bývá centralizace dat ze všech podružných systémů, pracovišť atp. do jednoho místa, což je v případě tak velké organizace jako je Masarykova univerzita velmi problematické. 
-
-Klasický datový sklad není problém postupně rozšiřovat o další data, která jsou požadovaná pro analýzu a případně není problém postupně přecházet na komplexnější architekturu, jako je například Data Lakehouse.
-
-Příslušný datový sklad byl implementován na jaře 2022 za pomocí externí dodavatelské společnosti specializující se na implementaci datových skladů a je postaven zejména na technologií společnosti Microsoft, jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
+Datový sklad je postaven zejména na technologií společnosti Microsoft, jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
 
     \begin{figure}[t]
         \begin{center}
@@ -699,36 +759,33 @@ Příslušný datový sklad byl implementován na jaře 2022 za pomocí externí
         \label{fig:dwh_muni}
     \end{figure} 
     
-Jak je vidět na zmíněném schématu, prvotní sběr dat probíhá pomocí nástroje \emph{Azure data factory}, což je nástroj určený k automatizovanému sběru dat z vícero zdrojů. Za tímto účelem je připojen ke všem potřebným zdrojům, mezi které patří například databázový systém Oracle DB, informační systém Magion a nebo například excelové soubory generované jednotlivými odděleními univerzity. Data z těchto zdrojů jsou pomocí tohoto nástroje pravidelně ve 24 hodinových intervalech extrahována a ukládána na STAGE server, který je realizován v režimu \emph{on premise server}\footnote{Jedná se o server zpravovaný samotnou univerzitou} přímo v prostředí Masarykovy univerzity. Na tomto serveru jsou data uložena v nezpracované formě ve formátu takzvaných snímků \footnote{angl. snapshot}.
+Jak je vidět na zmíněném schématu, prvotní sběr dat probíhá pomocí nástroje \emph{Azure data factory}, což je nástroj určený k automatizovanému sběru dat z vícero zdrojů. Za tímto účelem je připojen ke všem potřebným zdrojům, mezi které patří například databázový systém Oracle DB, informační systémy ERP a nebo například excelové soubory generované jednotlivými odděleními univerzity. Data z těchto zdrojů jsou pomocí tohoto nástroje pravidelně ve 24 hodinových intervalech extrahována a ukládána databáze na tzv. STAGE serveru, který je realizován v režimu \emph{on premise server}\footnote{Jedná se o server zpravovaný samotnou univerzitou} přímo v prostředí Masarykovy univerzity. Na tomto serveru jsou data uložena v nezpracované formě ve formátu takzvaných snímků \footnote{angl. snapshot} a pravidelně každý den promazávána.
 
 Jak je vyobrazeno na schématu, dalším krokem je pak pak proces samotného zpracování dat, což zajišťuje ETL proces, který data patřičně vyčistí a vyfiltruje a to tak, aby byla uložena pouze relevantní data v dostatečné kvalitě. Data jsou následně transformována do podoby, kterou je možné uložit do cloudového úložiště, kterým je v tomto případě Azure SQL databáze\footnote{https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/}, což je relační databáze obohacená o inteligentní funkce, které jsou schopny automaticky automaticky upravovat její výkon.
 
 Data jsou v tomto případě uložena ve formě datového schématu zvaného hvězda, který pracuje se třemi druhy tabulek, kterými jsou tabulky obsahující samotná fakta, tedy informace o jednotlivých záznamech, dále tabulky obsahující jednotlivé dimenze, dle kterých je možné data třídit a takzvané můstkové tabulky, které propojují fakta s dimenzemi. 
 
-Data v této podobě je pak již možné přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI, který je možné připojit přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí nástroje PowerBI lze následně data dále upravovat, vytvářet kontingenční tabulky nebo filtry a následně výsledky vizualizovat pomocí vhodných tabulek, grafů atp. ve formě uživatelských reportů. Tyto reporty lze následně velmi snadno sdílet, neboť je možné je uveřejnit například ve formě webové stránky.
+V této podobě je pak již možné data přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI, který je možné připojit přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí nástroje PowerBI lze následně data dále upravovat, vytvářet kontingenční tabulky nebo filtry a následně výsledky vizualizovat pomocí vhodných tabulek, grafů atp. ve formě uživatelských reportů. Tyto reporty lze následně velmi snadno sdílet, neboť je možné je uveřejnit například ve formě webové stránky.
 
+Celá konstelace služeb, které dohromady tvoří datový sklad Masarykovy univerzity je nutné monitorovat, aby nedošlo k jeho výpadků. Vzhledem k tomu, že je sklad z velké části provozován v prostředí Microsoft Azure, je jeho dostupnost velmi dobrá a lze k monitoringu využít nástroje samotného prostředí Azure, jako jsou aplikační logy Application Insights a na nic postavené alerty, které v případě zaznamenání problému upozorní správce datového skladu\footnote{ověřit, jestli je to pravda}. Vzhledem k tomu, že některé části datového skladu, jako je například STAGE server, nejsou provozovány v prostředí Azure, je k monitoringu těchto prostředků využívána služba Zabbix, která je přímo určena k monitoringu webových, databázových a jiných serverů.\footnote{má smysl více rozepisovat? https://www.zabbix.com/ zjistit, jestli je to opravdu tak}
+
+\section{Současný stav}
 Na tomto datovém skladě je v současnosti již implementováno několik uživatelských aplikací, jako je například interaktivní report využití studoven, který na základě dostupných dat pocházejících z Oracle DB a dále pak z například interních monitorovacích turniketů, vizualizuje ve formě takzvané heatmapy vytíženost jednotlivých studoven  a je z něj tak možné vysledovat, které studovny jsou nejvíce vytížené a v kterou dobu. 
 
-Dalším z příkladu využití datového skladu v rámci Masarykovy univerzity je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému Magion, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou. Automatická tvorba tohoto reportu šetří přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
-
-
-\section{Zpracovávaný usecase - provozně ekonomická data}
-dasdasd
+Dalším z příkladu využití datového skladu v rámci Masarykovy univerzity je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému ERP, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou. Automatická tvorba tohoto reportu šetří přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
 
 \section{Evaluace a optimalizace procesu}
 sadasdasd
 
+
+
+
 \chapter{Aplikační část}
 dasdasd
 
-\chapter{Zpracovávaný usecase}
-asdasd
+\section{Zpracovávaný usecase - provozně ekonomická data}
+dasdasd
 
-\section{Technické řešení}
-\subsection{Technické řešení DWH}
-asdasd
-\subsection{Usecase}
-sdas
 
 \section{Návrh implementačního procesu}
 \section{Zavedení}
