@@ -42,6 +42,16 @@
 
 
 ## DWH?
+### new list
+1. Jmenovat lidi?
+1. Proces nahlášení nefunkčního skladu, co se děje pak?
+1. nový usecase - zapojení třetí strany, je nutné a nebo správce zvládne ETL sám?
+1. citace zakládací listiny - asi neveřejný dokument?
+1. kooperace a třetí strany -  je zde někdo další krom firmy, co to původně vystavěla?
+1. Monitoring - Azure hl9d8 aktivně? Applicatrion Insights? něco dalšího?
+1. Zabbix - předpokládám on premise servery?
+
+### ????
 1. Proč se zvolil DWH
 2. DWH
    1. Účel a cíle - je to takhle možné?
@@ -57,6 +67,32 @@
 5. Zakladácí listina - je prázdná, je možné dodat vyplněnou?
 6. Implementace usecase
    1. Existuje nějaký ukázkový na kterém lze proces popsat a demonstrovat?
+   
+
+## Data model
+- Rozpoc_Radek
+   - ROZP_TYP
+- Rozpoc
+   - Smlouva - string a nebo je to reference na t5eba soubor?
+   - Mena - ciselnik? Enum? string?
+   - Bez_rozpoctu - význam? zatím to chápu jako bool
+   - Zmenil - Id usera a nebo proste jmeno?
+   - Zmeneno - timestamp?
+   - FIN_RMU - Vůbec nevím, co je
+- Riv_druh_vysledku
+   - Co znamena cela tabulka?
+   - riv?
+- Proj_Sdg
+   - Co znamen8 cela tabulka?
+   - Uroven - vyznam, typ
+   - Sdg_cislo - vynam, typ
+- INVESTOR_TYP
+   - Nemá id?
+- Np_prac_osoba
+   - Akademik - string neba další entita?
+   - oscis - vyznam?
+   
+
 
 ## LINKS
 - [DWH web](https://it.muni.cz/sluzby/datovy-sklad-na-mu)
