@@ -770,9 +770,31 @@ V této podobě je pak již možné data přímo zpracovávat analytickými nás
 Celá konstelace služeb, které dohromady tvoří datový sklad Masarykovy univerzity je nutné monitorovat, aby nedošlo k jeho výpadků. Vzhledem k tomu, že je sklad z velké části provozován v prostředí Microsoft Azure, je jeho dostupnost velmi dobrá a lze k monitoringu využít nástroje samotného prostředí Azure, jako jsou aplikační logy Application Insights a na nic postavené alerty, které v případě zaznamenání problému upozorní správce datového skladu\footnote{ověřit, jestli je to pravda}. Vzhledem k tomu, že některé části datového skladu, jako je například STAGE server, nejsou provozovány v prostředí Azure, je k monitoringu těchto prostředků využívána služba Zabbix, která je přímo určena k monitoringu webových, databázových a jiných serverů.\footnote{má smysl více rozepisovat? https://www.zabbix.com/ zjistit, jestli je to opravdu tak}
 
 \section{Současný stav}
-Na tomto datovém skladě je v současnosti již implementováno několik uživatelských aplikací, jako je například interaktivní report využití studoven, který na základě dostupných dat pocházejících z Oracle DB a dále pak z například interních monitorovacích turniketů, vizualizuje ve formě takzvané heatmapy vytíženost jednotlivých studoven  a je z něj tak možné vysledovat, které studovny jsou nejvíce vytížené a v kterou dobu. 
+Prvními uživatelskými aplikacemi, které využívaly datový sklad byly aplikace generující reporty využití jednotlivých studoven a report sloužící jako podpora rozhodování v centru RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Obda dva reporty jsou pilotními projekty, sloužícími jako demonstrace možností datového skladu a nejsou plně implenetovány jako služba dle ITIL\footnote{doplnit jak to je, padla zmínka o punkové verzi}
 
-Dalším z příkladu využití datového skladu v rámci Masarykovy univerzity je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému ERP, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou. Automatická tvorba tohoto reportu šetří přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
+Interaktivní report ukazující využití studoven využívá dat pocházejících z databáze Oracle a dále pak například z interních monitorovacích turniketů. Takto sesbíraná data následně vizualizuje ve formě takzvané heatmapy, která na časové matici zobrazuje, které časy je daná učebna nejvíce využívána, např na \ref{fig:cps} je zobrazena heatmapa vstupů do centrální počítačové učebny. Vyjma heatmap obsazenosti učeben, nabízí další staistická data, jako je například délka sezení, otevírací doba a nebo obsazenost jednotlivých pracovišť v čase. Celý report je dostupný pro všechny studenty i zaměstnance z reportovacího portálu datového skladu. \footnote{https://it.muni.cz/sluzby/datovy-sklad-na-mu/reportovaci-portal-mu}
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/ucebny.png}
+        \end{center}
+        \caption{Heatmapa vstupů do CPS}
+        \label{fig:cps}
+    \end{figure} 
+ 
+Další ze zmíněných pilotních aplikací je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému ERP\footnote{z angl. Enterprise resource planning, neboli plánování podnikových zdrojů}, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou.
+
+Report má tři hlavní výstupy, které pomáhají organizaci celého centra a to plánované úvazky, rozdíly úvazků a hledané pozice. Byť automatizace není v tomto případě úplná, šetří automatická tvorba tohoto reportu přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
+
+Oba dva pilotní reporty je možné zobrazit z reportovacího portálu datového skladu \footnote{https://it.muni.cz/sluzby/datovy-sklad-na-mu/reportovaci-portal-mu}, který sdružuje reporty využívající univerzitní datový sklad a je možné je skrze tento portál dohledat. Přímo z reportovacího portálu je také možné vytvořit požadavek na nový report.
+
+Jednotlivé reporty jsou v rámci portálu rozčleněny do tří kategorií dle původu jejich dat, která mohou být veřejná, ekonomická a nebo projektová. 
+
+Reporty pracující s veřejnými daty slouží zejména k prezentaci obecných dat o univerzitě a agregovaných dat tykajících se studentů. Všechna data jsou zde anonymizována. Mezi reporty v této kategorii patří například report \emph{Dotazník spokojenosti se službami ÚVT}, který ukazuje výsledky dotazníkového šetření spokojenosti se službami Ústavu výpočetních technologií na MUNI a nebo \emph{Akreditované studijní programy}, ukazující data o jednotlivých akreditovaných oborech univerzity, jejich celkové počty, vývoj v čase, rozdělení dle fakult atp.
+
+Ekonomické reporty pracují zejména ekonomickými údaji a výsledky univerzity. Reporty získávají data převážně z ERP systému Magion\footnote{zde ho můžu nechat a nebo jen ERP} a jsou zpravidla neveřjní. Mezi ekonomické reporty patří například report \emph{Rozvaha a výnosy}, který se zaměřuje na ekonomický výkon jednotlivých fakult.
+
+V poslední kategorii projektových dat se nacházejí reporty se specifickým určením, které typicky kombinují data z vícero zdrojů, jako jsou obecná data již uložená v datovém skladu typu personální nebo účetní data a dále pak data, která jsou specifická pro daný projekt. Tyto data bývají často v nestandardizované podobě a v různých formátech, jako jsou například excel soubory, sharepoint seznamy atp. Do této kategorie reportů patří i oba pilotní reporty \emph{Přehled využívání počítačů v univerzitních studovnách} a \emph{Přehled úvazků pro RECETOX}, které jsou popsány výše, dalšími reporty z kategorie pak je \emph{Age-friendly univerzity}, který shrnuje data z projektu \emph{MUNI pro každý věk\footnote{https://starnuti.fss.muni.cz/muni-pro-kazdy-vek}}, který se se věnuje analýze anonymizovaných zaměstnaneckých dat typu pohlaví, věku, délce kontraktu atp.
 
 \section{Evaluace a optimalizace procesu}
 sadasdasd
