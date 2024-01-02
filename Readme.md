@@ -1,9 +1,9 @@
 # DP-DWH Notes
 ## Služba
-1. Definice služby
-2. Účel
-3. Cíle
-4. Proces zavádění
+1. ~~Definice služby~~
+2. ~~čel~~
+3. ~~Cíle~~
+4. ~~Proces zavádění~~
    1. Zakládací listina - základní parametry
       1. Účel
       2. Cíl
@@ -43,13 +43,18 @@
 
 ## DWH?
 ### new list
-1. Jmenovat lidi?
+1. Jmenovat lidi - myšleno pana Švaříčka atp.
 1. Proces nahlášení nefunkčního skladu, co se děje pak?
 1. nový usecase - zapojení třetí strany, je nutné a nebo správce zvládne ETL sám?
 1. citace zakládací listiny - asi neveřejný dokument?
 1. kooperace a třetí strany -  je zde někdo další krom firmy, co to původně vystavěla?
 1. Monitoring - Azure hl9d8 aktivně? Applicatrion Insights? něco dalšího?
 1. Zabbix - předpokládám on premise servery?
+1. Oracle DB u studoven - kde se berou data?
+1. Studovny a RECETOX
+   - punková implementace, jak to je?
+   - Lze ukázat veřejně?
+   - není divné, že i já mám přístup do RECETOXu a Age friendly university? Nebo jsem dostal v rámci DP přístup?
 
 ### ????
 1. Proč se zvolil DWH
@@ -91,7 +96,27 @@
 - Np_prac_osoba
    - Akademik - string neba další entita?
    - oscis - vyznam?
-   
+
+   ## TODO
+   1. Přepsat procesy dle dedrleho
+   1. zminit jiru
+   1. zminit chybejici proces vyhodnoceni
+      1. chybi, ale kpi tak, jak jsou nastaveny nejsou slozity
+      1. navhrnout sledovani vyuziti usecasu
+   1. dle springerove centralizovana globální high-touch sluzba
+      1. potvrzuje heterogenitu
+      1. vlastník je v kategorii manager/product owner
+## ISEP usecase
+- nezvládá kapacitní plánování do budoucna
+   - predikce úvazků na projekty, na základě úvazků
+
+1. incident management
+   - ohlašuje se zpátky reportujícímu vyřešení problému?
+   - bylo už něco nahlášeno?
+1. kolik bylo požadavků na nový usecase? 
+1. dostupnost služby - počet incidentů, vypadlo to někdy?
+1. aktivní nabízení DWH - proces. jak vypadá?
+
 
 
 ## LINKS
