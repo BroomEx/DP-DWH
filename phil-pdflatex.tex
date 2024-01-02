@@ -375,8 +375,12 @@ Zajišťuje, aby byly procesy vykonávány správně dle nastavených politik a 
 Soubor aktivit, které je třeba vykonat pro dosažení cíle. Aktivity přijímají definované vstupy, které následně za pomoci nástrojů transformují na požadované výstupy.
 \paragraph{Funkce (Function)}
 Pojem funkce má několik významů. Primárně se jedná o skupinu lidí, nástrojů a jiných zdrojů, které zainteresované osoby využívají k provádění procesů a činností. Dále se pak může jednat o zamýšlený účel konfigurační položky, osoby, týmu nebo procesu. Posledním významem pojmu je pak vyjádření toho, zda je zamýšlený úkol vykonáván správně. 
-\paragraph{Role (Role)}
+\paragraph{Role}
 Soubor činností, povinností a pravomocí přidělených konkrétní osobě, anebo skupině osob. Jednotlivec, nebo skupina může mít více rolí.
+\paragraph{Incident}
+Jako incident je označována situace, kdy dojde k neplánovanému omezení buď to celé IT služby a nebo jen její dodávané kvality.
+\paragraph{Problém (Problem)}
+Za problémy jsou označovány příčiny, které způsobují vznik jednoho či více incidentů a které typicky nejsou známy v čase vzniku incidentů.
 \paragraph{Kvalita (Quality)}
 Schopnost služby, výrobku nebo procesu poskytnout požadovanou hodnotu. Kvalita je ukazatel účinnosti a efektivity procesů.
 \section{Základní principy ITSM}
@@ -676,6 +680,14 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
         \label{tab:management_practices_ITIL}
     \end{table}
 
+\section{Jira}
+\label{Jira}
+V rámci ÚVT MUNI je na správu IT projektů využíván softwarový online nástroj JIRA od společnosti Atlassian, který patří mezi jeden z nejrozšířenějších nástrojů určených pro projekt management. Tento nástroj je součástí projekt management platformy Atlassian, která nabízí komplexní sadu nástrojů určených pro správu projektu. Tato platforma má v současnosti podíl na trhu okolo 23\% \parencite{atlassian} a patří tak mezi leadery na poli nástrojů pro projektový management a týmovou kolaboraci.
+
+V rámci skupiny nástrojů platformy Atlassian je tak možné řídit v rámci projektového managementu vše, počínaje jeho plánováním samotného projektu, jeho rozdělení do jednotlivých částí, které se skládají z menších úkolů, alokaci zdrojů, tvorbu časových harmonogramů atp. Díky hluboké integraci s ostatními službami v rámci platformy a se službami třetích stran, jako je například služba Clockify, je možné sledovat již spotřebované zdroje, díky integraci s verzovacími nástroji typu GitHub je možné jednotlivé úkoly propojovat přímo s odevzdanou prací atp. Kromě funkcí, které umožňují plánování a kontrolu postupu projektu také poskytuje dobrý nástroj pro tvorbu tiketů, správu bugů a celkově pro digitalizace jakýchkoliv procesů.  
+
+Díky velké flexibilitě je možné tento nástroj využít ve většině managerský frameworků, jako je COBIT, FitSM a tedy také v rámci ÚVT využívaného frameworku ITIL.
+
 \chapter{DWH v rámci Masarykovy univerzity}
 Masarykova univerzita generuje, jako každá srovnatelně velká instituce, velké množství provozních dat, která jsou však roztříštěna mezi jednotlivými odděleními a to v různých, často vzájemně nekompatibilních formátech. Vzhledem k tomuto stavu, je velmi komplikované tato data jakkoliv využívat , což vedlo k rozhodnutí  vybudovat v rámci univerzity jednotného datové úložiště, které by sloužilo jako datová báze pro analytické nástroje, díky kterým je následně možné takto shromážděná data analyzovat a dále využívat, další velkým benefitem je možnost automatizovat některé procesy, které je nutné v rámci činnosti univerzity vykonávat, jako jsou například tvorby různých reportů provozně ekonomického typu. Optimalizace a zefektivnění procesů souvisejících s chodem a řízením univerzity je také dobrá startovní pozice k dosáhnutí stavu daty řízené univerzity \footnote{Data Driven University}, zlepšení jejího běžného provozu a v neposlední řadě také poskytnutí lepší podpory podpory výuky.
 
@@ -700,30 +712,22 @@ V neposlední řadě je pak součástí zakládací listiny též definice cílo
 
 Účel služby datového skladu je dle její webové stránky \footnote{viz. https://it.muni.cz/sluzby/datovy-sklad-na-mu} poskytnutí nástroje, který je schopen sbírat data z různých zdrojů, provést jejich standardizaci a následně je tranformované poskytnout buď ve formě prostých dat, které si může uživatel - zákazník dále dle potřeby zpracovat a nebo ve formě již zpracovaných reportů, které poskytují informace. 
 
-\subsection{Procesy}
-Nedílnou součástí služby jsou také její procesy, které slouží k jejímu úspěšnému provozování a rozvoji. Procesy, které jsou v rámci datového skladu využívány, mají za úkol zajištění její dostupnosti a postupné zlepšování. Za tímto účelem je tedy již přímo v zakládací listině částečně definován proces sloužící k žádosti o nový usecase, dále je pak nutné definovat proces pro nahlášení nefunkční služby a neposlední řadě proces týkající se aktivní akvizice nový usecasů prostřednictví nabízení datového skladu jako služby přímo koncovým uživatelům. Všechny tyto procesy jsou detailněji popsány níže.
-\begin{itemize}
-  \item Žádost o nový usecase - Proces požadavku na tvorbu nového reportu má několik fází, které jsou vyobrazeny na obr. \ref{fig:new_report}. 
-        \begin{itemize}
-            \item První fází je kontaktování správce datového skladu s novým požadavkem a to skrze webový formulář dostupný na stránkách datového skladu. V tuto chvíli by měl uživatel již mít rozmyšlen konkrétní požadavek a to včetně potřebných dat. 
-            \item Následuje konzultace se správcem datového skladu, během které se posoudí vhodnost navrhovaných dat pro tvorbu požadovaného reportu a celkovou možnost realizace.
-            \item V případě, že je požadovaný report realizovatelný, musí žadatel přidělit přístup k požadovaným datům správci DWH a detailní popis dat, které jsou pro daný usecase třeba. Následně správce zvolí vhodné tabulky, které jsou v reportu využity.
-            \item Finální fází je pak nahrání dat do datového skladu, jejich transformace do požadovaného tvaru a tvorba samotného výstupu, kterým z pravidla bývá report vytvořený pomocí PowerBI, toto však nemusí být nutností a výstup může mít i jinou podobu. 
-        \end{itemize}
-  \item Nahlášení nefunkční služby - Pro nahlášení nefunkční služby slouží formulář uvedený na stránkách datového skladu v katalogu služeb Masarykovy univerzity, tento proces je vyobrazen na schématu \ref{fig:service_fail}
-        \begin{itemize}
-            \item Nahlášení nefunkční služby
-            \item Magie
-            \item Profit
-        \end{itemize}
-  \item Aktivní nabízení služby datového skladu - Cílem procesu je pro aktivní přístup k rozšiřování reportů, využívajících datový sklad, díky čemuž by měl být co nejvíce využit jeho potenciál i v rámci dat, jejich majitelé o existenci datového skladu nevědí, popřípadě jeji z nějakého důvodu nevyužívají. Jednotlivé procesní fáze jsou vyobrazeny na \ref{fig:active_offer}
-        \begin{itemize}
-            \item Nabídka služby DWH
-            \item Magie
-            \item Profit
-        \end{itemize}
-\end{itemize}
+\subsection{Procesy služby}
+Nedílnou součástí služby jsou také její procesy, které slouží k jejímu úspěšnému provozování a rozvoji. Služba datového skladu má implementovány procesy pouze ze čtvrté a páté fáze frameworku ITIL v3, která se týká provozu (podpory)  a rozvoje (kvality) služby viz. \ref{fig:itil3_schema}. Z této fáze jsou implementovány procesy a funkce, které se týkají správy incidentů, správy problémů a akvizice nových usecasů, postavených na službě datového skladu. V služby je také využit service desk, který ale není přímo integrální součástí služby datového skladu, ale jedná se service desk sloužící celé univerzitě. Jednotlivé procesy jsou detailněji rozepsány níže.
 
+\paragraph{Service desk}
+V rámci frameworku ITIL je Service desk klíčový jako tzv. jednotný kontaktní bod \footnote{z angl. single point of contact, zkráceně SPOC}, které je zodpovědně za prvotní kontakt s uživateli služby, má na starosti evidenci požadavků, incidentů, ale i běžných provozních záležitostí, následně pak z evidovaných událostí zakládá tikety, které propaguje směrem k zodpovědným týmům. 
+
+Jak již bylo zmíněno, službu service desku pro účely služby datového skladu zajišťuje service desk, který provozuje ÚVT MUNI a slouží jako jednotný kontaktní bod pro většinu služeb, které Masarykova univerzita poskytuje, typicky tedy pro ty, které jsou zahrnuty v katalogu IT služeb Masarykovy univerzity \footnote{viz. https://it.muni.cz/sluzby}. Service desk je realizován za pomoci nástroje JIRA, viz \ref{Jira} a je dostupný ze stránek uživatelské podpory \footnote{viz. https://it.muni.cz/kategorie/uzivatelska-podpora}.
+
+\subsubsection{Rozvoj služby}
+\paragraph{Žádost o nový usecase} - Jedná se o proces týkající se rozvoje služby datového skladu a jeho výstupem je zpracování požadavku na tvorbu nového uživatelského reportu nebo unikátní datové sestavy. Jednotlivé fáze procesu jsou rozepsány níže a vyobrazeny na schématu \ref{fig:new_report}. Tento proces v zásadě slouží i pro žádosti související s úpravou již existujícího usecasu. V tomto případě se musí projít proces stejně, jako v případě nového usecasu, neboť je potřeba smysluplnost a realizovatelnost požadavku a následně ověřit dostupnost a integritu dat a přístup k nim stejně, jako se tak děje v případě žádosti o nový usecase.
+\begin{itemize}
+    \item První fází je kontaktování správce datového skladu s novým požadavkem a to skrze webový formulář dostupný na stránkách datového skladu. V tuto chvíli by měl uživatel již mít rozmyšlen konkrétní požadavek a to včetně potřebných dat. 
+    \item Následuje konzultace se správcem datového skladu, během které se posoudí vhodnost navrhovaných dat pro tvorbu požadovaného reportu a celkovou možnost realizace.
+    \item V případě, že je požadovaný report realizovatelný, musí žadatel přidělit přístup k požadovaným datům správci DWH a detailní popis dat, které jsou pro daný usecase třeba. Následně správce zvolí vhodné tabulky, které jsou v reportu využity.
+    \item Finální fází je pak nahrání dat do datového skladu, jejich transformace do požadovaného tvaru a tvorba samotného výstupu, kterým z pravidla bývá report vytvořený pomocí PowerBI, toto však nemusí být nutností a výstup může mít i jinou podobu, jako je například specifická datová sestava, která může být uživatelem dále zpracována. 
+\end{itemize}
     \begin{figure}[t]
         \begin{center}
             \includegraphics[width=11cm]{img/new_usecase.png}
@@ -731,14 +735,15 @@ Nedílnou součástí služby jsou také její procesy, které slouží k jejím
         \caption{Proces požadavku na nový report. Vlastní zpracování}
         \label{fig:new_report}
     \end{figure} 
-    
-        \begin{figure}[t]
-        \begin{center}
-            \includegraphics[width=11cm]{img/service_failure_process.png}
-        \end{center}
-        \caption{Proces nahlášení problému se službou. Vlastní zpracování}
-        \label{fig:service_fail}
-    \end{figure} 
+
+\paragraph{Aktivní nabízení služby datového skladu} - Proces týkající se rozvoje služby. Cílem procesu je pro-aktivní přístup k rozšiřování uživatelských usecasů, postavených na službě datového skladu. Jednotlivý uživatelé nemusí být seznámeni s možností využití datového skladu, nehledě na to, že využití služby datového skladu není z uživatelského hlediska triviální záležitostí a tak je vhodné aktivně nabízet datový sklad jako službu již s předem připravenými vhodnými usecasy. Díky aktivnímu nabízení služby je tak možné implementovat DWH na větším množství dat. Jednotlivé procesní fáze jsou vyobrazeny na \ref{fig:active_offer} a popsány níže. 
+        \begin{itemize}
+            \item V prvotní fázi aktivní propagace služby datového skladu, dochází ke kontaktování možných nových uživatelů. Děje se tak například za pomoci interního oběžníku, nebo přímým kontaktem fakult a pracovišť a zodpovědných osob.
+            \item Obsahem obecného oběžníku je popis samotné služby datového skladu a již fungujících usecasů, které jsou na něm postaveny.
+            \item V případě přímého kontaktu je kromě výše uvedeného součástí i konkrétní aplikace s popisem jejího přínosu pro dané pracoviště s případnou referencí na podobný usecase, který je již v podobném prostředí nasazen.
+            \item Pokud dojde k vytvoření zájmu, dojde k zahájení procesu, který je totožný se standardním procesem \emph{Žádosti o nový usecase}, s tím rozdílem, že zde je přeskočena první fáze kontaktu a přechází se rovnou do fáze specifikace požadovaného usecasu.
+        \end{itemize}
+Samotný proces aktivního nabízení není v současné době v užívání (?) a tak ještě není zcela odlazen a nemá konkrétní výsledky. 
 
     \begin{figure}[t]
         \begin{center}
@@ -747,9 +752,31 @@ Nedílnou součástí služby jsou také její procesy, které slouží k jejím
         \caption{Proces aktivního nabízení DWH. Vlastní zpracování}
         \label{fig:active_offer}
     \end{figure} 
+
+\subsubsection{Správa incidentů a správa problémů}
+Vzhledem k tomu, že služba datového skladu má v současné době malý rozsah, nejsou incidenty a problémy nikterak rozlišovány a jsou proto řešeny jedním procesem. 
+
+\paragraph{Nahlášení incidentu/problému} - Tento proces slouží pro nahlášení všech zaznamenaných incidentů spojených s funkčností a výstupní kvalitou služby. K tomuto účelu slouží formulář uvedený na stránkách datového skladu v katalogu služeb Masarykovy univerzity \footnote{viz. }, tento proces kromě samotného týmu datového skladu zahrnuje centrální service desk Masarykovy univerzity, který je zodpovědný za komplexní správu IT služeb v rámci celé Masarykovy univerzity. Celý proces vyobrazen na schématu \ref{fig:service_fail} a popsán níže.
+    \begin{itemize}
+        \item Identifikace incidentů a problémů probíhá, jak již bylo zmíněno, zejména za pomoci uživatelů, kteří pokud objeví incident/problém, který souvisí s datovým skladem, provedou jeho nahlášení pomocí zmíněného formuláře na webových stránkách datového skladu MUNI. Tento formulář je realizován pomocí service desku Masarykovy univerzity a po nahlášení dojde k vytvoření tzv. tiketu v interním systému Jira. 
+        \item Obsluha service desku následně zkontroluje stav konkrétního usecasu, který se týká reportovaného incidentu a v případě potvrzení jeho existence, nejprve provede kontrolu, zdali se nejedná o plánovaný výpadek služby, který může být způsoben například aktualizací daného reportu nebo samotné služby datového skladu. 
+        \item Dle výsledků předchozího kroku je buď informován uživatel ohledně plánované odstávky a nebo je problém dále eskalován směrem k týmu datového skladu. 
+        \item Tým datového skladu následně posoudí závažnost reportovaného problému a provede jeho prioritizaci na jejím základě buď problém vyřeší své pomocí a nebo v případě velké komplikovanost kontaktuje dodavatele datového skladu v jehož součinnosti zjednají nápravu. 
+        \item Ohlašuje se se to pak zpětně ohlašovateli?
+    \end{itemize}
+        
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/service_failure_process.png}
+        \end{center}
+        \caption{Proces nahlášení problému se službou. Vlastní zpracování}
+        \label{fig:service_fail}
+    \end{figure} 
     
 \section{Technické řešení}
-Datový sklad je postaven zejména na technologií společnosti Microsoft, jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
+Datový sklad je z pohledu ukládaných dat navržen jako hybridní, tzn. jedná se o kombinaci hlubokého a širokého datového skladu, kdy jsou je v současnosti využíváno zejména jeho hluboké datové charakteristiky, viz například usecasy Studovy a nebo RECETOX v sekci Současné využití níže. Z pohlednu prostředí, ve kterém je provozován, se jedná Operational Data Store a to zejména z důvodů jeho primárního zpracování dat z provozních procesů. V budoucnu je možný a pravděpodobný postupný přechod k typu Enterprise data warehouse, který bude mít za cíl vybudování jednotného datového úložiště pro celou univerzitu.
+
+Datový sklad by navržen a postaven externí společnosí a to zejména na technologiích společnosti Microsoft, jeho rámcové schéma je vyobrazeno na obrázku \ref{fig:dwh_muni}
 
     \begin{figure}[t]
         \begin{center}
@@ -767,27 +794,68 @@ Data jsou v tomto případě uložena ve formě datového schématu zvaného hv�
 
 V této podobě je pak již možné data přímo zpracovávat analytickými nástroji, jako je například analytický a vizualizační nástroj PowerBI, který je možné připojit přímo na databázi datového skladu, čímž je vždy zajištěna aktuálnost dat. Pomocí nástroje PowerBI lze následně data dále upravovat, vytvářet kontingenční tabulky nebo filtry a následně výsledky vizualizovat pomocí vhodných tabulek, grafů atp. ve formě uživatelských reportů. Tyto reporty lze následně velmi snadno sdílet, neboť je možné je uveřejnit například ve formě webové stránky.
 
-Celá konstelace služeb, které dohromady tvoří datový sklad Masarykovy univerzity je nutné monitorovat, aby nedošlo k jeho výpadků. Vzhledem k tomu, že je sklad z velké části provozován v prostředí Microsoft Azure, je jeho dostupnost velmi dobrá a lze k monitoringu využít nástroje samotného prostředí Azure, jako jsou aplikační logy Application Insights a na nic postavené alerty, které v případě zaznamenání problému upozorní správce datového skladu\footnote{ověřit, jestli je to pravda}. Vzhledem k tomu, že některé části datového skladu, jako je například STAGE server, nejsou provozovány v prostředí Azure, je k monitoringu těchto prostředků využívána služba Zabbix, která je přímo určena k monitoringu webových, databázových a jiných serverů.\footnote{má smysl více rozepisovat? https://www.zabbix.com/ zjistit, jestli je to opravdu tak}
+Celá konstelace služeb, které dohromady tvoří datový sklad Masarykovy univerzity je nutné monitorovat, aby nedocházelo k výpadkům delším, než je nezbytně nutné. Vzhledem k tomu, že je datový sklad z velké části provozován v prostředí Microsoft Azure, je jeho dostupnost velmi dobrá a lze k monitoringu využít nástroje samotného prostředí Azure, jako jsou aplikační logy Application Insights a na nich postavené alerty, které v případě zaznamenání problému upozorní správce datového skladu. Vzhledem k tomu, že některé části datového skladu, jako je například STAGE server, nejsou provozovány v prostředí Azure, ale jako on premise servery v prostředí samotné univerzity, je k monitoringu těchto prostředků využívána služba Zabbix, která je dostupná pod licencí GNU GPL a která je přímo  určena k monitoringu webových, databázových a jiných serverů.
 
-\section{Současný stav}
-Na tomto datovém skladě je v současnosti již implementováno několik uživatelských aplikací, jako je například interaktivní report využití studoven, který na základě dostupných dat pocházejících z Oracle DB a dále pak z například interních monitorovacích turniketů, vizualizuje ve formě takzvané heatmapy vytíženost jednotlivých studoven  a je z něj tak možné vysledovat, které studovny jsou nejvíce vytížené a v kterou dobu. 
+\section{Současné využití}
+Prvními uživatelskými aplikacemi, které využívaly datový sklad byly aplikace generující reporty využití jednotlivých studoven a report sloužící jako podpora rozhodování v centru RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Oba dva reporty jsou pilotními projekty, které byli implementovány v prvopočátcích datového skladu a jejich technické řešení je tak lehce odlišné od nově implementovaných usecasů. 
 
-Dalším z příkladu využití datového skladu v rámci Masarykovy univerzity je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému ERP, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou. Automatická tvorba tohoto reportu šetří přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
+Interaktivní report ukazující využití studoven využívá dat pocházejících z interních aplikací, které sledují přístupové turnikety do učeben, . Takto sesbíraná data následně vizualizuje ve formě takzvané heatmapy, která na časové matici zobrazuje, které časy je daná učebna nejvíce využívána, např na \ref{fig:cps} je zobrazena heatmapa vstupů do centrální počítačové učebny. Vyjma heatmap obsazenosti učeben, nabízí další statistická data, jako je například délka sezení, otevírací doba a nebo obsazenost jednotlivých pracovišť v čase. Celý report je dostupný pro všechny studenty i zaměstnance z reportovacího portálu datového skladu. \footnote{https://it.muni.cz/sluzby/datovy-sklad-na-mu/reportovaci-portal-mu}
 
-\section{Evaluace a optimalizace procesu}
-sadasdasd
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/ucebny.png}
+        \end{center}
+        \caption{Heatmapa vstupů do CPS}
+        \label{fig:cps}
+    \end{figure} 
+ 
+Další ze zmíněných pilotních aplikací je pak manažerský report pracující s ekonomickými daty centra RECETOX\footnote{z angl .Research Centre for Toxic Compounds in the Environment}. Tento report má jako primární úkol poskytnout podklady pro management, které se týkají lidských zdrojů a jejich úvazků na jednotlivých projektech v rámci centra. Report je  založen na datech pocházejících primárně se informačního systému ERP\footnote{z angl. Enterprise resource planning, neboli plánování podnikových zdrojů}, které mají formu excelových souborů a před samotným nahráním do datového skladu procházejí manuální úpravou, což u služby tohoto typu nebývá zbykem, neboť samotný proces extrakce by měl být plně automatický. 
+
+Report má tři hlavní výstupy, které pomáhají organizaci celého centra a to plánované úvazky, rozdíly úvazků a hledané pozice. Byť automatizace není v tomto případě úplná, šetří automatická tvorba tohoto reportu přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
+
+Oba dva pilotní reporty je možné zobrazit z reportovacího portálu datového skladu \footnote{https://it.muni.cz/sluzby/datovy-sklad-na-mu/reportovaci-portal-mu}, který sdružuje reporty využívající univerzitní datový sklad a je možné je skrze tento portál dohledat. Přímo z reportovacího portálu je také možné vytvořit požadavek na nový report.
+
+Jednotlivé reporty jsou v rámci portálu rozčleněny do tří kategorií dle původu jejich dat, která mohou být veřejná, ekonomická a nebo projektová. 
+
+Reporty pracující s veřejnými daty slouží zejména k prezentaci obecných dat o univerzitě a agregovaných dat tykajících se studentů. Všechna data jsou zde anonymizována. Mezi reporty v této kategorii patří například report \emph{Dotazník spokojenosti se službami ÚVT}, který ukazuje výsledky dotazníkového šetření spokojenosti se službami Ústavu výpočetních technologií na MUNI a nebo \emph{Akreditované studijní programy}, ukazující data o jednotlivých akreditovaných oborech univerzity, jejich celkové počty, vývoj v čase, rozdělení dle fakult atp.
+
+Ekonomické reporty pracují zejména ekonomickými údaji a výsledky univerzity. Reporty získávají data převážně z ERP systému a jsou zpravidla neveřejné. Mezi ekonomické reporty patří například report \emph{Rozvaha a výnosy}, který se zaměřuje na ekonomický výkon jednotlivých fakult.
+
+V poslední kategorii projektových dat se nacházejí reporty se specifickým určením, které typicky kombinují data z vícero zdrojů, jako jsou obecná data již uložená v datovém skladu typu personální nebo účetní data a dále pak data, která jsou specifická pro daný projekt. Tyto data bývají často v nestandardizované podobě a v různých formátech, jako jsou například excel soubory, sharepoint seznamy atp. Do této kategorie reportů patří i oba pilotní reporty \emph{Přehled využívání počítačů v univerzitních studovnách} a \emph{Přehled úvazků pro RECETOX}, které jsou popsány výše, dalšími reporty z kategorie pak je \emph{Age-friendly univerzity}, který shrnuje data z projektu \emph{MUNI pro každý věk\footnote{https://starnuti.fss.muni.cz/muni-pro-kazdy-vek}}, který se se věnuje analýze anonymizovaných zaměstnaneckých dat typu pohlaví, věku, délce kontraktu atp.
+
+\section{Evaluace současného stavu}
+V rámci ÚVT probíhal v roce 2020 výzkum kvality služeb, který byl součástí diplomové práce Mgr. Pavlíny Špringerové - \citetitle{Springerova2020}, v jehož rámci byla provedena analýza a evaluace několika vybraných služeb poskytovaných Masarykovou univerzitou. V rámci výstupu z výzkumu bylo identifikováno několik kategorií, dle kterých lze služby na MUNI třídit. 
+
+Dle tohoto výzkumu lze službu datového skladu charakterizovat jako \emph{centralizovanou globální high-tech službu.} 
+
+Že služba je centralizovaná můžeme říci, pokud splňuje kriteria \emph{Modelu č.1}, které říkají, že centralizovaná služba je taková, která v žádné své části provozu nespoléhá na externího dodavatele a vše se řeší v rámci týmu, který je za provoz služby zodpovědný.\parencite[s. 103]{Springerova2020} Jedinými externími spolupracovníky v tomto případě byla externí společnost, která datový sklad původně implementovala, ta však již do samotného provozu služby nikterak nezasahuje. 
+
+Služba je globální, pokud je poskytována celé univerzitě a ne jen vybraným fakultám či pracovištím.\parencite[s. 47]{Springerova2020} V tomto bodě by bylo možní uvažovat o službě i jako o \emph{globálně modifikované}, neboť jednotlivé dílčí usecasy slouží jen pro určitá pracoviště, co se ale samotného provozu služby týče, tak všechny procesy jsou stejné pro všechny uživatele a tudíž má služba spíše globální charakter.
+
+High-tech služba v případě služeb obecně znamená, že služby není potřeba přímá interakce se zákazníkem, který v tomto případě pouze konzumuje její výstup. Interakce nastává až pouze v případě požadavku na změnu služby, nebo například v případě vzniku incidentu či problému.\parencite[s. 47]{Springerova2020} Služba datového skladu může mít v tomto ohledu určitý přesah do high-touch služby, jelikož minimálně v počátcích jejího poskytování je interakce nutná, vzhledem k tomu, že jsou však tyto interakce minimální, řadím ji spíše mezi high-tech služby.
+
+Dalším z využitelných výstupů je typologie vlastníka služby, z původního výzkumu vyplývá, že se v rámci služeb na MUNI vyskytují čtyři základní typy vlastníků - technický, pro-uživatelský, nezainteresovaný a manager/product owner, kteří jsou rozděleni dle jejich technických schopností, přístupu k uživatelům atp.\parencite[s. 78]{Springerova2020} Vlastník služby datového skladu dle této typologie vychází jako typický manager/product owner, neboť má neboť jeho úkolem je holistický přístup k službě, její rozvoj i znalost technických detailů.  Tato klasifikace je zcela očekávaná, neboť současný vlastník služby byl za tím účelem zvolen od samého začátku, což dle původního výzkumu je, co se analyzovaných služeb týče, spíše výjimka. 
+
+V zakládací listině služby, je zmíněn jediný KPI, který se věnuje počtu usecase, který je stanoven na dva pilotní usecasy a velmi vágně definované "zvýšení do konce roku", které nedefinuje jasný počet usecasů, kterých je třeba dosáhnout. Pro upřesnění však lze využít řádky \emph{Odhadnutý počet uživatelů využívající službu} a \emph{Odhadnutý počet požadavků za rok}, kterou taktéž se zakládací listiny. V těch to parametrech je definováno, že počet uživatelů, v tom to případě uživatel = usecase, je odhadován na deset za rok a stejně tak počet požadavků na službu by měl být deset ročně. 
+
+Vzhledem k tomu, že dle reportovacího portálu je v současnosti v provozu jen sedm usecasů, nebylo těchto cílů v roce 2023 dosaženo. Zde je však důležité zmínit, že současnosti se finalizuje práce na několika nových usecasech a tak lze splnění tohoto milníku očekávat v prvním čtvrtletí roku 2024.
+
+Počet žádostí na nový usecase..... Doplnit od p. Švaříčka
+
+
+
 
 
 
 
 \chapter{Aplikační část}
+V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících ze systému ISEP, který je určen k evidenci projektů na Masarykově univerzitě. Vzhledem k citlivé povaze dat však zde realizovaný a prezentovaný usecase vychází pouze z datového modelu a samotná data jsou náhodně vygenerovaná a nereflektují reálný stav. V případě využití reportu v reálném provozu je možné jej přepojit na reálná data. 
+
+
+\section{Zpracovávaný usecase - data z ISEP}
 dasdasd
 
-\section{Zpracovávaný usecase - provozně ekonomická data}
-dasdasd
 
-
-\section{Návrh implementačního procesu}
 \section{Zavedení}
 
 \chapter{Závěr}
