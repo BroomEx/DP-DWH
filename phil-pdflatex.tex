@@ -356,7 +356,48 @@ Vzhledem k tomu, že datové sklady typicky zpracovávají a následně drží v
   \label{fig:data_marts_schema}
 \end{figure}  
 
+\section{Datový dashboard}
+Výstupy z datového skladu a jednotných datových úložišť obecně mohou mít mnoho různých forem, v principu se však vždy jedná o pouhý koncový bod, který dle zadaných filtrů poskytuje požadovaná data.
 
+Datový sklad na Masarykově univerzitě momentálně slouží primárně jako datová báze pro přehledové dashboardy usnadňující řízení a monitoring daných projektů, oddělení, služeb atp. Z těchto důvodů se následující podkapitola věnuje základním parametrům potřebným pro návrh funkčního dashboardu a základním zásadám vizualizace, které je dobrém v rámci jejich návrhu dodržovat.
+
+\subsection{Klíčové parametry dashboardu}
+Kvalitní dashboard by měl splňovat několik základních pravidel, které se souhrnně označují akronymem SMART, odvozeným z anglických názvu těchto pravidel, která jsou samotná popsána níže \parencite[s.~1]{Kratochvil2014}:
+\begin{compactitem}
+    \item Synergie - dashboard by měl důležité a vzájemně závislé informace zobrazovat na jedné obrazovce
+    \item Monitoring - v rámci dashboardu by měli být jasně definované a vizualizované požadované KPI\footnote{z angl. Key Performance Indicator, klíčový ukazatel výkonosti} a jejich případná změna
+    \item Přesnost - data, které dashboard vizualizuje musí být vždy přesná a důveryhodná
+    \item Citlivost - dashboard by měl sám aktivně sledovat prahové meze a upozornit na jejich překročení
+    \item Včasnost - dashboard musí vždy zobrazovat aktuální data, dle požadavků dashboardu
+\end{compactitem}
+Přesnost, citlivost a včasnost je v našem konkrétním případě zajištěna samotným datovým skladem, jehož je toto esenciální součástí a není tedy potřeba data dále zpracovávat. 
+
+Pro splnění bodů synergie a monitoringu, je však potřeba definovat další základní parametry, které následně významně ovlivní další postup. Mezi tyto základní parametry patří zejména samotný účel, kterému má konkrétní dashboard sloužit, skupina uživatelů, která má s dashboardem pracovat a vhodné metriky, které má dashboard vizualizovat a díky kterým je možné vizualizovat požadované KPI \parencite[s.~6]{Faron2016thesis}. 
+
+Z výše uvedených základních parametrů následně vyplývá i základní kategorizace dashboardů, která je dle typu zobrazovaných dat, jejich míry detailu, četnosti aktualizace atp. dělí to tří kategorií, kterou jsou následující\parencite[s.~3]{Faron2016thesis}:
+\begin{compactitem}
+    \item Strategické - zachycují současný stav monitorované situace v přehledové a ne moc detailní formě. Jsou tvořeny převážně agregovanými daty a jejich primární účel je poskytnout rychlý, stručný a jasný přehled, na jehož základě je možné identifikovat možná místa problémů, či zlepšení. Strategické dashboardy bývají často statické, s dlouhým intervalem aktualizací.
+    \item Analytické - slouží k monitoringu trendů a výsledků v rámci monitorované situace. Poskytují data v mnohem detailnější formě s možností usazené do širšího kontextu, z tohoto důvodu bývají zpravidla interaktivní, s možností detailního filtrování.
+    \item Operační - poskytují monitoring dané situace ideálně v reálném čase a slouží jako každodenní pracovní nástroj podporující rozhodování. Tento typ dasboardů obsahuje nejméně informací ze všech zmíněných a vše je zde podřízeno maximální efektivitě a rychlosti doručení nejaktuálnějších dat.  
+\end{compactitem}
+
+Výše zmíněná kategorizace není v praxi brána příliš dogmaticky a dashboardy bývají velmi často tvořeny jako kombinace jednotlivých kategorií dle jejich typu předávaných informací, skupině uživatelů a dalších základních parametrů.
+
+\subsection{Správná vizualizace dat}
+Pokud jsou předchozí podmínky a parametry splněny, je nutné samotná data vizualizovat. To může být provedeno vícero způsoby, nejčastěji se však jedná o formu jednoho či více grafů. Souhrn pravidel pro tvorbu kvalitního grafu a dashboardu je mimo rámec a hlavní zaměření této práce, v této podkapitole jsou tedy uvedeny pouze základní pravidla předpozornostních atritubutů a základních zákonů gestaltismu, které jsou z hlediska autora nejpodstatnější a díky kterým může být výsledný dashboard a jeho čtení značně zefektivněno. 
+
+Pro efektivní efektivní předání důležitých hodnot je vhodné využít již zmíněných předpozornostních atributů neboli výkyvů a vzorů, které podvědomě vyhodnocujeme jako více důležité. Zjednodušeně lze říci, že tyto atributy jsou realizovány např. jako zvýraznění KPI, velkých hodnotových odchylek a nebo extrémů. Díky tomuto zvýraznění nemusí uživatel aktivně hledat požadované informace, ale jsou mu efektivně vizualizovány \parencite[s.~70]{Marek2015thesis}.
+
+Vzhledem k tomu, že dashboard se typicky skládá z vícero prvků, je vhodné tyto prvky naformátovat a seskupit tak, aby jejich čtení bylo přehledné a jasné. K tomuto účelu je možné využít například základní zákony gestaltismu \parencite[s.73]{Marek2015thesis}, které jsou:
+\begin{compactitem}
+    \item Zákon podobnosti - podobně vypadající prvky vnímáme jako celek
+    \item Zákon blízkosti - prvky blízko u sebe vnímáme jako skupinu
+    \item Zákon propojenosti - prvky které jsou vizuálně propojené vnímáme jako celek
+    \item Zákon dobrého pokračování - prvky na sebe vhodně navazují
+    \item Zákon uzavření - prvky v ohraničené oblasti vnímáme jako skupinu
+\end{compactitem}  
+
+Cílem využití výše uvedených zákonů je předat požadované informace co nejefektivněji a nejsrozumitelněji. Uživatel by měl hlavní předávané informace získat ideálně na první pohled a případné doplňující informace by měli být snad čitelné a vyhledatelné právě díky jasnému propojení, ať už díky pozici, velikosti a nebo barvě. 
 
 \chapter{ITSM}
 Jak již bylo zmíněno v úvodní kapitole, velký rozmach informačních technologií a služeb v 60. letech 20. století si vyžádal vznik patřičných standardizovaných procesů, postupů a pravidel pro řízení služeb v prostředí podniků a organizací. Souhrnně je tento obor označován jako ITSM, neboli Information Technology Service Management, což je pojem, který se původně objevil pouze v rámci metodiky ITIL, ale postupně se rozšířil a zobecnil tak, že v současné době obecně pokrývá problematiku řízení IT služeb.\parencite[s.~20]{Matula2017} 
@@ -706,7 +747,7 @@ Framework ITIL v3 definuje službu jako \emph{způsob doručení zákazníkem po
 
 Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, kterým je v tomto případě Bc. Filip Švaříček\footnote{uvádět jménem?}, který spolu s Mgr Tomášem Bártkem tvoří tým zodpovědný za provoz a rozvoj datového skladu.
 
-Dále pak zakládací listina obsahuje definované základní KPI\footnote{z angl. Key Performance Indicator}, neboli klíčové ukazatele výkonosti, které byly v tomto případě nastaveny na počet uživatelů datového skladu, kdy uživateli jsou v tomto případě myšleny spíše jednotlivé usecasy, které jsou na datovém skladu postaveny. Jako prvotní cíl bylo stanoveno dosáhnutí alespoň deseti usecasů.
+Dále pak zakládací listina obsahuje definované základní KPI, neboli klíčové ukazatele výkonosti, které byly v tomto případě nastaveny na počet uživatelů datového skladu, kdy uživateli jsou v tomto případě myšleny spíše jednotlivé usecasy, které jsou na datovém skladu postaveny. Jako prvotní cíl bylo stanoveno dosáhnutí alespoň deseti usecasů.
 
 V neposlední řadě je pak součástí zakládací listiny též definice cílové skupiny, kterou jsou zejména manažeři rektorátu Masarykovy univerzity spolu s managementem ÚVT, obecně má ale datový sklad sloužit jako podpůrný prostředek pro uživatele potřebující vyhodnotit velké množství dat.
 
@@ -836,7 +877,7 @@ High-tech služba v případě služeb obecně znamená, že služby není potř
 
 Dalším z využitelných výstupů je typologie vlastníka služby, z původního výzkumu vyplývá, že se v rámci služeb na MUNI vyskytují čtyři základní typy vlastníků - technický, pro-uživatelský, nezainteresovaný a manager/product owner, kteří jsou rozděleni dle jejich technických schopností, přístupu k uživatelům atp.\parencite[s. 78]{Springerova2020} Vlastník služby datového skladu dle této typologie vychází jako typický manager/product owner, neboť má neboť jeho úkolem je holistický přístup k službě, její rozvoj i znalost technických detailů.  Tato klasifikace je zcela očekávaná, neboť současný vlastník služby byl za tím účelem zvolen od samého začátku, což dle původního výzkumu je, co se analyzovaných služeb týče, spíše výjimka. 
 
-V zakládací listině služby, je zmíněn jediný KPI, který se věnuje počtu usecase, který je stanoven na dva pilotní usecasy a velmi vágně definované "zvýšení do konce roku", které nedefinuje jasný počet usecasů, kterých je třeba dosáhnout. Pro upřesnění však lze využít řádky \emph{Odhadnutý počet uživatelů využívající službu} a \emph{Odhadnutý počet požadavků za rok}, kterou taktéž se zakládací listiny. V těch to parametrech je definováno, že počet uživatelů, v tom to případě uživatel = usecase, je odhadován na deset za rok a stejně tak počet požadavků na službu by měl být deset ročně. 
+V zakládací listině služby, je zmíněn jediný KPI, který se věnuje počtu usecase, který je stanoven na dva pilotní usecasy a velmi vágně definované "zvýšení do konce roku", které nedefinuje jasný počet usecasů, kterých je třeba dosáhnout. Pro upřesnění však lze využít řádky \emph{Odhadnutý počet uživatelů využívající službu} a \emph{Odhadnutý počet požadavků za rok}, taktéž ze zakládací listiny. V těch to parametrech je definováno, že počet uživatelů, v tom to případě uživatel = usecase, je odhadován na deset za rok a stejně tak počet požadavků na službu by měl být deset ročně. 
 
 Vzhledem k tomu, že dle reportovacího portálu je v současnosti v provozu jen sedm usecasů, nebylo těchto cílů v roce 2023 dosaženo. Zde je však důležité zmínit, že současnosti se finalizuje práce na několika nových usecasech a tak lze splnění tohoto milníku očekávat v prvním čtvrtletí roku 2024.
 
