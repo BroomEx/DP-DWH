@@ -818,14 +818,38 @@ Taktéž by bylo vhodné implementovat proces, sloužící k ukončení provozu 
 
 
 \chapter{Aplikační část}
-V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících ze systému ISEP, který je určen k evidenci projektů na Masarykově univerzitě. Vzhledem k citlivé povaze dat však zde realizovaný a prezentovaný usecase vychází pouze z datového modelu a samotná data jsou náhodně vygenerovaná a nereflektují reálný stav. V případě využití reportu v reálném provozu je možné jej přepojit na reálná data. 
+V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících z Informačního sys
+tému pro evidenci projektů na Masarykově univerzitě, zkráceně ISEP, který je určen k evidenci projektů na Masarykově univerzitě. Vzhledem k citlivé povaze dat však zde realizovaný a prezentovaný usecase vychází pouze z datového modelu a samotná data jsou náhodně vygenerovaná a nereflektují reálný stav. V případě využití reportu v reálném provozu je možné jej přepojit na reálná data. 
 
+Realizovaný dashboard se věnuje vizualizaci projektových dat na základě genderu osob zainteresovaných do jednotlivých projektů. V rámci přípravy realizace je nutné definovat následující základní parametry dashboardu.
 
-\section{Zpracovávaný usecase - data z ISEP}
-dasdasd
+Prvním parametrem je účel samotného dashboardu, kterým je poskytnutí snadného nástroje pro monitoring genderové vyváženosti projektů na Masarykově univerzitě. Pro tento účel je třeba zvolit sledované metriky, které slouží jako hlavní KPI dashboardu, z těchto metriky pak vyplývají i příslušné dimenze dat. Pro splnění účelu dashboard byly zvoleny následující metriky: 
+\begin{compactitem}
+    \item Úspěšnost návrhů na nové projekty dle genderu navrhovatelů - vizualizace genderového rozdělení projektů, které přešli z fáze návrhu do fáze realizace v komparaci s těmi, které zůstali ve fázi realizace.
+    \item Úspěšnost realizovaných projektů dle genderu jejich zpracovatelů - vizualizace relativního poměru úspěšné realizace.
+    \item ...
+\end{compactitem}
+vyjma hlavních KPI, má dashboard obsahovat i následující vedlejší KPI:
+\begin{compactitem}
+    \item Poměr můžu a žen v rámci všech zpracovávaných projektů - vizualizace poměrného genderového rozdělení v rámci všech realizovaných projektů v průběhu posledních pěti let.
+    \item ...
+\end{compactitem}
 
+Posledním základním atributem je pak skupina uživatelů, která bude daný dashboard využívat, v tomto případě se jedná primárně o management MUNI, ale vzhledem k anonymní podstatě dat a jejich společenskému charakteru by měl být výsledný report dostupný i veřejně. 
 
-\section{Zavedení}
+Z hlediska charakteru dashboardem zpracovávaných dat, u kterých z principu nedochází k časté aktualizace, se bude jednat o strategický dashboard. Data budou aktualizována klasickým ETL procesem datové skladu, který je prováděn jednou denně. 
+
+Pro samotnou realizaci dashboardu je využit program PowerBI, který je využíván většinou již fungujících usecasů v rámci služby datového skladu a jedná se tak o defacto standard pro vizualizaci dat.
+
+\section{Zdrojová data}
+Zdrojová data z ISEP je třeba pro využití v navrhovaném dahsboardu zpracovat za pomoci ETL procesu. O jednotlivé fáze procesu se stará samotná služba datového skladu a jsou rozepsány níže a to v rozšířené verzi, tak jak je ETL proces definován v knize \citetitle{Kimballc2004}.
+\paragraph{Extrakce} - v první fázi je třeba potřebná data extrahovat z původního úložiště ISEP. Toto úložiště je standardní relační databáze, data jsou tam extrahována pomocí služby \emph{Azure data factory} a příslušného konektoru. 
+\paragraph{Čištění a potvrzování} - vzhledem k charakteru dat lze předpokládat, že tyto fáze nejsou v tomto konkrétním případě důležité. U dat týkajících se jednotlivých projektů a genderu zainteresovaných osob lze předpokládat, že budou vždy vyplněny správně, v případě chybných dat není možné tyto data, vyjma explicitně chybějících hodnot, detekovat. Granularita dat je v tomto případě vždy 24 hodin.
+\paragraph{Doručování} - v polsední fází dochází k transformaci dat do datové hvězdy a její uložení. Všechny transformace, kterou jsou s daty provedeny jsou vedeny následující podkapitole.
+\subsection{Transformace dat}
+
+\section{Dashboard - PowerBi}
+
 
 \chapter{Závěr}
 \section{Diskuse výsledků práce}
