@@ -330,13 +330,41 @@ Fáze potvrzování má význam zejména v případech, kdy extrahujeme data z v
 Dalším důležitým úkolem je pak kontrola konfliktů mezi názvy jednotlivých dimenzí, neboť napříč datovými zdroji nemusí mít vždy stejný význam. \parencite{Kimballc2004}
 
 \paragraph{Doručení (Delivering)}
-Během doručovací fáze dochází k samotné transformaci dat do jednotného formátu a následně se z dat vytvoří dimenzionální model, nebo požadované schéma. Mezi ty patří například schéma hvězdice či datová krychle.\parencite[s.~19]{Kimballc2004}
+Během doručovací fáze dochází k samotné transformaci dat do jednotného formátu a následně se z dat vytvoří dimenzionální model, nebo požadované schéma. Z nichž mezi nejčastěji využívané patří schémata datové krychle a nebo hvězdy, která je rozepsána v následující podkapitole.\parencite[s.~19]{Kimballc2004}
 
 Výstupem této fáze je tedy patřičně setříděný a provázaný soubor dat, nad kterým je již možné provádět dotazy, jako nad celkem, tedy bez ohledu na datové zdroje a jejich formát. Takto zpracovaná data se pak následně nahrají do databáze samotného datového skladu.
 
 Díky ETL procesu jsou ve výsledku v datovém skladu data uložena v jednoduché a snadno dovažovatelně formě, což značně usnadňuje a urychluje přístup a následnou práci s těmito daty.
 
-\subsubsection{Využití datových skladů}
+\subsection{Datový model}
+V rámci transformační fáze ETL procesu dochází k transformaci původního datového modelu na model, který je využíván datovým skladem. Jak již bylo zmíněno, typicky se jedná o modely datové krychle neboli OLAP \footnote{y angl. Online Analytical Processing Cube} a nebo datové hvězdy. 
+
+Oba tyto modely pracují se stejným konceptem datových dimenzí, ale zásadně se liší v jejich reálné implementaci. Zatímco model datového hvězdy pracuje na základě  tabulek faktů, ke kterým jsou relačně připojeny tabulky obsahující jednotlivé dimenze. V případě datové krychle Jsou pak fakta a dimenze uloženy ve více rozměrech.\parencite[s.9]{Kimball2013} Oba datové modely jsou pak vyobrazeny na obrázku \ref{fig:star_olap} a blíže popsány níže. 
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/star_olap.png}
+  \end{center}
+  \caption{Model datové hvězdy a krychle.  \parencite[s.9]{Kimball2013}}
+  \label{fig:star_olap}
+\end{figure}  
+
+\subsubsection{Datová hvězda}
+Jak již bylo zmíněno model datové hvězdy je založen na relačních databázích a tabulkách dvojího, respektive trojího typu. Název modelu je odvozen od jeho vizualizace, kdy jsou k ústřední tabulce faktů paprskovitě připojeny tabulky s dimenzemi. Tabulka faktů obsahuje numerická data, která představují kvantifikovatelné ukazatele a nebo události.\parencite[s.10]{Kimball2013} Typicky se tak jedná o různé provozní a nebo obchodní KPI, jako jsou např. uskutečněné prodeje.
+
+K tabulkám faktů jsou pak pomocí relací připojeny tabulky obsahující jednotlivé dimenze, dle kterých je možné fakty analyzovat. Dimenze představují základní prvek ke kategorizaci a popisu faktů. Jednotlivé dimenze obsahují atributy, na základě který je možné provádět filtrace, pohledy, granularizaci atp. V případě již zmíněných prodejů, by se tak mohlo jednat například o prodané zboží, datum uskutečnění atp.
+
+Tyto dva zmíněné druhy tabulek může doplňovat ještě typ třetí, který se nazývá můstkový a slouží jako propojovací prvek mezi fakty a dimenzemi.
+
+V praxi běžně nastává situace, kdy může dojít k propojení více datových hvězd, čímž dojde ke vzniku datového modelu zvaného souhvězdí. K této situaci typicky dochází v případech, kdy spolu jednotlivé fakty úzce souvisí, např. prodej - platba. V tomto případě jsou obě tabulky samostatné datové hvězdy, ale jsou spolu vzájemně propojeny.\footnote{doplnit obr}
+
+\subsubsection{Datová krychle}
+Model datové krychle vychází z modelu datové hvězdy, oproti ní se však zásadně odlišuje tím, že data jsou uspořádána ve vícerozměrném poli, kdy každá dimenze představuje jeden rozměr tohoto pole. S takto strukturovanými daty je následně možné provádět základní operace, jako je například krájení - získání jednoprvkové podmnožiny, pivotování - otáčení datové krychle za účelem získání jiné perspektivy, kostkování - získání podmnožiny dat omezením jedné nebo více dimenzí. 
+
+Díky tomu, že data jsou v takto silně zpracované a provázané soustavě přímo uložena, je analýza dat, ve srovnání s klasickou datovou hvězdou založenou na relační databázi, velmi rychlá a efektivní.  Značnou nevýhodou však je nemožnost data editovat, neboť v případě každé změny je nutné přestavět celou datovou kostku, tento fakt také velmi omezuje využití tohoto modelu pro ukládání dat v reálném čase.
+
+Jak již bylo řečeno, oba zde zmíněno modely mají stejný logický základ s rozdílnou implementaci, v praxi je tak často využíván model datové hvězdy jako prvního fyzického úložiště dat, na základě kterého je po zachycení dostatečného množství dat vytvořena datová krychle. Hvězdicové schéma je také odolnější proti poškození dat a je tak vhodnější pro jejich zálohování a dlouhodobé zachování.\parencite[s.9]{Kimball2013}
+
+\subsection{Využití datových skladů}
 Datové sklady nacházejí velké využití zejména u velkých organizací a společností, ale i u tak velkých celků, jako jsou například samostatné státy. Velkou výhodou datových skladů je jejich perzistentní struktura, kdy data můžeme shromažďovat po dlouhou dobu a jejich analýzu provést až ve chvíli, kdy nastane její potřeba. Díky tomu se hodí na analýzu dat dlouhodobého charakteru.
 
 Jedním z typických zástupců tohoto typu nasazení je pak sdílení dat mezi vědeckými pracovišti. Například v případové studii \citetitle{Seneviratne20180124} \parencite{Seneviratne20180124} se autoři zabývali propojením vědeckých pracovišť Stanford University, Stanford Cancer Institute a California Cancer Registry za účelem vytvoření společného datového skladu obsahujícího elektronické zdravotní záznamy pacientů postižených rakovinou prostaty. Díky tomuto datovému skladu vědci mají přístup k tisícům reálných případů, napříč těmito třemi institucemi.
@@ -383,7 +411,7 @@ Z výše uvedených základních parametrů následně vyplývá i základní ka
 
 Výše zmíněná kategorizace není v praxi brána příliš dogmaticky a dashboardy bývají velmi často tvořeny jako kombinace jednotlivých kategorií dle jejich typu předávaných informací, skupině uživatelů a dalších základních parametrů.
 
-\subsection{Správná vizualizace dat}
+\subsection{Vizualizace dat}
 Pokud jsou předchozí podmínky a parametry splněny, je nutné samotná data vizualizovat. To může být provedeno vícero způsoby, nejčastěji se však jedná o formu jednoho či více grafů. Souhrn pravidel pro tvorbu kvalitního grafu a dashboardu je mimo rámec a hlavní zaměření této práce, v této podkapitole jsou tedy uvedeny pouze základní pravidla předpozornostních atritubutů a základních zákonů gestaltismu, které jsou z hlediska autora nejpodstatnější a díky kterým může být výsledný dashboard a jeho čtení značně zefektivněno. 
 
 Pro efektivní efektivní předání důležitých hodnot je vhodné využít již zmíněných předpozornostních atributů neboli výkyvů a vzorů, které podvědomě vyhodnocujeme jako více důležité. Zjednodušeně lze říci, že tyto atributy jsou realizovány např. jako zvýraznění KPI, velkých hodnotových odchylek a nebo extrémů. Díky tomuto zvýraznění nemusí uživatel aktivně hledat požadované informace, ale jsou mu efektivně vizualizovány \parencite[s.~70]{Marek2015thesis}.
@@ -669,7 +697,7 @@ Samotný datový sklad byl implementován na jaře 2022 za pomoci externí dodav
 
 Framework ITIL v3 definuje službu jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}, přičemž v tomto konkrétním případě se dle zakládací listiny jedná o službu typu CFS \footnote{z angl. Customer Facing Service}, což je z definice ITIL služba, \emph{která přímo přináší přidanou hodnotu pro uživatele, který s ní může vědomě nebo přímo interagovat.}\parencite{SyFvQA11lk1OaIec} Zakládací listina též definuje výstupní hodnotu jako již zmíněné automaticky generované reporty, jejichž cílem je usnadnit rozhodovací procesy a také poskytovat podporu ve vzdělávání. \footnote{odcitovat zakládací listinu jako neveřejný dokument?}
 
-Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, kterým je v tomto případě Bc. Filip Švaříček\footnote{uvádět jménem?}, který spolu s Mgr Tomášem Bártkem tvoří tým zodpovědný za provoz a rozvoj datového skladu.
+Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, spolu s dalším administrátorem pak tvoří tým zodpovědný za provoz a rozvoj datového skladu.
 
 Dále pak zakládací listina obsahuje definované základní KPI, neboli klíčové ukazatele výkonosti, které byly v tomto případě nastaveny na počet uživatelů datového skladu, kdy uživateli jsou v tomto případě myšleny spíše jednotlivé usecasy, které jsou na datovém skladu postaveny. Jako prvotní cíl bylo stanoveno dosáhnutí alespoň deseti usecasů.
 
@@ -827,12 +855,11 @@ Prvním parametrem je účel samotného dashboardu, kterým je poskytnutí snadn
 \begin{compactitem}
     \item Úspěšnost návrhů na nové projekty dle genderu navrhovatelů - vizualizace genderového rozdělení projektů, které přešli z fáze návrhu do fáze realizace v komparaci s těmi, které zůstali ve fázi realizace.
     \item Úspěšnost realizovaných projektů dle genderu jejich zpracovatelů - vizualizace relativního poměru úspěšné realizace.
-    \item ...
 \end{compactitem}
 vyjma hlavních KPI, má dashboard obsahovat i následující vedlejší KPI:
 \begin{compactitem}
     \item Poměr můžu a žen v rámci všech zpracovávaných projektů - vizualizace poměrného genderového rozdělení v rámci všech realizovaných projektů v průběhu posledních pěti let.
-    \item ...
+    \item Velikost rozpočtu v závislosti na genderovém složení. 
 \end{compactitem}
 
 Posledním základním atributem je pak skupina uživatelů, která bude daný dashboard využívat, v tomto případě se jedná primárně o management MUNI, ale vzhledem k anonymní podstatě dat a jejich společenskému charakteru by měl být výsledný report dostupný i veřejně. 
