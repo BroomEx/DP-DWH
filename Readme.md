@@ -4,7 +4,7 @@
 2. ~~čel~~
 3. ~~Cíle~~
 4. ~~Proces zavádění~~
-   1. Zakládací listina - základní parametry
+   1. ~~Zakládací listina - základní parametry~~
       1. Účel
       2. Cíl
       3. KPI
@@ -116,6 +116,23 @@
 1. kolik bylo požadavků na nový usecase? 
 1. dostupnost služby - počet incidentů, vypadlo to někdy?
 1. aktivní nabízení DWH - proces. jak vypadá?
+
+## Dashboard
+
+1. Personal
+   - Hlavní KPI
+      - Poměr žen a mužů celkově
+      - Poměr žen a můžu v roli řešitele
+   - Doplnky
+      - Vývoj poměrového zastoupení mužů a žen v posledních pětri letech
+      - Vývoj poměru žen v roli řešitele v posledních pěti letech
+      - u obojího poměrová změna za sledované období
+1. Projekty
+   - Hlavní KPI
+      - Poměr projektů, které přešli z draftu k realizaci v závislosti na genderu řešitele
+      - Relativní rozdíly ve velikostech rozpočtu projektů v závislosti na genederu řešitele
+   - Doplňky
+      - Trend poměru rozpočtu v závislosti na genderu 
 
 
 
