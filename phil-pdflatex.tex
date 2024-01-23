@@ -298,6 +298,16 @@ Specifický typ datového skladu, který funguje pouze jako transportní a trans
 \vspace{5mm}
 Uvedené typy datových skladů je možné dále rozšířit o další poddruhy, jako je například koncept \emph{Data vault}, který se vyznačuje velmi vysokou mírou přesnosti dat a důslednou kontrolou jejich integrity, kdy je například uchovávaná i informace o jejich původu a je kladen velký důraz na jejich verifikaci a i následné využití. Tento typ datového sklad nachází uplatnění například v bankovním, armádním a nemocničním sektoru a z tohoto důvodu se většinou jedná o vysoce zabezpečené a neveřejné datové sklady.\parencite{Inmon2021}
 
+V souvislosti s datovými sklady je vhodné pracovat s celkovou korporátní informační infrastrukturou, neboť datové sklady typicky zpracovávají a následně drží velké množství dat a je zbytečné a z bezpečnostního hlediska nevhodné poskytovat všechna data všem uživatelům. Z tohoto důvodu je vhodné, aby byl datový sklad součástí této infrastruktury a sloužil jako její integrální součást a ne jen jako její doplněk. Toho se velmi často dosahuje tak, že na základě velkým datový skladů vznikají malé specializované sklady tzv. \emph{data marts} viz. \ref{dwh_types}, které využívají datovou bázi \emph{mateřského} datového skladu a následně poskytují pouze přesně zacílené informace, které jsou relevantní pro dané uživatele, typicky firemní oddělení, čímž došlo ke vzniku tzv. \emph{the corporate information factory}.\parencite{Inmon2021} Tento koncept je znázorněn na obrázku \ref{fig:data_marts_schema}, ze kterého je zřejmé, že pro chod celé informační infrastruktury je využíváno více datových skladů, na jejichž základě jsou pak vytvářeny jednotlivé specializované sklady.
+
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/data_marts_schema.png}
+  \end{center}
+  \caption{Korporátní informační struktura \parencite[s.12]{Inmon2008}}
+  \label{fig:data_marts_schema}
+\end{figure}  
+
 Všechny zmíněné typy datových skladů vyžadují specifický přístup, a to jak
 k architektuře samotného skladu, zpracování dat, tak i k technickému vybavení. Z tohoto
 důvodu je důležité zvolit správný typ datového skladu již ve fázi návrhu, protože
@@ -353,9 +363,25 @@ Jak již bylo zmíněno model datové hvězdy je založen na relačních databá
 
 K tabulkám faktů jsou pak pomocí relací připojeny tabulky obsahující jednotlivé dimenze, dle kterých je možné fakty analyzovat. Dimenze představují základní prvek ke kategorizaci a popisu faktů. Jednotlivé dimenze obsahují atributy, na základě který je možné provádět filtrace, pohledy, granularizaci atp. V případě již zmíněných prodejů, by se tak mohlo jednat například o prodané zboží, datum uskutečnění atp.
 
-Tyto dva zmíněné druhy tabulek může doplňovat ještě typ třetí, který se nazývá můstkový a slouží jako propojovací prvek mezi fakty a dimenzemi.
+Tyto dva zmíněné druhy tabulek může doplňovat ještě typ třetí, který se nazývá můstkový a slouží jako propojovací prvek mezi fakty a dimenzemi. Propojovací tabulky se typicky využívají v situacích, kdy je mezi dvěma tabulkami vazba M:N, kdy každá z tabulek, může být propojena s vícero jiných tabulek. Tato situace je znázorněna na  
+obrázku \ref{fig:M_N}, kde lze vidět projekt může zahrnovat více osob a stejně tak osoby mohou být zainteresovány ve více projektech. V případě datové hvězdy, kde jde z principu o snahu eliminovat M:N vazby, však slouží zejména ke zjednodušení editací jednotlivých dimenzionálních vztahů a k lepší editační flexibilitě. 
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/M_N.png}
+  \end{center}
+  \caption{M:N vazba mezi tabulkami.  Vlastní zpracování}
+  \label{fig:M_N}
+\end{figure}  
 
-V praxi běžně nastává situace, kdy může dojít k propojení více datových hvězd, čímž dojde ke vzniku datového modelu zvaného souhvězdí. K této situaci typicky dochází v případech, kdy spolu jednotlivé fakty úzce souvisí, např. prodej - platba. V tomto případě jsou obě tabulky samostatné datové hvězdy, ale jsou spolu vzájemně propojeny.\footnote{doplnit obr}
+V praxi běžně nastává situace, kdy může dojít k propojení více datových hvězd, čímž dojde ke vzniku datového modelu zvaného souhvězdí. K této situaci typicky dochází v případech, kdy spolu jednotlivé fakty úzce souvisí, např. prodej - platba. V tomto případě jsou obě tabulky samostatné datové hvězdy, ale jsou spolu vzájemně propojeny. Tato situace je zobrazena na obrátku \ref{fig:constellation}, kde jsou vidět dvě datové hvězdy - faktura a platba, které jsou mají vzájemné projení.
+
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/Constellations.png}
+  \end{center}
+  \caption{Schéma souhvězdí.  Vlastní zpracování}
+  \label{fig:constellation}
+\end{figure}  
 
 \subsubsection{Datová krychle}
 Model datové krychle vychází z modelu datové hvězdy, oproti ní se však zásadně odlišuje tím, že data jsou uspořádána ve vícerozměrném poli, kdy každá dimenze představuje jeden rozměr tohoto pole. S takto strukturovanými daty je následně možné provádět základní operace, jako je například krájení - získání jednoprvkové podmnožiny, pivotování - otáčení datové krychle za účelem získání jiné perspektivy, kostkování - získání podmnožiny dat omezením jedné nebo více dimenzí. 
@@ -372,17 +398,6 @@ Jedním z typických zástupců tohoto typu nasazení je pak sdílení dat mezi 
 Další zajímavou aplikací, je například optimalizace a analýza mléčné farmy. Tato aplikace popsaná v článku \citetitle{Schuetz20180326} \parencite{Schuetz20180326} se zabývá návrhem a implementací datového skladu, který má za cíl pomocí různých senzorů sledujících například pohyb dojnic či samotné dojení, optimalizovat a vylepšit výkon této mléčné farmy. Celý projekt je velmi zajímavý a to zejména z důvodu, že se jedná o specifickou oblast, kde ještě nebyl koncept datového skladu nasazen.
 
 Zvláštním příkladem jednoúčelově zaměřeného datového skladu je projekt, týkající se pandemie viru SARS-COV-2. V článku \citetitle{Agapito2020} \parencite{Agapito2020}, autoři popisují implementaci datového skladu vytvořeného za účelem monitorování šíření viru v Itálii. Zajímavé je, že datový sklad zahrnuje kromě informací týkajících se přímo samotného viru i další, zdánlivě nesouvisející, informace, které zahrnují například také aktuálním stavu klimatu, jako je znečistěni ovzduší a nebo síla a směr větru. Výzkumné výstupy z tohoto projektu se tak mohou zabývat i vlivem počasí na šíření nákazy. 
-
-
-Vzhledem k tomu, že datové sklady typicky zpracovávají a následně drží velké množství dat, je zbytečné, poskytovat všechna data všem uživatelům, z tohoto je běžné, že na základě velkým datový skladů vznikají malé specializované sklady tzv. \emph{data marts} viz. \ref{dwh_types}, které využívají datovou bázi \emph{mateřského} datového skladu a následně poskytují pouze přesně zacílené informace, které jsou relevantní pro dané uživatele, typicky firemní oddělení, čímž došlo ke vzniku tzv. \emph{the corporate information factory}.\parencite{Inmon2021} Tento koncept je znázorněn na obrázku \ref{fig:data_marts_schema}, ze kterého je zřejmé, že pro chod celé informační infrastruktury je využíváno více datových skladů, na jejichž základě jsou pak vytvářeny jednotlivé specializované sklady.
-
-\begin{figure}[h]
-  \begin{center}
-          \includegraphics[width=10cm]{img/data_marts_schema.png}
-  \end{center}
-  \caption{Korporátní informační struktura \parencite[s.12]{Inmon2008}}
-  \label{fig:data_marts_schema}
-\end{figure}  
 
 \section{Datový dashboard}
 Výstupy z datového skladu a jednotných datových úložišť obecně mohou mít mnoho různých forem, v principu se však vždy jedná o pouhý koncový bod, který dle zadaných filtrů poskytuje požadovaná data.
@@ -704,6 +719,40 @@ Dále pak zakládací listina obsahuje definované základní KPI, neboli klíč
 V neposlední řadě je pak součástí zakládací listiny též definice cílové skupiny, kterou jsou zejména manažeři rektorátu Masarykovy univerzity spolu s managementem ÚVT, obecně má ale datový sklad sloužit jako podpůrný prostředek pro uživatele potřebující vyhodnotit velké množství dat.
 
 Účel služby datového skladu je dle její webové stránky \footnote{viz. https://it.muni.cz/sluzby/datovy-sklad-na-mu} poskytnutí nástroje, který je schopen sbírat data z různých zdrojů, provést jejich standardizaci a následně je tranformované poskytnout buď ve formě prostých dat, které si může uživatel - zákazník dále dle potřeby zpracovat a nebo ve formě již zpracovaných reportů, které poskytují informace. 
+\subsection{Bezpečnost dat}
+Jelikož datový sklad zpracovává a zpřístupňuje velké množství dat, které mohou být citlivé z více hledisek jako například z hlediska osobních a nebo finančních údajů, bylo potřeba vytvořit potřebné politiky, které práci s datovým skladem a daty upravují. 
+
+Za tímto účelem byla v lednu 2024 přijata příslušná směrnice, která definuje příslušné politiky pro reporty. V rámci tohoto dokumentu jsou definovány základní role, které se týkají uživatelů datového skladu, jejich povinnosti a dále pak kategorizace reportů a k ní vztažené povolené možnosti ukládání dat.Tato směrnice se sice zabývá reporty pracujícími pouze s daty z Ekonomického a personálního informačního systému MU zkráceně EPIS, ale v obecné rovině je možné její politiky aplikovat na celou službu datového skladu. 
+
+Směrnice definuje dvě role pro uživatele datového skladu a to Vlastníka reportu, který je definován jako \emph{osoba definující report, který má být za pomocí daných dat připraven} a uživatele reportu, který je definován jako \emph{osoba, která obdržela od vlastníka přístup a nebo soba které byl report předán}. Obě role mají následně definovány povinnosti, jejichž cílem je zaručit, že se data nedostanou mimo definovaný okruh uživatelů. 
+
+Dále je jsou v dokumentu definovány následující tři základní kategorie reportů, na jejichž základě je určena úroveň ochrany dat.
+\begin{compactitem}
+    \item Kategorie I. -  Reporty neobsahující osobní údaje ani jiné interní informace, či vysoce agregované statistické přehledy. Reporty této kategorie mají základní ochranu dat.
+    \item Kategorie II. - Reporty obsahují osobní údaje, interní informace a nebo vysoce agregované statistické přehledy, kdy narušení důvěrnosti těchto dat může způsobit škodu. Tato kategorie podléhá zvýšené ochraně.
+    \item Kategorie III. - Tyto reporty obsahují osobní údaje zvláštní kategorie nebo neagregované statistické přehledy provázené s osobními daty. Tato kategorie podléhá striktní ochraně.
+\end{compactitem}
+
+Tyto jednotlivé kategorie následně určují, do jakých úložišť a jakým způsobem je možné ukládat data a jejich kombinace je ukázána v tabulce \ref{tab:security_storage}.
+
+Dodržení těchto pravidel by mělo vést k minimalizaci vzniku škod vlivem narušení důvěrnosti.
+
+\begin{table}
+  \begin{tabularx}{\textwidth}{|p{2.5cm}|p{2.5cm}|p{2.5cm}|p{3.5cm}|}
+    \toprule
+    Typ úložistě & Kategorie I.  & Kategorie II. & Kategorie III. \\
+    \midrule
+    Přenosná média & povoleno & povoleno, je-li použito šifrování & zakázáno \\
+    Lokální úložiště & povoleno & povoleno, je-li použito šifrování & povoleno, je-li použito šifrování \\
+    Síťová úložiště MU & povoleno &
+    povoleno & povoleno, je-li použito šifrování \\
+    MUNI Microsoft O365 & povoleno &
+    povoleno & povoleno, je-li použito šifrování \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Povolené možnosti ukládání reportů}
+  \label{tab:security_storage}
+\end{table}
 
 \subsection{Procesy služby}
 Nedílnou součástí služby jsou také její procesy, které slouží k jejímu úspěšnému provozování a rozvoji. Služba datového skladu má implementovány procesy pouze ze čtvrté a páté fáze frameworku ITIL v3, která se týká provozu (podpory)  a rozvoje (kvality) služby viz. \ref{fig:itil3_schema}. Z této fáze jsou implementovány procesy a funkce, které se týkají správy incidentů, správy problémů a akvizice nových usecasů, postavených na službě datového skladu. V služby je také využit service desk, který ale není přímo integrální součástí služby datového skladu, ale jedná se service desk sloužící celé univerzitě. Jednotlivé procesy jsou detailněji rozepsány níže.
@@ -729,22 +778,9 @@ Jak již bylo zmíněno, službu service desku pro účely služby datového skl
         \label{fig:new_report}
     \end{figure} 
 
-\paragraph{Aktivní nabízení služby datového skladu} - Proces týkající se rozvoje služby. Cílem procesu je pro-aktivní přístup k rozšiřování uživatelských usecasů, postavených na službě datového skladu. Jednotlivý uživatelé nemusí být seznámeni s možností využití datového skladu, nehledě na to, že využití služby datového skladu není z uživatelského hlediska triviální záležitostí a tak je vhodné aktivně nabízet datový sklad jako službu již s předem připravenými vhodnými usecasy. Díky aktivnímu nabízení služby je tak možné implementovat DWH na větším množství dat. Jednotlivé procesní fáze jsou vyobrazeny na \ref{fig:active_offer} a popsány níže. 
-        \begin{itemize}
-            \item V prvotní fázi aktivní propagace služby datového skladu, dochází ke kontaktování možných nových uživatelů. Děje se tak například za pomoci interního oběžníku, nebo přímým kontaktem fakult a pracovišť a zodpovědných osob.
-            \item Obsahem obecného oběžníku je popis samotné služby datového skladu a již fungujících usecasů, které jsou na něm postaveny.
-            \item V případě přímého kontaktu je kromě výše uvedeného součástí i konkrétní aplikace s popisem jejího přínosu pro dané pracoviště s případnou referencí na podobný usecase, který je již v podobném prostředí nasazen.
-            \item Pokud dojde k vytvoření zájmu, dojde k zahájení procesu, který je totožný se standardním procesem \emph{Žádosti o nový usecase}, s tím rozdílem, že zde je přeskočena první fáze kontaktu a přechází se rovnou do fáze specifikace požadovaného usecasu.
-        \end{itemize}
-Samotný proces aktivního nabízení není v současné době v užívání (?) a tak ještě není zcela odlazen a nemá konkrétní výsledky. 
+\paragraph{Aktivní nabízení služby datového skladu} - Proces týkající se rozvoje služby. Cílem procesu je pro-aktivní přístup k rozšiřování uživatelských usecasů, postavených na službě datového skladu.
 
-    \begin{figure}[t]
-        \begin{center}
-            \includegraphics[width=11cm]{img/active_aquisition.png}
-        \end{center}
-        \caption{Proces aktivního nabízení DWH. Vlastní zpracování}
-        \label{fig:active_offer}
-    \end{figure} 
+Proces je momentálně ve stavu návrhu a plánování, přičemž další postup je blokován prozatímně nedostatečně implementovanou politikou týkající se přidělování přístupových práv k datům.
 
 \subsubsection{Správa incidentů a správa problémů}
 Vzhledem k tomu, že služba datového skladu má v současné době malý rozsah, nejsou incidenty a problémy nikterak rozlišovány a jsou proto řešeny jedním procesem. 
@@ -846,34 +882,61 @@ Taktéž by bylo vhodné implementovat proces, sloužící k ukončení provozu 
 
 
 \chapter{Aplikační část}
-V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících z Informačního sys
-tému pro evidenci projektů na Masarykově univerzitě, zkráceně ISEP, který je určen k evidenci projektů na Masarykově univerzitě. Vzhledem k citlivé povaze dat však zde realizovaný a prezentovaný usecase vychází pouze z datového modelu a samotná data jsou náhodně vygenerovaná a nereflektují reálný stav. V případě využití reportu v reálném provozu je možné jej přepojit na reálná data. 
+V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících z Informačního systému pro evidenci projektů na Masarykově univerzitě, zkráceně ISEP. ISEP je součástí informačního systému Masarykovi univerzity a jeho účelem je správa a řízení projektů univerzity. 
 
-Realizovaný dashboard se věnuje vizualizaci projektových dat na základě genderu osob zainteresovaných do jednotlivých projektů. V rámci přípravy realizace je nutné definovat následující základní parametry dashboardu.
+Hlavní účel systému je evidence a správa jak návrhů na nové projekty, tak projektů samotných. V systému jsou tak ke každému návrhu uloženy všechny potřebná data, jako jsou všechny na projektu se podílející osoby, rozpočty s jednotlivými položkami, zdroje financování atp. slouží také jako elektronický archiv projektové dokumentace.
 
-Prvním parametrem je účel samotného dashboardu, kterým je poskytnutí snadného nástroje pro monitoring genderové vyváženosti projektů na Masarykově univerzitě. Pro tento účel je třeba zvolit sledované metriky, které slouží jako hlavní KPI dashboardu, z těchto metriky pak vyplývají i příslušné dimenze dat. Pro splnění účelu dashboard byly zvoleny následující metriky: 
+Realizovaný report se věnuje vizualizaci projektových dat na základě genderu osob zainteresovaných do jednotlivých projektů. V rámci přípravy realizace je nutné definovat následující základní parametry reportu.
+
+Prvním parametrem je účel samotného reportu, kterým je poskytnutí snadného nástroje pro monitoring genderové vyváženosti projektů na Masarykově univerzitě. Pro tento účel je třeba zvolit sledované metriky, které slouží jako hlavní KPI reportu, z těchto metriky pak vyplývají i příslušné dimenze dat. Realizovaný report se skládá ze tři samostatných dahsboardů, kdy se každý z nich věnuje nějakému specifickému tématickému okruhu. 
+\paragraph{Personál} První dashboard se věnuje analýze genderu osob, které jsou zainteresovány v jednotlivých projektech. Jeho základní vizualizované metriky jsou: 
 \begin{compactitem}
-    \item Úspěšnost návrhů na nové projekty dle genderu navrhovatelů - vizualizace genderového rozdělení projektů, které přešli z fáze návrhu do fáze realizace v komparaci s těmi, které zůstali ve fázi realizace.
-    \item Úspěšnost realizovaných projektů dle genderu jejich zpracovatelů - vizualizace relativního poměru úspěšné realizace.
+    \item Poměr žen a mužů mezi participujícími osobami
+    \item Relativní zastoupení žen v roli hlavního řešitele
+    \item Genderové rozložení jednotlivých rolí
 \end{compactitem}
-vyjma hlavních KPI, má dashboard obsahovat i následující vedlejší KPI:
+Kromě těchto základních parametrů je dashboard doplněn o celkový vývoj počtu mužů a žen participující na všech projektech a poměrové zastoupení žen.
+
+\paragraph{Projekty} Dashboard má za úkol vizualizovat projekty jako celky a to na základě pohlaví jejich hlavního řešitele. Vizualizovány jsou následující metriky:
 \begin{compactitem}
-    \item Poměr můžu a žen v rámci všech zpracovávaných projektů - vizualizace poměrného genderového rozdělení v rámci všech realizovaných projektů v průběhu posledních pěti let.
-    \item Velikost rozpočtu v závislosti na genderovém složení. 
+    \item Konverzní poměr mezi návrhy a projekty pro ženské navrhovatele
+    \item Konverzní poměr mezi návrhy a projekty pro mužské navrhovatele
 \end{compactitem}
+Vyjma těchto dvou hlavních metrik je dashboard doplněn o celkové počty návrhů a projektů ve sledovaném období a jejich konverzní poměr. Dále dashboard obsahuje přehledový graf návrhů a projektů v jednotlivých letech a konverzní poměry pro ženské i mužské navrhovatele, takté dle let.
 
-Posledním základním atributem je pak skupina uživatelů, která bude daný dashboard využívat, v tomto případě se jedná primárně o management MUNI, ale vzhledem k anonymní podstatě dat a jejich společenskému charakteru by měl být výsledný report dostupný i veřejně. 
+\paragraph{Finance} Poslední dashboard se pak věnuje financím a jejích genderové vyváženosti. Primárně vizualizované metriky jsou pak následující:
+\begin{compactitem}
+    \item Relativní velikost rozpočtů dle pohlaví řešitele projektu
+    \item Průměrná velikost rozpočtu projektu dle pohlaví řešitele projektu
+\end{compactitem}
+\vspace{5}
 
-Z hlediska charakteru dashboardem zpracovávaných dat, u kterých z principu nedochází k časté aktualizace, se bude jednat o strategický dashboard. Data budou aktualizována klasickým ETL procesem datové skladu, který je prováděn jednou denně. 
+Posledním základním atributem je pak skupina uživatelů, která bude daný report využívat, v tomto případě se jedná primárně o management MUNI, ale vzhledem k anonymní podstatě dat a jejich společenskému charakteru by měl být výsledný report dostupný i veřejně. 
+
+Z hlediska charakteru report zpracovávaných dat, u kterých z principu nedochází k časté aktualizace, se bude jednat o strategický report. Data budou extrahována klasickým ETL procesem datové skladu, který je prováděn jednou denně. 
 
 Pro samotnou realizaci dashboardu je využit program PowerBI, který je využíván většinou již fungujících usecasů v rámci služby datového skladu a jedná se tak o defacto standard pro vizualizaci dat.
 
 \section{Zdrojová data}
-Zdrojová data z ISEP je třeba pro využití v navrhovaném dahsboardu zpracovat za pomoci ETL procesu. O jednotlivé fáze procesu se stará samotná služba datového skladu a jsou rozepsány níže a to v rozšířené verzi, tak jak je ETL proces definován v knize \citetitle{Kimballc2004}.
-\paragraph{Extrakce} - v první fázi je třeba potřebná data extrahovat z původního úložiště ISEP. Toto úložiště je standardní relační databáze, data jsou tam extrahována pomocí služby \emph{Azure data factory} a příslušného konektoru. 
-\paragraph{Čištění a potvrzování} - vzhledem k charakteru dat lze předpokládat, že tyto fáze nejsou v tomto konkrétním případě důležité. U dat týkajících se jednotlivých projektů a genderu zainteresovaných osob lze předpokládat, že budou vždy vyplněny správně, v případě chybných dat není možné tyto data, vyjma explicitně chybějících hodnot, detekovat. Granularita dat je v tomto případě vždy 24 hodin.
-\paragraph{Doručování} - v polsední fází dochází k transformaci dat do datové hvězdy a její uložení. Všechny transformace, kterou jsou s daty provedeny jsou vedeny následující podkapitole.
-\subsection{Transformace dat}
+Zdrojová data z ISEP je třeba pro využití v navrhovaném dashboardu zpracovat za pomoci ETL procesu, který data uloží v datovém skladu. Tento proces je v již pro data pocházející z ISEP v datové skladu implementován. O jednotlivé fáze procesu se stará samotná služba datového skladu a jsou rozepsány níže. 
+
+\paragraph{Extrakce} V první fázi je třeba potřebná data extrahovat z původního úložiště ISEP. Toto úložiště je standardní relační databáze, data jsou tam extrahována pomocí služby \emph{Azure data factory} a příslušného konektoru. 
+\paragraph{Čištění a potvrzování} Vzhledem k charakteru dat lze předpokládat, že tyto fáze nejsou v tomto konkrétním případě důležité. U dat týkajících se jednotlivých projektů a genderu zainteresovaných osob lze předpokládat, že budou vždy vyplněny správně, v případě chybných dat není možné tyto data, vyjma explicitně chybějících hodnot, detekovat. Granularita dat je v tomto případě vždy 24 hodin.
+\paragraph{Doručování} V poslední fází dochází k transformaci dat do datové hvězdy a její uložení. V případě dat ze z ISEP, jsou data v davétm skladě uložena ve stejném formátu jako jsou v původním úložišti a žádná transformace nebyla nutná, neboť data z ISEP již jsou strukturována ve formě datového hvězdy. 
+
+Pro potřeby řešeného reportu jsou využity dvě datové hvězdy, které zastupují jak samotné projekty, tak i jim předcházející návrhy. Obě datové hvězdy obsahují větší množství dat, než které je pro žádané metriky potřeba a tak je realizaci reportu využit defacto jejich subset, jehož struktura je popsána níže. 
+
+
+
+Vzhledem k tomu, že projektové rozpočty mohou být vedeny jak v českých korunách, tak i v eurech a dolarech, bylo pro potřeby porovnání rozpočtů mezi projekty zajistit jejich přepočet do stejné měny. Za tímto účelem byla k datovému modelu přidána tabulka se směnnými kurzy. Tato tabulka je převzata z rozhraní České národní banky a aktualizuje se s každou aktualizací dat v reportu. 
+
+Velikosti rozpočtů, které jsou takto přepočteny na české koruny, tak odpovídají současným směnným kurzům, které se mohou od původních odlišovat. Realizovat přesný přepočet dle dobových kurzů, je značně komplikovanější. Vzhledem k tomu, že neexistuje relevantní důvod předpokládat, že nekorunové rozpočty nejsou rovnoměrně rozloženy mezi všechny projekty bez ohledu na pohlaví řešitele, můžeme tuto nepřesnost v rámci tohoto reportu zanedbat.
+
+\subsection{Testovací data}
+Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu a veškerá data, jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu.  Datový model však zůstal zachován a tak by v případě reálného využití, mělo být možné připojit výsledný report na produkční databázi datového skladu a vizualizovat tak reálný stav. 
+
+Testovací data byla vygenerována za pomocí jednoduchého programu napsaného v jazyce C\# za využití frameworku \emph{.NET core} a knihovny \emph{bogus}, která je zodpovědná za generování náhodných dat. Data jsou pro účely testu uloženy v databázi SQLite. Generátor i databáze s testovacími daty jsou součástí příloh.
+
 
 \section{Dashboard - PowerBi}
 
@@ -892,7 +955,7 @@ Zdrojová data z ISEP je třeba pro využití v navrhovaném dahsboardu zpracova
   \printindex
 
 \appendix %% Start the appendices.
-\chapter{An appendix}
+\chapter{Přílohy}
 Here you can insert the appendices of your thesis.
 
 \end{document}
