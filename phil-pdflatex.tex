@@ -330,13 +330,41 @@ Fáze potvrzování má význam zejména v případech, kdy extrahujeme data z v
 Dalším důležitým úkolem je pak kontrola konfliktů mezi názvy jednotlivých dimenzí, neboť napříč datovými zdroji nemusí mít vždy stejný význam. \parencite{Kimballc2004}
 
 \paragraph{Doručení (Delivering)}
-Během doručovací fáze dochází k samotné transformaci dat do jednotného formátu a následně se z dat vytvoří dimenzionální model, nebo požadované schéma. Mezi ty patří například schéma hvězdice či datová krychle.\parencite[s.~19]{Kimballc2004}
+Během doručovací fáze dochází k samotné transformaci dat do jednotného formátu a následně se z dat vytvoří dimenzionální model, nebo požadované schéma. Z nichž mezi nejčastěji využívané patří schémata datové krychle a nebo hvězdy, která je rozepsána v následující podkapitole.\parencite[s.~19]{Kimballc2004}
 
 Výstupem této fáze je tedy patřičně setříděný a provázaný soubor dat, nad kterým je již možné provádět dotazy, jako nad celkem, tedy bez ohledu na datové zdroje a jejich formát. Takto zpracovaná data se pak následně nahrají do databáze samotného datového skladu.
 
 Díky ETL procesu jsou ve výsledku v datovém skladu data uložena v jednoduché a snadno dovažovatelně formě, což značně usnadňuje a urychluje přístup a následnou práci s těmito daty.
 
-\subsubsection{Využití datových skladů}
+\subsection{Datový model}
+V rámci transformační fáze ETL procesu dochází k transformaci původního datového modelu na model, který je využíván datovým skladem. Jak již bylo zmíněno, typicky se jedná o modely datové krychle neboli OLAP \footnote{y angl. Online Analytical Processing Cube} a nebo datové hvězdy. 
+
+Oba tyto modely pracují se stejným konceptem datových dimenzí, ale zásadně se liší v jejich reálné implementaci. Zatímco model datového hvězdy pracuje na základě  tabulek faktů, ke kterým jsou relačně připojeny tabulky obsahující jednotlivé dimenze. V případě datové krychle Jsou pak fakta a dimenze uloženy ve více rozměrech.\parencite[s.9]{Kimball2013} Oba datové modely jsou pak vyobrazeny na obrázku \ref{fig:star_olap} a blíže popsány níže. 
+\begin{figure}[h]
+  \begin{center}
+          \includegraphics[width=10cm]{img/star_olap.png}
+  \end{center}
+  \caption{Model datové hvězdy a krychle.  \parencite[s.9]{Kimball2013}}
+  \label{fig:star_olap}
+\end{figure}  
+
+\subsubsection{Datová hvězda}
+Jak již bylo zmíněno model datové hvězdy je založen na relačních databázích a tabulkách dvojího, respektive trojího typu. Název modelu je odvozen od jeho vizualizace, kdy jsou k ústřední tabulce faktů paprskovitě připojeny tabulky s dimenzemi. Tabulka faktů obsahuje numerická data, která představují kvantifikovatelné ukazatele a nebo události.\parencite[s.10]{Kimball2013} Typicky se tak jedná o různé provozní a nebo obchodní KPI, jako jsou např. uskutečněné prodeje.
+
+K tabulkám faktů jsou pak pomocí relací připojeny tabulky obsahující jednotlivé dimenze, dle kterých je možné fakty analyzovat. Dimenze představují základní prvek ke kategorizaci a popisu faktů. Jednotlivé dimenze obsahují atributy, na základě který je možné provádět filtrace, pohledy, granularizaci atp. V případě již zmíněných prodejů, by se tak mohlo jednat například o prodané zboží, datum uskutečnění atp.
+
+Tyto dva zmíněné druhy tabulek může doplňovat ještě typ třetí, který se nazývá můstkový a slouží jako propojovací prvek mezi fakty a dimenzemi.
+
+V praxi běžně nastává situace, kdy může dojít k propojení více datových hvězd, čímž dojde ke vzniku datového modelu zvaného souhvězdí. K této situaci typicky dochází v případech, kdy spolu jednotlivé fakty úzce souvisí, např. prodej - platba. V tomto případě jsou obě tabulky samostatné datové hvězdy, ale jsou spolu vzájemně propojeny.\footnote{doplnit obr}
+
+\subsubsection{Datová krychle}
+Model datové krychle vychází z modelu datové hvězdy, oproti ní se však zásadně odlišuje tím, že data jsou uspořádána ve vícerozměrném poli, kdy každá dimenze představuje jeden rozměr tohoto pole. S takto strukturovanými daty je následně možné provádět základní operace, jako je například krájení - získání jednoprvkové podmnožiny, pivotování - otáčení datové krychle za účelem získání jiné perspektivy, kostkování - získání podmnožiny dat omezením jedné nebo více dimenzí. 
+
+Díky tomu, že data jsou v takto silně zpracované a provázané soustavě přímo uložena, je analýza dat, ve srovnání s klasickou datovou hvězdou založenou na relační databázi, velmi rychlá a efektivní.  Značnou nevýhodou však je nemožnost data editovat, neboť v případě každé změny je nutné přestavět celou datovou kostku, tento fakt také velmi omezuje využití tohoto modelu pro ukládání dat v reálném čase.
+
+Jak již bylo řečeno, oba zde zmíněno modely mají stejný logický základ s rozdílnou implementaci, v praxi je tak často využíván model datové hvězdy jako prvního fyzického úložiště dat, na základě kterého je po zachycení dostatečného množství dat vytvořena datová krychle. Hvězdicové schéma je také odolnější proti poškození dat a je tak vhodnější pro jejich zálohování a dlouhodobé zachování.\parencite[s.9]{Kimball2013}
+
+\subsection{Využití datových skladů}
 Datové sklady nacházejí velké využití zejména u velkých organizací a společností, ale i u tak velkých celků, jako jsou například samostatné státy. Velkou výhodou datových skladů je jejich perzistentní struktura, kdy data můžeme shromažďovat po dlouhou dobu a jejich analýzu provést až ve chvíli, kdy nastane její potřeba. Díky tomu se hodí na analýzu dat dlouhodobého charakteru.
 
 Jedním z typických zástupců tohoto typu nasazení je pak sdílení dat mezi vědeckými pracovišti. Například v případové studii \citetitle{Seneviratne20180124} \parencite{Seneviratne20180124} se autoři zabývali propojením vědeckých pracovišť Stanford University, Stanford Cancer Institute a California Cancer Registry za účelem vytvoření společného datového skladu obsahujícího elektronické zdravotní záznamy pacientů postižených rakovinou prostaty. Díky tomuto datovému skladu vědci mají přístup k tisícům reálných případů, napříč těmito třemi institucemi.
@@ -356,7 +384,48 @@ Vzhledem k tomu, že datové sklady typicky zpracovávají a následně drží v
   \label{fig:data_marts_schema}
 \end{figure}  
 
+\section{Datový dashboard}
+Výstupy z datového skladu a jednotných datových úložišť obecně mohou mít mnoho různých forem, v principu se však vždy jedná o pouhý koncový bod, který dle zadaných filtrů poskytuje požadovaná data.
 
+Datový sklad na Masarykově univerzitě momentálně slouží primárně jako datová báze pro přehledové dashboardy usnadňující řízení a monitoring daných projektů, oddělení, služeb atp. Z těchto důvodů se následující podkapitola věnuje základním parametrům potřebným pro návrh funkčního dashboardu a základním zásadám vizualizace, které je dobrém v rámci jejich návrhu dodržovat.
+
+\subsection{Klíčové parametry dashboardu}
+Kvalitní dashboard by měl splňovat několik základních pravidel, které se souhrnně označují akronymem SMART, odvozeným z anglických názvu těchto pravidel, která jsou samotná popsána níže \parencite[s.~1]{Kratochvil2014}:
+\begin{compactitem}
+    \item Synergie - dashboard by měl důležité a vzájemně závislé informace zobrazovat na jedné obrazovce
+    \item Monitoring - v rámci dashboardu by měli být jasně definované a vizualizované požadované KPI\footnote{z angl. Key Performance Indicator, klíčový ukazatel výkonosti} a jejich případná změna
+    \item Přesnost - data, které dashboard vizualizuje musí být vždy přesná a důveryhodná
+    \item Citlivost - dashboard by měl sám aktivně sledovat prahové meze a upozornit na jejich překročení
+    \item Včasnost - dashboard musí vždy zobrazovat aktuální data, dle požadavků dashboardu
+\end{compactitem}
+Přesnost, citlivost a včasnost je v našem konkrétním případě zajištěna samotným datovým skladem, jehož je toto esenciální součástí a není tedy potřeba data dále zpracovávat. 
+
+Pro splnění bodů synergie a monitoringu, je však potřeba definovat další základní parametry, které následně významně ovlivní další postup. Mezi tyto základní parametry patří zejména samotný účel, kterému má konkrétní dashboard sloužit, skupina uživatelů, která má s dashboardem pracovat a vhodné metriky, které má dashboard vizualizovat a díky kterým je možné vizualizovat požadované KPI \parencite[s.~6]{Faron2016thesis}. 
+
+Z výše uvedených základních parametrů následně vyplývá i základní kategorizace dashboardů, která je dle typu zobrazovaných dat, jejich míry detailu, četnosti aktualizace atp. dělí to tří kategorií, kterou jsou následující\parencite[s.~3]{Faron2016thesis}:
+\begin{compactitem}
+    \item Strategické - zachycují současný stav monitorované situace v přehledové a ne moc detailní formě. Jsou tvořeny převážně agregovanými daty a jejich primární účel je poskytnout rychlý, stručný a jasný přehled, na jehož základě je možné identifikovat možná místa problémů, či zlepšení. Strategické dashboardy bývají často statické, s dlouhým intervalem aktualizací.
+    \item Analytické - slouží k monitoringu trendů a výsledků v rámci monitorované situace. Poskytují data v mnohem detailnější formě s možností usazené do širšího kontextu, z tohoto důvodu bývají zpravidla interaktivní, s možností detailního filtrování.
+    \item Operační - poskytují monitoring dané situace ideálně v reálném čase a slouží jako každodenní pracovní nástroj podporující rozhodování. Tento typ dasboardů obsahuje nejméně informací ze všech zmíněných a vše je zde podřízeno maximální efektivitě a rychlosti doručení nejaktuálnějších dat.  
+\end{compactitem}
+
+Výše zmíněná kategorizace není v praxi brána příliš dogmaticky a dashboardy bývají velmi často tvořeny jako kombinace jednotlivých kategorií dle jejich typu předávaných informací, skupině uživatelů a dalších základních parametrů.
+
+\subsection{Vizualizace dat}
+Pokud jsou předchozí podmínky a parametry splněny, je nutné samotná data vizualizovat. To může být provedeno vícero způsoby, nejčastěji se však jedná o formu jednoho či více grafů. Souhrn pravidel pro tvorbu kvalitního grafu a dashboardu je mimo rámec a hlavní zaměření této práce, v této podkapitole jsou tedy uvedeny pouze základní pravidla předpozornostních atritubutů a základních zákonů gestaltismu, které jsou z hlediska autora nejpodstatnější a díky kterým může být výsledný dashboard a jeho čtení značně zefektivněno. 
+
+Pro efektivní efektivní předání důležitých hodnot je vhodné využít již zmíněných předpozornostních atributů neboli výkyvů a vzorů, které podvědomě vyhodnocujeme jako více důležité. Zjednodušeně lze říci, že tyto atributy jsou realizovány např. jako zvýraznění KPI, velkých hodnotových odchylek a nebo extrémů. Díky tomuto zvýraznění nemusí uživatel aktivně hledat požadované informace, ale jsou mu efektivně vizualizovány \parencite[s.~70]{Marek2015thesis}.
+
+Vzhledem k tomu, že dashboard se typicky skládá z vícero prvků, je vhodné tyto prvky naformátovat a seskupit tak, aby jejich čtení bylo přehledné a jasné. K tomuto účelu je možné využít například základní zákony gestaltismu \parencite[s.73]{Marek2015thesis}, které jsou:
+\begin{compactitem}
+    \item Zákon podobnosti - podobně vypadající prvky vnímáme jako celek
+    \item Zákon blízkosti - prvky blízko u sebe vnímáme jako skupinu
+    \item Zákon propojenosti - prvky které jsou vizuálně propojené vnímáme jako celek
+    \item Zákon dobrého pokračování - prvky na sebe vhodně navazují
+    \item Zákon uzavření - prvky v ohraničené oblasti vnímáme jako skupinu
+\end{compactitem}  
+
+Cílem využití výše uvedených zákonů je předat požadované informace co nejefektivněji a nejsrozumitelněji. Uživatel by měl hlavní předávané informace získat ideálně na první pohled a případné doplňující informace by měli být snad čitelné a vyhledatelné právě díky jasnému propojení, ať už díky pozici, velikosti a nebo barvě. 
 
 \chapter{ITSM}
 Jak již bylo zmíněno v úvodní kapitole, velký rozmach informačních technologií a služeb v 60. letech 20. století si vyžádal vznik patřičných standardizovaných procesů, postupů a pravidel pro řízení služeb v prostředí podniků a organizací. Souhrnně je tento obor označován jako ITSM, neboli Information Technology Service Management, což je pojem, který se původně objevil pouze v rámci metodiky ITIL, ale postupně se rozšířil a zobecnil tak, že v současné době obecně pokrývá problematiku řízení IT služeb.\parencite[s.~20]{Matula2017} 
@@ -578,26 +647,9 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
     \end{figure} 
 
 \begin{compactitem}
-    \item Hlavní principy (Guiding principles) - První vrstva se zabývá komplexním řízením celé organizace a za všech situací a vytváří základy pro interní kulturu poskytovatele, rozhodovací mechanismy a celkově proces pro řízení poskytování služeb. Tato vrstva je rozdělena na sedm klíčových principů, které pokrývají celý proces poskytování služeb. 
-    \begin{compactitem}
-      \item Zaměř se na hodnotu - Nejdůležitější je doručená hodnota a její kvalita, ať pro uživatele služby, tak pro samotného dodavatele. Důležitým ukazatelem kvality služby je v tomto případě tzv. Customer Experience\footnote{zkráceně CX}, který udává jak je uživatel s danou službou spokojený.
-      \item Začínej v aktuální situaci - není nutné vždy začít vyvíjet službu od začátku, je vhodné stavět na již existujících prostředcích, službách atp., neboť vývoj od samého začátku je velmi náročný na zdroje a z pravidla zahrnuje i již jednou řešené situace. 
-      \item Postupuj iterativně a s ohledem na odezvu - Velké úkoly je nutné rozdělit do menších celků, které se dají lépe spravovat a řídit a to jednak v ohledech kontroly jejich samotné realizace, tak s ohledem na snazší řešení případných problémů. Jednotlivé úkoly by měly být zaváděny postupně a s ohledem na odezvu, neboť se v průběhu vývoje či poskytování mohou požadavky na službu lišit. 
-      \item Collaborate and promote visibility - Personál musí spolupracovat a zajišťovat, aby každý, kdo je zainteresovaný do procesu poskytování služby, měl přiřazenou patřičnou roli, která odpovídá jeho schopnostem. Je důležité, aby byla pracovní náplň jednotlivců či týmů známá, neboť je tak možné snáze hledat chyby a případně změny v projektu a zjednat jejich nápravu.
-      \item Mysli a pracuj holisticky - Žádný ze zdrojů potřebných pro realizace a poskytování služby není od ostatních izolován a nejedná samostatně. Cílem je, aby v celém procesu nevznikala slepá a neznámá místa, celý proces musí přesně zmapován od požadavku do doručení kvality.
-      \item Udrž to jednoduché a praktické - Cílem je využívat co nejjednodušší postupy a zdroje. Je důležité uchovávat v provozu pouze ty zdroje, procesy, metriky atp., které přinášejí požadovaný výstup. 
-      \item Optimalizuj a automatizuj - V rámci organizace je důležité automatizovat rutinní úkoly v co největší míře, což vede k úspoře nákladů a zpravidla i k menší chybovosti. Zautomatizované úkoly je nutné udržovat v optimalizované formě, neboť neoptimalizované procesy mohou naopak organizaci zatěžovat.
-    \end{compactitem} 
+    \item Hlavní principy (Guiding principles) - První vrstva se zabývá komplexním řízením celé organizace a za všech situací a vytváří základy pro interní kulturu poskytovatele, rozhodovací mechanismy a celkově proces pro řízení poskytování služeb. Tato vrstva je rozdělena na sedm klíčových principů, které pokrývají celý proces poskytování služeb, viz. \citetitle{Cartlidge2020} od strany 14.
     \item Správa (Governance) - Druhá vrstva se věnuje nastavení potřebných procesů pro řízení a reporting uvnitř organizace poskytující služby. Může se jednat o celou organizaci a nebo jen její dílčí části, cílem je zajištění správného směřování vůči cílům a prioritám organizace. 
-    \item Hodnotový řetězec služby - Jak již bylo zmíněno výše, jedná se o soubor kroků, které je třeba provést, aby z dodaných vstupů vznikla požadovaná hodnota. Tento řetězec se skládá z šesti samostatných aktivit a celé schéma hodnotového řetězce je vyobrazeno na obrázku \ref{fig:value_chain}, jeho jednotlivé části jsou pak definovány následovně:
-    \begin{compactitem}
-        \item Plan - Zajišťuje sdílení jednotné vize, stavu a směru dalšího vývoje produktu či služby.
-        \item Zlepšení - Věnuje se postupnému zlepšování služby, nebo produktu.
-        \item Zapojení - Zajišťuje správné pochopení potřeb všech zainteresovaných stran, jejich transparentnost a kontinuální zapojení. 
-        \item Design a přechod - Zprostředkovává kontrolu kvality výsledného produktu/služby, nákladů a jejich uvedení na trh.
-        \item Získávání/budování - Zabezpečuje, že jsou jednotlivé komponenty služby/produktu dostupné, když jsou potřeba a dle potřebných specifikací.
-        \item Doručení a podpora - Zaručuje doručení produktu/služby dle domluvených specifikací a očekávání zainteresovaných stran.
-    \end{compactitem}
+    \item Hodnotový řetězec služby - Jak již bylo zmíněno výše, jedná se o soubor kroků, které je třeba provést, aby z dodaných vstupů vznikla požadovaná hodnota. Tento řetězec se skládá z šesti samostatných aktivit a celé schéma hodnotového řetězce je vyobrazeno na obrázku \ref{fig:value_chain}.
     Hodnotový řetězec služby je značně flexibilní a umožňuje nasazení v rámci nejrůznějších vývojových přístupů. Díky této flexibilitě umožňuje velmi snadno, rychle a efektivně reagovat na případné změnové požadavky zainteresovaných stran. Spolu s praktikami ITIL tak tvoří velmi komplexní sadu nástrojů pro správu IT služeb.\parencite[s.~21]{Cartlidge2020}
 
     \begin{figure}[h]
@@ -608,38 +660,7 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
         \label{fig:value_chain}
     \end{figure} 
     
-    \item Postupy (Practices) - V rámci třetí vrstvy je definována řada postupů, které jsou designovány dle čtyř základních dimenzí managementu služeb a každá podporuje více hodnotových řetězců. Tyto postupy se dělí do tří kategorií a to \emph{Obecné manažerské postupy}, \emph{Postupy managementu služeb} a \emph{Postupy technického managementu}, jejich kompletní seznam je pak uveden v tabulce \ref{tab:management_practices_ITIL}.
-    Tyto postupy jsou navrženy tak, aby zajistili správné pochopení a ukotvení celkového přehledu tykajícího se struktury, obsahu a klíčových konceptů uživateli služby nebo produktu. Z tohoto jsou všechny vystavěny dle následujícího schématu: \parencite[s.~23]{Cartlidge2020}
-    \begin{compactitem}
-        \item Obecné informace
-        \begin{compactitem}
-            \item Účel a popis
-            \item Termíny a pojmy
-            \item Rozsah/záběr
-            \item Faktory úspěšné praxe
-            \item Klíčové metriky
-        \end{compactitem}
-        \item Hodnotové proudy a procesy
-        \begin{compactitem}
-            \item Jak praxe přispívá k činnostem hodnotového řetězce služeb
-            \item Procesy a činnosti praxe
-        \end{compactitem}
-        \item Organizace a lidé
-            \begin{compactitem}
-                \item Role, kompetence a zodpovědnosti
-                \item Organizační struktury a týmy
-            \end{compactitem}
-        \item Informace a technologie
-        \begin{compactitem}
-            \item Výměna informací: vstupy a výstupy
-            \item Automatizace a nástroje
-        \end{compactitem}
-        \item Partneři a dodavatelé
-        \begin{compactitem}
-            \item Vztahy s třetími stranami zapojenými do praxe
-            \item Zohlednění zdrojů
-        \end{compactitem}
-    \end{compactitem}
+    \item Postupy (Practices) - V rámci třetí vrstvy je definována řada postupů, které jsou designovány dle čtyř základních dimenzí managementu služeb a každá podporuje více hodnotových řetězců. Tyto postupy se dělí do tří kategorií a to \emph{Obecné manažerské postupy}, \emph{Postupy managementu služeb} a \emph{Postupy technického managementu} \parencite[s.~22]{Cartlidge2020}.
 
     \begin{figure}[h]
         \begin{center}
@@ -651,34 +672,6 @@ Jak již bylo zmíněno, tak na výše definovaných základních dimenzích je 
     \item Průběžné vylepšení (Continual improvement) - Model kontinuálního vylepšování je v rámci SVS definován jako cyklický řetězec otázek, které jsou úzce propojeny s jednotlivými procesy a metrikami, díky kterým je možné tyto otázky zodpovědět a provést případná vylepšení. Schéma celého řetězce je znázorněno na obrázku \ref{fig:svs_continual_improvement}.
 \end{compactitem}
 
-    \begin{table}[h]
-        \scriptsize
-        \begin{tabularx}{\textwidth}{100X}
-            \toprule
-                Obecné manažerské postupy & Postupy managementu služeb & Postupy technického managementu \\
-             \midrule
-                Architecture management & Availability management & Deployment management \\
-                Continual improvement & Business analysis & Infrastructure and platform management \\
-                Information security management & Capacity and performance & Software development and management \\
-                Knowledge management & Change enablement  \\
-                Measurement and reporting & Incident management  \\
-                Organizational change management & IT asset management  \\
-                Portfolio management & Monitoring and event management  \\
-                Project management & Problem management  \\
-                Relationship management & Release management \\
-                Risk management & Service catalogue management \\
-                Service financial management & Service configuration management \\
-                Strategy management & Service continuity management \\
-                Supplier management & Service design \\
-                Workforce and talent management & Service desk \\
-                Service level management \\
-                Service request management \\
-                Service validation and testing \\
-            \bottomrule
-        \end{tabularx}
-        \caption{Manažerské postupy dle ITIL \parencite[s.~22]{Cartlidge2020}}
-        \label{tab:management_practices_ITIL}
-    \end{table}
 
 \section{Jira}
 \label{Jira}
@@ -704,9 +697,9 @@ Samotný datový sklad byl implementován na jaře 2022 za pomoci externí dodav
 
 Framework ITIL v3 definuje službu jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}, přičemž v tomto konkrétním případě se dle zakládací listiny jedná o službu typu CFS \footnote{z angl. Customer Facing Service}, což je z definice ITIL služba, \emph{která přímo přináší přidanou hodnotu pro uživatele, který s ní může vědomě nebo přímo interagovat.}\parencite{SyFvQA11lk1OaIec} Zakládací listina též definuje výstupní hodnotu jako již zmíněné automaticky generované reporty, jejichž cílem je usnadnit rozhodovací procesy a také poskytovat podporu ve vzdělávání. \footnote{odcitovat zakládací listinu jako neveřejný dokument?}
 
-Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, kterým je v tomto případě Bc. Filip Švaříček\footnote{uvádět jménem?}, který spolu s Mgr Tomášem Bártkem tvoří tým zodpovědný za provoz a rozvoj datového skladu.
+Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, spolu s dalším administrátorem pak tvoří tým zodpovědný za provoz a rozvoj datového skladu.
 
-Dále pak zakládací listina obsahuje definované základní KPI\footnote{z angl. Key Performance Indicator}, neboli klíčové ukazatele výkonosti, které byly v tomto případě nastaveny na počet uživatelů datového skladu, kdy uživateli jsou v tomto případě myšleny spíše jednotlivé usecasy, které jsou na datovém skladu postaveny. Jako prvotní cíl bylo stanoveno dosáhnutí alespoň deseti usecasů.
+Dále pak zakládací listina obsahuje definované základní KPI, neboli klíčové ukazatele výkonosti, které byly v tomto případě nastaveny na počet uživatelů datového skladu, kdy uživateli jsou v tomto případě myšleny spíše jednotlivé usecasy, které jsou na datovém skladu postaveny. Jako prvotní cíl bylo stanoveno dosáhnutí alespoň deseti usecasů.
 
 V neposlední řadě je pak součástí zakládací listiny též definice cílové skupiny, kterou jsou zejména manažeři rektorátu Masarykovy univerzity spolu s managementem ÚVT, obecně má ale datový sklad sloužit jako podpůrný prostředek pro uživatele potřebující vyhodnotit velké množství dat.
 
@@ -836,27 +829,54 @@ High-tech služba v případě služeb obecně znamená, že služby není potř
 
 Dalším z využitelných výstupů je typologie vlastníka služby, z původního výzkumu vyplývá, že se v rámci služeb na MUNI vyskytují čtyři základní typy vlastníků - technický, pro-uživatelský, nezainteresovaný a manager/product owner, kteří jsou rozděleni dle jejich technických schopností, přístupu k uživatelům atp.\parencite[s. 78]{Springerova2020} Vlastník služby datového skladu dle této typologie vychází jako typický manager/product owner, neboť má neboť jeho úkolem je holistický přístup k službě, její rozvoj i znalost technických detailů.  Tato klasifikace je zcela očekávaná, neboť současný vlastník služby byl za tím účelem zvolen od samého začátku, což dle původního výzkumu je, co se analyzovaných služeb týče, spíše výjimka. 
 
-V zakládací listině služby, je zmíněn jediný KPI, který se věnuje počtu usecase, který je stanoven na dva pilotní usecasy a velmi vágně definované "zvýšení do konce roku", které nedefinuje jasný počet usecasů, kterých je třeba dosáhnout. Pro upřesnění však lze využít řádky \emph{Odhadnutý počet uživatelů využívající službu} a \emph{Odhadnutý počet požadavků za rok}, kterou taktéž se zakládací listiny. V těch to parametrech je definováno, že počet uživatelů, v tom to případě uživatel = usecase, je odhadován na deset za rok a stejně tak počet požadavků na službu by měl být deset ročně. 
+V zakládací listině služby, je zmíněn jediný KPI, který se věnuje počtu usecase, který je stanoven na dva pilotní usecasy a velmi vágně definované "zvýšení do konce roku", které nedefinuje jasný počet usecasů, kterých je třeba dosáhnout. Pro upřesnění však lze využít řádky \emph{Odhadnutý počet uživatelů využívající službu} a \emph{Odhadnutý počet požadavků za rok}, taktéž z tabulky v zakládací listině. V těch to parametrech je definováno, že počet uživatelů, v tom to případě uživatel = usecase, je odhadován na deset za první rok a stejně tak počet požadavků na službu by měl být deset ročně. 
 
-Vzhledem k tomu, že dle reportovacího portálu je v současnosti v provozu jen sedm usecasů, nebylo těchto cílů v roce 2023 dosaženo. Zde je však důležité zmínit, že současnosti se finalizuje práce na několika nových usecasech a tak lze splnění tohoto milníku očekávat v prvním čtvrtletí roku 2024.
+Vzhledem k tomu, že dle reportovacího portálu je v současnosti v provozu jen sedm usecasů, nebylo těchto cílů v roce 2023 dosaženo. Co se požadavků na novou službu týče, tak se dle vlastní služby v současné době v různých fázích zpracovává více jak deset těchto nových požadavků, které již mají i dodané všechny potřebné podklady. Tyto požadavky byly vesměs přijaty pomocí příslušného procesu, který se tímto jeví jako dostatečně efektivní, neboť požadavek na deset nových požadavků ročně je splněn. 
 
-Počet žádostí na nový usecase..... Doplnit od p. Švaříčka
+Co se KPI týkajícího se nasazených usecasů týče, lze předpokládat, že vzhledem k množství rozpracovaných usecasů, dojde k jeho naplnění v prvním čtvrtletí roku 2024.
 
+Vyjma již zmíněného procesu obstarávajícího sběr požadavků na nový usecase, je v rámci služby implementován ještě proces pro nahlašování incidentů nebo problémů. Dle vlastníka služby je tento proces bezproblémově využíván uživateli a to zejména v situacích neaktuálnosti dat, ke kterým do této doby docházelo jen kvůli nefunkčnosti služeb třetích stran, které slouží jako primární zdroje dat. Proces je tedy funkční a efektivní, i když v tomto případě je nutné uvést, že proces je součástí univerzitního service desku a jako takový je tak společný pro většinu služeb MUNI. Samotná služba má být dle zakládací listiny dostupná 99.99\% času, tohoto požadavku je dle jejího vlastníka bez problémů dosaženo.
 
+Poslední proces, který má za úkol aktivní akvizici uživatelů nebyl v době vzniku této práce ještě v provozu a tak jej nebylo možné vyhodnotit. 
 
+Co se služby jako takové týče, z pohledu ITIL zde postrádám jakoukoliv metodiku na zpětné zhodnocení kvality a postupné vylepšování služby. V případě změn v již existujících usecase sice lze znovu využít proces pro sběr požadavků, ale ten je z principu designován na velké změny. Pro lepší správu služby by bylo vhodné aktivně sbírat informace o spokojenosti jejích uživatelů a na základě těchto informací následně provoz vyhodnotit a případně upravit. 
 
+Taktéž by bylo vhodné implementovat proces, sloužící k ukončení provozu daného usecasu, pokud již není dále využíván, byť to lze řešit za pomoci univerzitního service desku.
 
 
 
 \chapter{Aplikační část}
-V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících ze systému ISEP, který je určen k evidenci projektů na Masarykově univerzitě. Vzhledem k citlivé povaze dat však zde realizovaný a prezentovaný usecase vychází pouze z datového modelu a samotná data jsou náhodně vygenerovaná a nereflektují reálný stav. V případě využití reportu v reálném provozu je možné jej přepojit na reálná data. 
+V rámci diplomové práce je prakticky zpracován jeden uživatelský report založený na datech pocházejících z Informačního sys
+tému pro evidenci projektů na Masarykově univerzitě, zkráceně ISEP, který je určen k evidenci projektů na Masarykově univerzitě. Vzhledem k citlivé povaze dat však zde realizovaný a prezentovaný usecase vychází pouze z datového modelu a samotná data jsou náhodně vygenerovaná a nereflektují reálný stav. V případě využití reportu v reálném provozu je možné jej přepojit na reálná data. 
 
+Realizovaný dashboard se věnuje vizualizaci projektových dat na základě genderu osob zainteresovaných do jednotlivých projektů. V rámci přípravy realizace je nutné definovat následující základní parametry dashboardu.
 
-\section{Zpracovávaný usecase - data z ISEP}
-dasdasd
+Prvním parametrem je účel samotného dashboardu, kterým je poskytnutí snadného nástroje pro monitoring genderové vyváženosti projektů na Masarykově univerzitě. Pro tento účel je třeba zvolit sledované metriky, které slouží jako hlavní KPI dashboardu, z těchto metriky pak vyplývají i příslušné dimenze dat. Pro splnění účelu dashboard byly zvoleny následující metriky: 
+\begin{compactitem}
+    \item Úspěšnost návrhů na nové projekty dle genderu navrhovatelů - vizualizace genderového rozdělení projektů, které přešli z fáze návrhu do fáze realizace v komparaci s těmi, které zůstali ve fázi realizace.
+    \item Úspěšnost realizovaných projektů dle genderu jejich zpracovatelů - vizualizace relativního poměru úspěšné realizace.
+\end{compactitem}
+vyjma hlavních KPI, má dashboard obsahovat i následující vedlejší KPI:
+\begin{compactitem}
+    \item Poměr můžu a žen v rámci všech zpracovávaných projektů - vizualizace poměrného genderového rozdělení v rámci všech realizovaných projektů v průběhu posledních pěti let.
+    \item Velikost rozpočtu v závislosti na genderovém složení. 
+\end{compactitem}
 
+Posledním základním atributem je pak skupina uživatelů, která bude daný dashboard využívat, v tomto případě se jedná primárně o management MUNI, ale vzhledem k anonymní podstatě dat a jejich společenskému charakteru by měl být výsledný report dostupný i veřejně. 
 
-\section{Zavedení}
+Z hlediska charakteru dashboardem zpracovávaných dat, u kterých z principu nedochází k časté aktualizace, se bude jednat o strategický dashboard. Data budou aktualizována klasickým ETL procesem datové skladu, který je prováděn jednou denně. 
+
+Pro samotnou realizaci dashboardu je využit program PowerBI, který je využíván většinou již fungujících usecasů v rámci služby datového skladu a jedná se tak o defacto standard pro vizualizaci dat.
+
+\section{Zdrojová data}
+Zdrojová data z ISEP je třeba pro využití v navrhovaném dahsboardu zpracovat za pomoci ETL procesu. O jednotlivé fáze procesu se stará samotná služba datového skladu a jsou rozepsány níže a to v rozšířené verzi, tak jak je ETL proces definován v knize \citetitle{Kimballc2004}.
+\paragraph{Extrakce} - v první fázi je třeba potřebná data extrahovat z původního úložiště ISEP. Toto úložiště je standardní relační databáze, data jsou tam extrahována pomocí služby \emph{Azure data factory} a příslušného konektoru. 
+\paragraph{Čištění a potvrzování} - vzhledem k charakteru dat lze předpokládat, že tyto fáze nejsou v tomto konkrétním případě důležité. U dat týkajících se jednotlivých projektů a genderu zainteresovaných osob lze předpokládat, že budou vždy vyplněny správně, v případě chybných dat není možné tyto data, vyjma explicitně chybějících hodnot, detekovat. Granularita dat je v tomto případě vždy 24 hodin.
+\paragraph{Doručování} - v polsední fází dochází k transformaci dat do datové hvězdy a její uložení. Všechny transformace, kterou jsou s daty provedeny jsou vedeny následující podkapitole.
+\subsection{Transformace dat}
+
+\section{Dashboard - PowerBi}
+
 
 \chapter{Závěr}
 \section{Diskuse výsledků práce}
