@@ -12,6 +12,8 @@ Hope the end is near.....
       1. potvrzuje heterogenitu
       1. vlastník je v kategorii manager/product owner
 
+# hejty
+- investicni, neinvesticni - řešit jinak, takhle se to musí filtrovat na základě částky
 
 
 ## LINKS

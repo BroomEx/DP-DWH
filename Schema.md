@@ -76,7 +76,7 @@ Table Projekt {
   Datum_navrhu timestamp
   Datum_zahajeni timestamp
   Datum_ukonceni timestamp
-  Navrhovatel_gender string
+  Gender string
   NP_prac_Id integer
 }
 
