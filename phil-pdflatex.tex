@@ -364,12 +364,12 @@ Jak již bylo zmíněno model datové hvězdy je založen na relačních databá
 K tabulkám faktů jsou pak pomocí relací připojeny tabulky obsahující jednotlivé dimenze, dle kterých je možné fakty analyzovat. Dimenze představují základní prvek ke kategorizaci a popisu faktů. Jednotlivé dimenze obsahují atributy, na základě který je možné provádět filtrace, pohledy, granularizaci atp. V případě již zmíněných prodejů, by se tak mohlo jednat například o prodané zboží, datum uskutečnění atp.
 
 Tyto dva zmíněné druhy tabulek může doplňovat ještě typ třetí, který se nazývá můstkový a slouží jako propojovací prvek mezi fakty a dimenzemi. Propojovací tabulky se typicky využívají v situacích, kdy je mezi dvěma tabulkami vazba M:N, kdy každá z tabulek, může být propojena s vícero jiných tabulek. Tato situace je znázorněna na  
-obrázku \ref{fig:M_N}, kde lze vidět projekt může zahrnovat více osob a stejně tak osoby mohou být zainteresovány ve více projektech. V případě datové hvězdy, kde jde z principu o snahu eliminovat M:N vazby, však slouží zejména ke zjednodušení editací jednotlivých dimenzionálních vztahů a k lepší editační flexibilitě. 
+obrázku \ref{fig:M_N}, kde lze vidět projekt může zahrnovat více osob a stejně tak osoby mohou být zainteresovány ve více projektech, zde je důležité zmínit, že na obrázku není zobrazen datový model, nýbrž reálná podoba dat ve fyzickém formátu, kdy se pro jednotlivé osoby a vazby na projekty vytváří vždy nový záznam v tabulce \emph{Projekt\_Osoba}. V případě datové hvězdy, kde jde z principu o snahu eliminovat M:N vazby, však slouží zejména ke zjednodušení editací jednotlivých dimenzionálních vztahů a k lepší editační flexibilitě. 
 \begin{figure}[h]
   \begin{center}
           \includegraphics[width=10cm]{img/M_N.png}
   \end{center}
-  \caption{M:N vazba mezi tabulkami.  Vlastní zpracování}
+  \caption{M:N vazba mezi tabulkami. Nejedná se o datový model, ale fyzické uložení dat.  Vlastní zpracování}
   \label{fig:M_N}
 \end{figure}  
 
@@ -924,13 +924,39 @@ Zdrojová data z ISEP je třeba pro využití v navrhovaném dashboardu zpracova
 \paragraph{Čištění a potvrzování} Vzhledem k charakteru dat lze předpokládat, že tyto fáze nejsou v tomto konkrétním případě důležité. U dat týkajících se jednotlivých projektů a genderu zainteresovaných osob lze předpokládat, že budou vždy vyplněny správně, v případě chybných dat není možné tyto data, vyjma explicitně chybějících hodnot, detekovat. Granularita dat je v tomto případě vždy 24 hodin.
 \paragraph{Doručování} V poslední fází dochází k transformaci dat do datové hvězdy a její uložení. V případě dat ze z ISEP, jsou data v davétm skladě uložena ve stejném formátu jako jsou v původním úložišti a žádná transformace nebyla nutná, neboť data z ISEP již jsou strukturována ve formě datového hvězdy. 
 
-Pro potřeby řešeného reportu jsou využity dvě datové hvězdy, které zastupují jak samotné projekty, tak i jim předcházející návrhy. Obě datové hvězdy obsahují větší množství dat, než které je pro žádané metriky potřeba a tak je realizaci reportu využit defacto jejich subset, jehož struktura je popsána níže. 
+Pro potřeby řešeného reportu jsou využity dvě datové hvězdy, které zastupují jak samotné projekty, tak i jim předcházející návrhy a které jsou vzájemně provázané, takže vytváří datové souhvězdí. Obě datové hvězdy obsahují větší množství dat, než které je pro žádané metriky potřeba a tak je realizaci reportu využit jejich subset, jehož struktura je popsána níže. 
 
+\subsection{Navrh}
+První datovou hvězdu tvoří tabulky, nesoucí data o návrzích projektů. Tato datová hvězda je vyobrazena na \ref{fig:draft_sch} a je tvořena pouze jedním faktem a to tabulkou \textbf{Navrh} a jednou dimenzí , kterou tvoří tabulky zainteresovaných osob - \textbf{NAVRH\_osoba}, které jsou s hlavní tabulkou faktů propojeny skrze vazební tabulku \textbf{NAVRH\_prac\_vazba}. Vazební tabulka je s tabulkou návrhu propojena kardinalitou 1:1, jednotlivé osoby s vazbou pak 1:N, tzn. návrh může mít jen jednu vazbu, ale ta může mít více osob.
 
+Z jednotlivých záznamů v tabulce \textbf{Navrh} jsou pro report stěžejní zejména informace o datu podání návrhu, případné realizace a ukončení projektu, genderu navrhovatele a stavu návrhu, který udává v jaké fázy schvalování se nachází. Z dat v tabulce \textbf{NAVRH\_osoba} jsou stěžejní zejména informace o pohlaví dané osoby a dále o její roli v daném projektovém návrhu.
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/draft_sch.png}
+        \end{center}
+        \caption{Datová hvězda - Návrhy projektů. Vlastní zpracování}
+        \label{fig:draft_sch}
+    \end{figure} 
+    
+\subsection{Projekt}
+Druhá datová hvězda nese data o schváleném a realizovaném projektu a je vyobrazena na obrázku \ref{fig:projects_sch}. Tento datový datový model je komplikovanější a to zejména z důvodů dat projektových rozpočtů.
 
-Vzhledem k tomu, že projektové rozpočty mohou být vedeny jak v českých korunách, tak i v eurech a dolarech, bylo pro potřeby porovnání rozpočtů mezi projekty zajistit jejich přepočet do stejné měny. Za tímto účelem byla k datovému modelu přidána tabulka se směnnými kurzy. Tato tabulka je převzata z rozhraní České národní banky a aktualizuje se s každou aktualizací dat v reportu. 
+Základem této hvězdy je tabulka \textbf{Projekt}, která má velmi podobnou strukturu jako ústřední tabulka faktu v případě návrhů, stejně tak tabulky \textbf{PROJEKT\_osoby} a \textbf{PROJEKT\_prac\_vazba} fungují identicky, jako jejich ekvivalenty v případě návrhů. Projekty jsou však rozšířeny o již zmíněné dimenze v podání tabulky \textbf{Rozpocet}, které jsou v kardinalitě 1:N, což znamená, že každý projekt může mít více rozpočtů. Rozpočet obsahuje základní informace o datu jeho platnosti a zejména o měně, v jaké je zaznamenán.
 
-Velikosti rozpočtů, které jsou takto přepočteny na české koruny, tak odpovídají současným směnným kurzům, které se mohou od původních odlišovat. Realizovat přesný přepočet dle dobových kurzů, je značně komplikovanější. Vzhledem k tomu, že neexistuje relevantní důvod předpokládat, že nekorunové rozpočty nejsou rovnoměrně rozloženy mezi všechny projekty bez ohledu na pohlaví řešitele, můžeme tuto nepřesnost v rámci tohoto reportu zanedbat.
+Rozpočet pak doplňuje tabulka \textbf{Rozpocet\_radek}, která nese data o jednotlivých položkách rozpočtu. Pro report jsou primární zejména hodnoty \textit{N\_Inveticni} a \textit{N\_Neinvesticni}, které představují investiční a neinvestiční náklady dané položky. Vyplněna může být vždy jen jedna hodnota.
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/projects_sch.png}
+        \end{center}
+        \caption{Datová hvězda - Projekty. Vlastní zpracování}
+        \label{fig:projects_sch}
+    \end{figure} 
+
+    
+Vzhledem k tomu, že projektové rozpočty mohou být vedeny jak v českých korunách, tak i v eurech a dolarech, bylo pro potřeby porovnání rozpočtů mezi projekty zajistit jejich přepočet do stejné měny. Za tímto účelem byla k datovému modelu přidána tabulka se směnnými kurzy \textbf{denni\_kurz}. Tato tabulka je převzata z rozhraní České národní banky \footnote{viz. https://www.cnb.cz/cs/financni\_trhy/devizovy\_trh/kurzy\_devizoveho\_trhu/denni\_kurz.txt} a aktualizuje se s každou aktualizací dat v reportu. 
+
+Velikosti rozpočtů, které jsou takto přepočteny na české koruny, tak odpovídají současným směnným kurzům, které se mohou od původních odlišovat. Realizace přesného přepočtu dle dobových kurzů, by byla značně komplikovanější a zahrnovala by využití služby třetí strany, neboť v samotném systému nejsou směnné kurzy archivovány. Vzhledem k tomu, že neexistuje relevantní důvod předpokládat, že nekorunové rozpočty nejsou rovnoměrně rozloženy mezi všechny projekty bez ohledu na pohlaví řešitele, můžeme tuto nepřesnost v rámci tohoto reportu zanedbat.
 
 \subsection{Testovací data}
 Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu a veškerá data, jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu.  Datový model však zůstal zachován a tak by v případě reálného využití, mělo být možné připojit výsledný report na produkční databázi datového skladu a vizualizovat tak reálný stav. 
