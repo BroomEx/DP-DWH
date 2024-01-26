@@ -906,7 +906,7 @@ Vyjma těchto dvou hlavních metrik je dashboard doplněn o celkové počty náv
 
 \paragraph{Finance} Poslední dashboard se pak věnuje financím a jejích genderové vyváženosti. Primárně vizualizované metriky jsou pak následující:
 \begin{compactitem}
-    \item Relativní velikost rozpočtů dle pohlaví řešitele projektu
+    \item Relativní velikost investičních a neinvestičních rozpočtů dle pohlaví řešitele projektu
     \item Průměrná velikost rozpočtu projektu dle pohlaví řešitele projektu
 \end{compactitem}
 \vspace{5}
@@ -953,19 +953,313 @@ Rozpočet pak doplňuje tabulka \textbf{Rozpocet\_radek}, která nese data o jed
         \label{fig:projects_sch}
     \end{figure} 
 
-    
+\subsection{Denní kurzy}
+\label{denni-kurz}
 Vzhledem k tomu, že projektové rozpočty mohou být vedeny jak v českých korunách, tak i v eurech a dolarech, bylo pro potřeby porovnání rozpočtů mezi projekty zajistit jejich přepočet do stejné měny. Za tímto účelem byla k datovému modelu přidána tabulka se směnnými kurzy \textbf{denni\_kurz}. Tato tabulka je převzata z rozhraní České národní banky \footnote{viz. https://www.cnb.cz/cs/financni\_trhy/devizovy\_trh/kurzy\_devizoveho\_trhu/denni\_kurz.txt} a aktualizuje se s každou aktualizací dat v reportu. 
 
 Velikosti rozpočtů, které jsou takto přepočteny na české koruny, tak odpovídají současným směnným kurzům, které se mohou od původních odlišovat. Realizace přesného přepočtu dle dobových kurzů, by byla značně komplikovanější a zahrnovala by využití služby třetí strany, neboť v samotném systému nejsou směnné kurzy archivovány. Vzhledem k tomu, že neexistuje relevantní důvod předpokládat, že nekorunové rozpočty nejsou rovnoměrně rozloženy mezi všechny projekty bez ohledu na pohlaví řešitele, můžeme tuto nepřesnost v rámci tohoto reportu zanedbat.
 
 \subsection{Testovací data}
+\label{testovaci-data}
 Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu a veškerá data, jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu.  Datový model však zůstal zachován a tak by v případě reálného využití, mělo být možné připojit výsledný report na produkční databázi datového skladu a vizualizovat tak reálný stav. 
 
-Testovací data byla vygenerována za pomocí jednoduchého programu napsaného v jazyce C\# za využití frameworku \emph{.NET core} a knihovny \emph{bogus}, která je zodpovědná za generování náhodných dat. Data jsou pro účely testu uloženy v databázi SQLite. Generátor i databáze s testovacími daty jsou součástí příloh.
+Testovací data byla vygenerována za pomocí jednoduchého programu napsaného v jazyce C\# za využití frameworku \emph{.NET core} a knihovny \emph{bogus}, která je zodpovědná za generování náhodných dat. Data jsou pro účely testu uloženy v databázi SQLite, která ze které jsou následně nahrány do programu PowerBI. Jelikož Power BI neumí nativně pracovat SQLite databázi je nutné využít SQLite ovladač pro ODBC\footnote{viz. http://www.ch-werner.de/sqliteodbc/}. 
+
+Generátor i databáze s testovacími daty jsou součástí příloh.
+
+\section{Report - PowerBi}
+Data byla do programu Power BI Desktop nahrána pomocí ODBC driveru pro SQLite zmíněného výše a jsou využita tak, jak jsou uležena v databázi bez dalších transformací, k datům byla pouze přidána tabulka \emph{denní\_kurz}, která slouží pro přepočet hodnot rozpočtů v cizích měnách viz. \ref{denni-kurz}. Tabulka je s rozpočtovou tabulkou propojena pomocí klíče uloženém ve sloupci \emph{kod}.  
+
+Dle zadání se výsledný report skládá ze tří samostatných dashboardů. Jednotlivé dashboardy jsou dostupné z úvodní obrazovky, která slouží jako základní rozcestník, viz. obrázek \ref{fig:crossroad}. Pro kliknutí na navigační tlačítko je uživatel přesměrován na již na zvolený dashboard, kde jsou vizualizované jednotlivé metriky. Tyto metriky jsou definovány za pomocí jazyka DAX\footnote{z angl. Data Analysis Expressions}, který je v Power BI využíván na tvorbu metrik a kalkulovaných sloupců, v jednodušších případech se jendá pouze o agregační funkce programu Power BI Desktop.
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/crossroad.png}
+        \end{center}
+        \caption{Report - rozcestník}
+        \label{fig:crossroad}
+    \end{figure}
+
+\subsection{Personál}
+První dashboard z nabídky se věnuje vizualizaci genderových dat osob, které jsou zainteresovány v jednotlivých projektech a jeho zpracování je na obrázku \ref{fig:persons}. Tento dashboard obsahuje následující základní trojici metrik.
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/persons.png}
+        \end{center}
+        \caption{Report - personál}
+        \label{fig:persons}
+    \end{figure}
+Všechny vizualizované metriky zobrazují ve výchozím stavu souhrn dat za celé sledované období, v případě využití filtru pak pouze období zvolené.
+
+\paragraph{Relativní zastoupení žen a mužů v pozici řešitele projektu}
+Tato základní metrika vizualizuje poměrové zastoupení žen a mužů ve vedení projektů. Metrika je vizualizována pomocí prstencového grafu, který jednoznačně ukazuje případný nepoměr mezi muži a ženami.
+
+Samotná metrika je pak spočítána jako suma jednotlivých pohlaví v sloupci \emph{Gender} tabulky \textbf{PROJEKT}, tento sloupec je využit také jako legenda grafu.
+
+\paragraph{Relativní zastoupení žen a mužů napříč všemi členy projektových týmů}
+Druhá metrika vizualizuje genderový poměr mezi všemi osobami podílejícími se na projektech ve sledovaném období. Metrika je, stejně jako předchozí, vizualizována pomocí prstencového grafu. Jako hodnoty spočítány sumy jednotlivých pohlaví ze sloupce \emph{Pohlavi} v tabulce \textbf{Projekt\_osoba}, stejný sloupec je pak využit jako legenda grafu. 
+
+\paragraph{Genderové zastoupení jednotlivých rolí}
+Poslední základní metrikou je pak vizualizace genderového zastoupení osob v jednotlivých rolích. Metrika zobrazuje rozložení jednotlivých rolí přiřazených k zainteresovaným osobám a rozděluje je dle jejich genderu. Data jsou vizualizována jako seskupený sloupcový graf, který je otočen horizontální polohy.  
+
+Metrika se pro mužskou variantu označuje jako \emph{PocetMuziRole} a je spočítána jako podíl počtu řádků zapsaných v tabulce \textbf{Projekt\_osoba}, které mají přiřazené mužské pohlaví a hodnoty \emph{ManCount}, výpočet je díky funkci \emph{CALCULATE} ošetřen proti dělení nulou.
+
+\emph{ManCount} je metrika pocházející z tabulky \textbf{Prac\_vazba}, která udává celkový počet mužů, kteří se podílí na jednom projektu a je vypočítána jako počet řádků tabulky \textbf{Projekt\_osoba}, které mají souvislost s danou vazbou a jako pohlaví je zde \emph{Muz}. V případě, že se na projektu žádní muži nepodílí, je tato hodnota rovna 0.
+
+Oba dva výpočty pak mají i variantu pro ženské pohlaví \emph{PocetZenyRole, WomanCount}. Všechny výpočty pak v jazyce DAX vypadají následovně:
+
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+ManCount = 
+var cnt = CALCULATE(
+    COUNTROWS(Projekt_osoba), Projekt_osoba[Pohlavi] = "Muz"
+    ) 
+RETURN IF(cnt = BLANK(), 0, cnt)
+
+--------------------------------------------
+
+WomanCount = 
+var cnt = CALCULATE(
+    COUNTROWS(Projekt_osoba), Projekt_osoba[Pohlavi] = "Zena"
+    ) 
+RETURN IF(cnt = BLANK(), 0, cnt)
+
+--------------------------------------------
+
+PocetMuziRole = DIVIDE(
+        COUNTROWS(
+            FILTER(Projekt_osoba, Projekt_osoba[Pohlavi] == "Muz")), 
+                    SUM(Prac_vazba[ManCount]), 0
+        )
+
+--------------------------------------------
+
+PocetZenyRole = DIVIDE(
+        COUNTROWS(
+            FILTER(Projekt_osoba, Projekt_osoba[Pohlavi] == "Zeny")),
+                    SUM(Prac_vazba[WomanCount]), 0
+        )
+```
+\end{markdown*}
+
+Tyto data jsou následně v grafu rozdělena dle jednotlivých rolí, které slouží jako legenda grafu. Pojmenování rolí je uloženo ve sloupci \emph{Popis} tabulky \textbf{Vav\_role}. 
 
 
-\section{Dashboard - PowerBi}
+\vspace{5}
+Tyto základní metriky jsou dále doplněny o přehledový sloupcový graf \emph{Absolutní počty mužů a žen v realizovaných projektech}. Který zobrazuje celkový počet osob zainteresovaných v probíhajících projektech za jednotlivé roky, jejich genderový poměr a dále pak křivku relativního zastoupení žen.  
 
+Data vizualizovaná v tomto grafu pocházejí z hodnot \emph{ManCount} a \emph{WomantCount}, které jsou rozebrány výše. Křivka relativního zastoupení žen je pak spočítána jako podíl hodnoty \emph{WomanCount} a součtu hodnot \emph{ManCount} a \emph{WomanCount}, které jsou obě rozebrány výše. Taktéž je zde využita funkce \emph{DIVIDE()} pro ošetření dělení nulou. Celý výpočet je v DAX následující:
+
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+WomenRatio = DIVIDE(Projekt[WomanCount], 
+                    Projekt[ManCount] + Projekt[WomanCount],
+                    1)
+```
+\end{markdown*}
+Hodnota je vizualizována ve formátu procent. 
+
+
+\subsection{Projekty}
+Druhý dashboard vizualizuje úspěšnost projektových návrhů v závislosti na genderu navrhovatele a je zobrazen na obrázku \ref{fig:projects}. Pro tento účel obsahuje následující základní metriku:
+
+\paragraph{Konverze projekt/návrh} Tato metrika zobrazuje procentuální úspěšnost navrhovatelů projektu v závislosti na jejich genderu. Metrika je pro ženského navrhovatele vypočítána jako podíl počtu řádků v tabulce \textbf{Navrh}, které mají ženského navrhovatele a realizovaný projekt s počtem všechnávrhů podaných ženami. Existence projektu je určena pomocí metriky \emph{ProjectExist}, která k návrhu hledá příslušný projekt, pokud projekt existuje je vrácena hodnota \emph{True()}, v opačném případě \emph{False()}. Metrika je vizualizována jako dvojice grafů paprskového měřidla, kdy každé zobrazuje konverzi návrh/projekt pro jedno pohlaví a to jak graficky, tak i ve formě procentuální informace.
+Zdrojový kód metriky je pak následující:
+
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+ProjectExist = 
+    var proj = RELATED(Projekt[Projekt_Id]) 
+RETURN IF(proj = BLANK(), FALSE(), TRUE())
+
+--------------------------------------------
+
+ManConversion = 
+    var res = CALCULATE(
+        DIVIDE(
+            CALCULATE(
+                COUNTROWS(Navrh), 
+                    Navrh[Navrhovatel_gender] = "Muz", Navrh[ProjectExist]),
+            CALCULATE(
+                COUNTROWS(Navrh),
+                    Navrh[Navrhovatel_gender] = "Muz"), 0))
+RETURN IF(res = BLANK(), 0, res)
+
+--------------------------------------------
+
+WomanConversion = 
+    var res = CALCULATE(
+        DIVIDE(
+            CALCULATE(
+                COUNTROWS(Navrh), 
+                Navrh[Navrhovatel_gender] = "Zena", Navrh[ProjectExist]),
+            CALCULATE(
+                COUNTROWS(Navrh),
+                Navrh[Navrhovatel_gender] = "Zena"), 0))
+RETURN IF(res = BLANK(), 0, res)
+```
+\end{markdown*}
+
+
+Tato metrika je dále doplněna sumami všech podaných návrhů, realizovaných projektů a celkovou úspěšností bez ohledu na gender. Počet všech podaných návrhů je vypočítám jako suma všech záznamů v tabulce \textbf{Navrh}, počet realizovaných projektů jako suma všech záznamů v tabulce \textbf{Navrh}, pro které je metrika \emph{ProjectExist} rovna \emph{TRUE()}.
+
+\newpage
+Celková konverze návrh/projekt je pak spočítána defacto jako podíl dvou předchozích hodnot s tím rozdílem, že jednotlivé sumy jsou v tomto případě vypočítány pomocí DAX následující způsobem.
+
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+CelkovaKonverze = DIVIDE(
+                    COUNTROWS(
+                        FILTER(Navrh, Navrh[ProjectExist] = TRUE())),
+                        COUNTROWS(Navrh),
+                        0)
+```
+\end{markdown*}
+Tato metrika je vizualizována ve formátu procent.
+
+
+Dasboard také obsahuje přehledový graf s absolutními počty návrhů a projektů v jednotlivých letech, který je doplněn o křivky konverze návrh/projekt pro jednotlivé pohlaví.
+
+Absolutní počty návrhů a projektů jsou stejné metriky, které jsou popsány výše, doplňkové křivky s úspěšností pro jednotlivá pohlaví jsou pak metriky \emph{WomanConversion} a \emph{ManConversion}, které jsou popsány v odstavci \emph{Konverze projekt/navrh}.
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/projects.png}
+        \end{center}
+        \caption{Report - projekty}
+        \label{fig:projects}
+    \end{figure}
+    
+\subsection{Finance}
+Poslední zpracovaným dahsboardem v rámci reportu je rozdělení financí dle genderu hlavního řešitele. Celý tento dashboard v zásadě zobrazuje pouze jednu metriku a to relativní velikost rozpočtu dle genderu hlavního řešitele. Avšak metrika je zde vizualizována ve čtyřech variantách a to pro muže a ženy v kombinaci s rozdělením rozpočtu na investiční a neinvestiční.  
+
+V obou případech je vizualizace uskutečněna jednak za pomoci koláčového grafu, který vizualizuje poměrné rozdělení za celé sledované období a dále pak za pomoci sloupcového grafu, který ukazuje průměrné velikosti rozpočtu v průběhu let. Tento graf je dále doplněn o lineární graf, který vizualizuje poměr veli velikostí rozpočtů.
+
+
+
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/finance.png}
+        \end{center}
+        \caption{Report - finance}
+        \label{fig:finance}
+    \end{figure}
+
+Pro variantu investičního rozpočtu projektů řešených ženami - \emph{RozpocetZenyInvesticni} - je primární metrika vypočítána jako podíl celkové sumy investičních položek rozpočtu a počtem řádků všech projektů, u kterých jsou hlavní řešitelé ženy.
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+RozpocetZenyInvesticni =                    
+    CALCULATE(
+        DIVIDE(
+            CALCULATE(
+                SUM(Projekt[RozpocetInvestSum]),
+                Projekt[Gender] = "Zena"),
+            COUNTROWS(
+                FILTER(
+                    Projekt,
+                    Projekt[Gender] == "Zena")),
+                0))
+
+RozpocetMuziInvesticni =                    
+    CALCULATE(
+        DIVIDE(
+            CALCULATE(
+                SUM(Projekt[RozpocetInvestSum]),
+                Projekt[Gender] = "Muz"),
+            COUNTROWS(
+                FILTER(
+                    Projekt,
+                    Projekt[Gender] == "Muz")),
+                0))
+
+RozpocetZenyNeinvesticni =                    
+    CALCULATE(
+        DIVIDE(
+            CALCULATE(
+                SUM(Projekt[RozpocetNoninvestSum]),
+                Projekt[Gender] = "Zena"),
+            COUNTROWS(
+                FILTER(
+                    Projekt,
+                    Projekt[Gender] == "Zena")),
+                0))
+
+RozpocetMuziNeinvesticni =                    
+    CALCULATE(
+        DIVIDE(
+            CALCULATE(
+                SUM(Projekt[RozpocetNoninvestSum]),
+                Projekt[Gender] = "Muz"),
+            COUNTROWS(
+                FILTER(
+                    Projekt,
+                    Projekt[Gender] == "Muz")),
+                0))
+```
+\end{markdown*}
+
+Pomocná metrika \emph{RozpocetInvestSum}, která udává celkovou sumu investičních položek je vypočítána pomocí metriky \emph{RozpocetInvestSum} vytvořené v tabulce \textbf{Projekt} a která počítá celkovou sumu z hodnot z metriky \emph{TotalInvest} z tabulky \textbf{Rozpocet}. Tato metrika pak poskytuje celkovou sumu ze sloupce \emph{N\_Investicni} tabulky \textbf{Projekt\_rozpocet\_radek}.
+
+V DAX se pak všechny zmíněné metriky počítají následovně:
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+TotalInvest = 
+    SUMX(FILTER(Projekt_rozpocet_radek,
+         Projekt_rozpocet_radek[Projekt_rozpocet_Id] = Rozpocet[Projekt_Id]),
+    Projekt_rozpocet_radek[N_Investicni])
+
+TotalNonInvest = 
+    SUMX(FILTER(Projekt_rozpocet_radek,
+         Projekt_rozpocet_radek[Projekt_rozpocet_Id] = Rozpocet[Projekt_Id]),
+    Projekt_rozpocet_radek[N_Neinvesticni])
+
+
+RozpocetInvestSum = 
+    SUMX(
+        FILTER(
+            Rozpocet, Rozpocet[Projekt_Id] = Projekt[Projekt_Id]
+            ),
+        Rozpocet[TotalInvest]
+    )
+
+RozpocetNoninvestSum = 
+    SUMX(
+        FILTER(
+            Rozpocet, Rozpocet[Projekt_Id] = Projekt[Projekt_Id]
+            ),
+        Rozpocet[TotalNoninvest]
+    )
+```
+\end{markdown*}
+
+Poslední vizualizovanou metrikou v rámci dashboardu je pak poměr rozpočtu mužů a žen, která vizualizuje křivku poměru mezi jednotlivými rozpočty. Metrika \emph{RozpocetGenderRatio} je vypočítána jako větší hodnota z podílu metrik \emph{RozpocetZenyNeinvesticni} a \emph{RozpocetMuziNeinvesticni} a z podílu jejich obrácené hodnoty. V DAX pak zápis vypadá následovně: 
+
+\begin{markdown*}{%
+  fencedCode,
+}
+```
+RozpocetGenderRatio = 
+    MAX(
+        DIVIDE(
+            [RozpocetZenyNeinvesticni], [RozpocetMuziNeinvesticni], 1),
+        DIVIDE(
+            [RozpocetMuziNeinvesticni], [RozpocetZenyNeinvesticni], 1)
+        )
+```
+\end{markdown*}
+
+Z výpočtu tedy vyplývá, že čím více se tato křivka přibližuje hodnotě 1, tím více  jsou velikosti rozpočtů vyrovnané, naopak čím je hodnota větší, tím větší je nepoměr mezi velikostmi rozpočtů.
 
 \chapter{Závěr}
 \section{Diskuse výsledků práce}

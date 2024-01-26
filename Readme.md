@@ -1,5 +1,11 @@
 # DP-DWH Notes
 Hope the end is near.....
+### Finale
+- Nezapomenout na adisera přidat ho na úvodku
+- Přepsat projekt
+  - Míň itil
+  - víc DWH
+- Zedituj metadata v šabloně
 
 # DWH?
    ## TODO
