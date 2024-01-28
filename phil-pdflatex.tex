@@ -56,7 +56,7 @@
     department  = Katedra informačních studií a knihovnictví,
     author      = Ing. Pavel Dytrych,
     gender      = m,
-    advisor     = {Ing. Filip Janovič PhD., MBA},
+    advisor     = {Ing. Filip Janovič PhD., MBA\\Konzultant: Ing. Jindřich Zechmeister},
     title       = Zavádění datového skladu v rámci Masarykovy univerzity,
     TeXtitle    = Zavádění datového skladu v rámci Masarykovy univerzity,
     keywords    = {keyword1, keyword2, ...},
@@ -70,7 +70,7 @@
     %% English thesis.
     programmeEn        = NA,
     fieldEn            = Cognitive Sciences,
-    departmentEn       = Department of Psychology,
+    departmentEn       = kisk,
     titleEn            = What Can Typography Tell Us
                  About the Nature of Man,
     TeXtitleEn         = What Can Typography Tell Us
@@ -267,6 +267,7 @@ Obecné schéma datového skladu je znázorněno na obrázku \ref{fig:dwh_schema
   \label{fig:dwh_schema}
 \end{figure}  
 
+
 \section{Typy datových skladů}
 \label{dwh_types}
 Datové sklady se dají rozdělit na několik druhů dle různých kritérií. \citeauthor{Inmon2005}
@@ -349,7 +350,7 @@ Díky ETL procesu jsou ve výsledku v datovém skladu data uložena v jednoduch�
 \subsection{Datový model}
 V rámci transformační fáze ETL procesu dochází k transformaci původního datového modelu na model, který je využíván datovým skladem. Jak již bylo zmíněno, typicky se jedná o modely datové krychle neboli OLAP \footnote{y angl. Online Analytical Processing Cube} a nebo datové hvězdy. 
 
-Oba tyto modely pracují se stejným konceptem datových dimenzí, ale zásadně se liší v jejich reálné implementaci. Zatímco model datového hvězdy pracuje na základě  tabulek faktů, ke kterým jsou relačně připojeny tabulky obsahující jednotlivé dimenze. V případě datové krychle Jsou pak fakta a dimenze uloženy ve více rozměrech.\parencite[s.9]{Kimball2013} Oba datové modely jsou pak vyobrazeny na obrázku \ref{fig:star_olap} a blíže popsány níže. 
+Oba tyto modely pracují se stejným konceptem datových dimenzí, ale zásadně se liší v jejich reálné implementaci. Zatímco model datového hvězdy pracuje na základě  tabulek faktů, ke kterým jsou relačně připojeny tabulky obsahující jednotlivé dimenze. V případě datové krychle jsou pak fakta a dimenze uloženy ve více rozměrech.\parencite[s.9]{Kimball2013} Oba datové modely jsou pak vyobrazeny na obrázku \ref{fig:star_olap} a blíže popsány níže. 
 \begin{figure}[h]
   \begin{center}
           \includegraphics[width=10cm]{img/star_olap.png}
@@ -359,12 +360,12 @@ Oba tyto modely pracují se stejným konceptem datových dimenzí, ale zásadně
 \end{figure}  
 
 \subsubsection{Datová hvězda}
-Jak již bylo zmíněno model datové hvězdy je založen na relačních databázích a tabulkách dvojího, respektive trojího typu. Název modelu je odvozen od jeho vizualizace, kdy jsou k ústřední tabulce faktů paprskovitě připojeny tabulky s dimenzemi. Tabulka faktů obsahuje numerická data, která představují kvantifikovatelné ukazatele a nebo události.\parencite[s.10]{Kimball2013} Typicky se tak jedná o různé provozní a nebo obchodní KPI, jako jsou např. uskutečněné prodeje.
+Model datové hvězdy je založen na relačních databázích a tabulkách dvojího, respektive trojího typu. Název modelu je odvozen od jeho vizualizace, kdy jsou k ústřední tabulce faktů paprskovitě připojeny tabulky s dimenzemi. Tabulka faktů obsahuje numerická data, která představují kvantifikovatelné ukazatele a nebo události.\parencite[s.10]{Kimball2013} Typicky se tak jedná o různé provozní a nebo obchodní KPI\footnote{z angl. Key Performance Indicator, klíčový ukazatel výkonosti}, jako jsou např. uskutečněné prodeje.
 
 K tabulkám faktů jsou pak pomocí relací připojeny tabulky obsahující jednotlivé dimenze, dle kterých je možné fakty analyzovat. Dimenze představují základní prvek ke kategorizaci a popisu faktů. Jednotlivé dimenze obsahují atributy, na základě který je možné provádět filtrace, pohledy, granularizaci atp. V případě již zmíněných prodejů, by se tak mohlo jednat například o prodané zboží, datum uskutečnění atp.
 
 Tyto dva zmíněné druhy tabulek může doplňovat ještě typ třetí, který se nazývá můstkový a slouží jako propojovací prvek mezi fakty a dimenzemi. Propojovací tabulky se typicky využívají v situacích, kdy je mezi dvěma tabulkami vazba M:N, kdy každá z tabulek, může být propojena s vícero jiných tabulek. Tato situace je znázorněna na  
-obrázku \ref{fig:M_N}, kde lze vidět projekt může zahrnovat více osob a stejně tak osoby mohou být zainteresovány ve více projektech, zde je důležité zmínit, že na obrázku není zobrazen datový model, nýbrž reálná podoba dat ve fyzickém formátu, kdy se pro jednotlivé osoby a vazby na projekty vytváří vždy nový záznam v tabulce \emph{Projekt\_Osoba}. V případě datové hvězdy, kde jde z principu o snahu eliminovat M:N vazby, však slouží zejména ke zjednodušení editací jednotlivých dimenzionálních vztahů a k lepší editační flexibilitě. 
+obrázku \ref{fig:M_N}, na kterém lze vidět, že projekt může zahrnovat více osob a stejně tak osoby mohou být zainteresovány ve více projektech. Zde je důležité zmínit, že na obrázku není zobrazen datový model, nýbrž reálná podoba dat tak jak jsou uloženy v databázi. V tomto případě se pro jednotlivé osoby a jejich vazby s projekty vytváří vždy nový záznam v tabulce \emph{Projekt\_Osoba}. V případě datové hvězdy, kde jde z principu o snahu eliminovat M:N vazby, však slouží zejména ke zjednodušení editací jednotlivých dimenzionálních vztahů a k lepší editační flexibilitě. 
 \begin{figure}[h]
   \begin{center}
           \includegraphics[width=10cm]{img/M_N.png}
@@ -373,7 +374,7 @@ obrázku \ref{fig:M_N}, kde lze vidět projekt může zahrnovat více osob a ste
   \label{fig:M_N}
 \end{figure}  
 
-V praxi běžně nastává situace, kdy může dojít k propojení více datových hvězd, čímž dojde ke vzniku datového modelu zvaného souhvězdí. K této situaci typicky dochází v případech, kdy spolu jednotlivé fakty úzce souvisí, např. prodej - platba. V tomto případě jsou obě tabulky samostatné datové hvězdy, ale jsou spolu vzájemně propojeny. Tato situace je zobrazena na obrátku \ref{fig:constellation}, kde jsou vidět dvě datové hvězdy - faktura a platba, které jsou mají vzájemné projení.
+V praxi běžně nastává situace, kdy může dojít k propojení více datových hvězd, čímž dojde ke vzniku datového modelu zvaného souhvězdí. K této situaci typicky dochází v případech, kdy spolu jednotlivé fakty úzce souvisí, např. prodej - platba. Tato situace je zobrazena na obrátku \ref{fig:constellation}, kde jsou vidět dvě datové hvězdy - faktura a platba, které mají vzájemnou relaci v podobě hodnoty \emph{Faktura\_Id}, která obsahuje Id řádku v tabulce Faktury a v tabulce Platby je uložena jako cizí klíč.
 
 \begin{figure}[h]
   \begin{center}
@@ -408,7 +409,7 @@ Datový sklad na Masarykově univerzitě momentálně slouží primárně jako d
 Kvalitní dashboard by měl splňovat několik základních pravidel, které se souhrnně označují akronymem SMART, odvozeným z anglických názvu těchto pravidel, která jsou samotná popsána níže \parencite[s.~1]{Kratochvil2014}:
 \begin{compactitem}
     \item Synergie - dashboard by měl důležité a vzájemně závislé informace zobrazovat na jedné obrazovce
-    \item Monitoring - v rámci dashboardu by měli být jasně definované a vizualizované požadované KPI\footnote{z angl. Key Performance Indicator, klíčový ukazatel výkonosti} a jejich případná změna
+    \item Monitoring - v rámci dashboardu by měli být jasně definované a vizualizované požadované KPI a jejich případná změna
     \item Přesnost - data, které dashboard vizualizuje musí být vždy přesná a důveryhodná
     \item Citlivost - dashboard by měl sám aktivně sledovat prahové meze a upozornit na jejich překročení
     \item Včasnost - dashboard musí vždy zobrazovat aktuální data, dle požadavků dashboardu
@@ -708,9 +709,9 @@ Pro tyto cíle byl jako nejvhodnější zvolen koncept datového skladu. Jeho hl
 
 Další výhodou tohoto konceptu je možnost jeho počátečního využití pouze v malé části univerzity a dle potřeby připojovat nové datové zdroje. Toto je sice možné i v případě ostatních konceptů, nicméně například v případě konceptu Data Lake existuje určitý předpoklad, že obsahuje všechna data z celé organizace/oddělení, což je v případě již zavedené a fungující organizace typu Masarykova Univerzita implementačně komplikované. Další nevýhodou je pak například ona surovost dat, kdy sice je možné data do úložiště velmi snadno nahrát, ale pro jejich zpracování je již potřeba specializovaného procesu. Ostatní koncepty jako je Lakehouse či služby Typu Azure Fabric pak mohou být v případě potřeby implementovány na stávajícím datovém skladu a nic tak nebrání jejich případnému zavedení.
 
-Samotný datový sklad byl implementován na jaře 2022 za pomoci externí dodavatelské společnosti, která se na implementaci datových skladů specializuje. \footnote{přidat nákres s časovou osou} Datový sklad byl implementován jako služba dle rámce ITIL v3 s určitými modifikacemi směrem k zákazníkovi, které jsou převzaté z ITIL v4. 
+Samotný datový sklad byl implementován na jaře 2022 za pomoci externí dodavatelské společnosti, která se na implementaci datových skladů specializuje. Datový sklad byl implementován jako služba dle rámce ITIL v3 s určitými modifikacemi směrem k zákazníkovi, které jsou převzaté z ITIL v4. 
 
-Framework ITIL v3 definuje službu jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}, přičemž v tomto konkrétním případě se dle zakládací listiny jedná o službu typu CFS \footnote{z angl. Customer Facing Service}, což je z definice ITIL služba, \emph{která přímo přináší přidanou hodnotu pro uživatele, který s ní může vědomě nebo přímo interagovat.}\parencite{SyFvQA11lk1OaIec} Zakládací listina též definuje výstupní hodnotu jako již zmíněné automaticky generované reporty, jejichž cílem je usnadnit rozhodovací procesy a také poskytovat podporu ve vzdělávání. \footnote{odcitovat zakládací listinu jako neveřejný dokument?}
+Framework ITIL v3 definuje službu jako \emph{způsob doručení zákazníkem požadované hodnoty za pomocí výstupů, kterých chce zákazník dosáhnout bez nutnosti vlastnictví specifických nákladů a rizik.} \parencite{SyFvQA11lk1OaIec}, přičemž v tomto konkrétním případě se dle zakládací listiny jedná o službu typu CFS \footnote{z angl. Customer Facing Service}, což je z definice ITIL služba, \emph{která přímo přináší přidanou hodnotu pro uživatele, který s ní může vědomě nebo přímo interagovat.}\parencite{SyFvQA11lk1OaIec} Zakládací listina též definuje výstupní hodnotu jako již zmíněné automaticky generované reporty, jejichž cílem je usnadnit rozhodovací procesy a také poskytovat podporu ve vzdělávání.\parencite{Zechmeister2023}
 
 Zakládací listina též definuje základní důležité vlastnosti služby, jako jejího vlastníka, tedy osobu zodpovědnou za provoz, správu a rozvoj služby, spolu s dalším administrátorem pak tvoří tým zodpovědný za provoz a rozvoj datového skladu.
 
@@ -720,9 +721,10 @@ V neposlední řadě je pak součástí zakládací listiny též definice cílo
 
 Účel služby datového skladu je dle její webové stránky \footnote{viz. https://it.muni.cz/sluzby/datovy-sklad-na-mu} poskytnutí nástroje, který je schopen sbírat data z různých zdrojů, provést jejich standardizaci a následně je tranformované poskytnout buď ve formě prostých dat, které si může uživatel - zákazník dále dle potřeby zpracovat a nebo ve formě již zpracovaných reportů, které poskytují informace. 
 \subsection{Bezpečnost dat}
+\label{data_sec}
 Jelikož datový sklad zpracovává a zpřístupňuje velké množství dat, které mohou být citlivé z více hledisek jako například z hlediska osobních a nebo finančních údajů, bylo potřeba vytvořit potřebné politiky, které práci s datovým skladem a daty upravují. 
 
-Za tímto účelem byla v lednu 2024 přijata příslušná směrnice, která definuje příslušné politiky pro reporty. V rámci tohoto dokumentu jsou definovány základní role, které se týkají uživatelů datového skladu, jejich povinnosti a dále pak kategorizace reportů a k ní vztažené povolené možnosti ukládání dat.Tato směrnice se sice zabývá reporty pracujícími pouze s daty z Ekonomického a personálního informačního systému MU zkráceně EPIS, ale v obecné rovině je možné její politiky aplikovat na celou službu datového skladu. 
+Za tímto účelem byla v lednu 2024 připravena příslušná směrnice, která definuje příslušné politiky pro reporty. V rámci tohoto dokumentu jsou definovány základní role, které se týkají uživatelů datového skladu, jejich povinnosti a dále pak kategorizace reportů a k ní vztažené povolené možnosti ukládání dat.Tato směrnice se sice zabývá reporty pracujícími pouze s daty z Ekonomického a personálního informačního systému MU zkráceně EPIS, ale v obecné rovině je možné její politiky aplikovat na celou službu datového skladu. \parencite{UVTMUNI2024}
 
 Směrnice definuje dvě role pro uživatele datového skladu a to Vlastníka reportu, který je definován jako \emph{osoba definující report, který má být za pomocí daných dat připraven} a uživatele reportu, který je definován jako \emph{osoba, která obdržela od vlastníka přístup a nebo soba které byl report předán}. Obě role mají následně definovány povinnosti, jejichž cílem je zaručit, že se data nedostanou mimo definovaný okruh uživatelů. 
 
@@ -763,7 +765,7 @@ V rámci frameworku ITIL je Service desk klíčový jako tzv. jednotný kontaktn
 Jak již bylo zmíněno, službu service desku pro účely služby datového skladu zajišťuje service desk, který provozuje ÚVT MUNI a slouží jako jednotný kontaktní bod pro většinu služeb, které Masarykova univerzita poskytuje, typicky tedy pro ty, které jsou zahrnuty v katalogu IT služeb Masarykovy univerzity \footnote{viz. https://it.muni.cz/sluzby}. Service desk je realizován za pomoci nástroje JIRA, viz \ref{Jira} a je dostupný ze stránek uživatelské podpory \footnote{viz. https://it.muni.cz/kategorie/uzivatelska-podpora}.
 
 \subsubsection{Rozvoj služby}
-\paragraph{Žádost o nový usecase} - Jedná se o proces týkající se rozvoje služby datového skladu a jeho výstupem je zpracování požadavku na tvorbu nového uživatelského reportu nebo unikátní datové sestavy. Jednotlivé fáze procesu jsou rozepsány níže a vyobrazeny na schématu \ref{fig:new_report}. Tento proces v zásadě slouží i pro žádosti související s úpravou již existujícího usecasu. V tomto případě se musí projít proces stejně, jako v případě nového usecasu, neboť je potřeba smysluplnost a realizovatelnost požadavku a následně ověřit dostupnost a integritu dat a přístup k nim stejně, jako se tak děje v případě žádosti o nový usecase.
+\paragraph{Žádost o nový usecase} Jedná se o proces týkající se rozvoje služby datového skladu a jeho výstupem je zpracování požadavku na tvorbu nového uživatelského reportu nebo unikátní datové sestavy. Jednotlivé fáze procesu jsou rozepsány níže a vyobrazeny na schématu \ref{fig:new_report}. Tento proces v zásadě slouží i pro žádosti související s úpravou již existujícího usecasu. V tomto případě se musí projít proces stejně, jako v případě nového usecasu, neboť je potřeba smysluplnost a realizovatelnost požadavku a následně ověřit dostupnost a integritu dat a přístup k nim stejně, jako se tak děje v případě žádosti o nový usecase.
 \begin{itemize}
     \item První fází je kontaktování správce datového skladu s novým požadavkem a to skrze webový formulář dostupný na stránkách datového skladu. V tuto chvíli by měl uživatel již mít rozmyšlen konkrétní požadavek a to včetně potřebných dat. 
     \item Následuje konzultace se správcem datového skladu, během které se posoudí vhodnost navrhovaných dat pro tvorbu požadovaného reportu a celkovou možnost realizace.
@@ -785,13 +787,13 @@ Proces je momentálně ve stavu návrhu a plánování, přičemž další postu
 \subsubsection{Správa incidentů a správa problémů}
 Vzhledem k tomu, že služba datového skladu má v současné době malý rozsah, nejsou incidenty a problémy nikterak rozlišovány a jsou proto řešeny jedním procesem. 
 
-\paragraph{Nahlášení incidentu/problému} - Tento proces slouží pro nahlášení všech zaznamenaných incidentů spojených s funkčností a výstupní kvalitou služby. K tomuto účelu slouží formulář uvedený na stránkách datového skladu v katalogu služeb Masarykovy univerzity \footnote{viz. }, tento proces kromě samotného týmu datového skladu zahrnuje centrální service desk Masarykovy univerzity, který je zodpovědný za komplexní správu IT služeb v rámci celé Masarykovy univerzity. Celý proces vyobrazen na schématu \ref{fig:service_fail} a popsán níže.
+\paragraph{Nahlášení incidentu/problému} - Tento proces slouží pro nahlášení všech zaznamenaných incidentů spojených s funkčností a výstupní kvalitou služby. K tomuto účelu slouží formulář uvedený na stránkách datového skladu v katalogu služeb Masarykovy univerzity, tento proces kromě samotného týmu datového skladu zahrnuje centrální service desk Masarykovy univerzity, který je zodpovědný za komplexní správu IT služeb v rámci celé Masarykovy univerzity. Celý proces vyobrazen na schématu \ref{fig:service_fail} a popsán níže.
     \begin{itemize}
         \item Identifikace incidentů a problémů probíhá, jak již bylo zmíněno, zejména za pomoci uživatelů, kteří pokud objeví incident/problém, který souvisí s datovým skladem, provedou jeho nahlášení pomocí zmíněného formuláře na webových stránkách datového skladu MUNI. Tento formulář je realizován pomocí service desku Masarykovy univerzity a po nahlášení dojde k vytvoření tzv. tiketu v interním systému Jira. 
         \item Obsluha service desku následně zkontroluje stav konkrétního usecasu, který se týká reportovaného incidentu a v případě potvrzení jeho existence, nejprve provede kontrolu, zdali se nejedná o plánovaný výpadek služby, který může být způsoben například aktualizací daného reportu nebo samotné služby datového skladu. 
         \item Dle výsledků předchozího kroku je buď informován uživatel ohledně plánované odstávky a nebo je problém dále eskalován směrem k týmu datového skladu. 
         \item Tým datového skladu následně posoudí závažnost reportovaného problému a provede jeho prioritizaci na jejím základě buď problém vyřeší své pomocí a nebo v případě velké komplikovanost kontaktuje dodavatele datového skladu v jehož součinnosti zjednají nápravu. 
-        \item Ohlašuje se se to pak zpětně ohlašovateli?
+        \item Po vyřešení incidentu je tato informace předána původnímu nahlašovateli
     \end{itemize}
         
     \begin{figure}[t]
@@ -817,7 +819,7 @@ Datový sklad by navržen a postaven externí společnosí a to zejména na tech
     
 Jak je vidět na zmíněném schématu, prvotní sběr dat probíhá pomocí nástroje \emph{Azure data factory}, což je nástroj určený k automatizovanému sběru dat z vícero zdrojů. Za tímto účelem je připojen ke všem potřebným zdrojům, mezi které patří například databázový systém Oracle DB, informační systémy ERP a nebo například excelové soubory generované jednotlivými odděleními univerzity. Data z těchto zdrojů jsou pomocí tohoto nástroje pravidelně ve 24 hodinových intervalech extrahována a ukládána databáze na tzv. STAGE serveru, který je realizován v režimu \emph{on premise server}\footnote{Jedná se o server zpravovaný samotnou univerzitou} přímo v prostředí Masarykovy univerzity. Na tomto serveru jsou data uložena v nezpracované formě ve formátu takzvaných snímků \footnote{angl. snapshot} a pravidelně každý den promazávána.
 
-Jak je vyobrazeno na schématu, dalším krokem je pak pak proces samotného zpracování dat, což zajišťuje ETL proces, který data patřičně vyčistí a vyfiltruje a to tak, aby byla uložena pouze relevantní data v dostatečné kvalitě. Data jsou následně transformována do podoby, kterou je možné uložit do cloudového úložiště, kterým je v tomto případě Azure SQL databáze\footnote{https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/}, což je relační databáze obohacená o inteligentní funkce, které jsou schopny automaticky automaticky upravovat její výkon.
+Jak je vyobrazeno na schématu, dalším krokem je pak pak proces samotného zpracování dat, což zajišťuje ETL proces, který data patřičně vyčistí a vyfiltruje a to tak, aby byla uložena pouze relevantní data v dostatečné kvalitě. Data jsou následně transformována do podoby, kterou je možné uložit do cloudového úložiště, kterým je v tomto případě Azure SQL databáze, což je relační databáze obohacená o inteligentní funkce, které jsou schopny automaticky automaticky upravovat její výkon.
 
 Data jsou v tomto případě uložena ve formě datového schématu zvaného hvězda, který pracuje se třemi druhy tabulek, kterými jsou tabulky obsahující samotná fakta, tedy informace o jednotlivých záznamech, dále tabulky obsahující jednotlivé dimenze, dle kterých je možné data třídit a takzvané můstkové tabulky, které propojují fakta s dimenzemi. 
 
@@ -842,7 +844,7 @@ Další ze zmíněných pilotních aplikací je pak manažerský report pracují
 
 Report má tři hlavní výstupy, které pomáhají organizaci celého centra a to plánované úvazky, rozdíly úvazků a hledané pozice. Byť automatizace není v tomto případě úplná, šetří automatická tvorba tohoto reportu přibližně 75\% manuální práce, kterou bylo potřeba vynaložit před automatizací.
 
-Oba dva pilotní reporty je možné zobrazit z reportovacího portálu datového skladu \footnote{https://it.muni.cz/sluzby/datovy-sklad-na-mu/reportovaci-portal-mu}, který sdružuje reporty využívající univerzitní datový sklad a je možné je skrze tento portál dohledat. Přímo z reportovacího portálu je také možné vytvořit požadavek na nový report.
+Oba dva pilotní reporty je možné zobrazit z reportovacího portálu datového skladu, který sdružuje reporty využívající univerzitní datový sklad a je možné je skrze tento portál dohledat. Přímo z reportovacího portálu je také možné vytvořit požadavek na nový report.
 
 Jednotlivé reporty jsou v rámci portálu rozčleněny do tří kategorií dle původu jejich dat, která mohou být veřejná, ekonomická a nebo projektová. 
 
@@ -947,7 +949,7 @@ Rozpočet pak doplňuje tabulka \textbf{Rozpocet\_radek}, která nese data o jed
 
     \begin{figure}[t]
         \begin{center}
-            \includegraphics[width=11cm]{img/projects_sch.png}
+            \includegraphics[width=13cm]{img/projects_sch.png}
         \end{center}
         \caption{Datová hvězda - Projekty. Vlastní zpracování}
         \label{fig:projects_sch}
@@ -961,11 +963,11 @@ Velikosti rozpočtů, které jsou takto přepočteny na české koruny, tak odpo
 
 \subsection{Testovací data}
 \label{testovaci-data}
-Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu a veškerá data, jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu.  Datový model však zůstal zachován a tak by v případě reálného využití, mělo být možné připojit výsledný report na produkční databázi datového skladu a vizualizovat tak reálný stav. 
+Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu databáze ISEP ve formátu, ve kterém je uložena v datovém skladu, veškerá zpracovávaná data jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu. Vzhledem k zachování původního datového modelu je v případě reálného nasazení možné do Power BI přidat nový datový zdroj a připojit tak produkční databázi datového skladu. S minimálními úpravami tak lze vizualizovat reálný stav, tak jak je uložen v databázi ISEP. 
 
-Testovací data byla vygenerována za pomocí jednoduchého programu napsaného v jazyce C\# za využití frameworku \emph{.NET core} a knihovny \emph{bogus}, která je zodpovědná za generování náhodných dat. Data jsou pro účely testu uloženy v databázi SQLite, která ze které jsou následně nahrány do programu PowerBI. Jelikož Power BI neumí nativně pracovat SQLite databázi je nutné využít SQLite ovladač pro ODBC\footnote{viz. http://www.ch-werner.de/sqliteodbc/}. 
+Testovací data byla vygenerována za pomocí jednoduchého programu napsaného v jazyce C\# za využití frameworku \emph{.NET core} a knihovny \emph{bogus}, která je zodpovědná za generování náhodných dat. Data jsou pro účely testu uloženy v databázi SQLite, která ze které jsou následně nahrány do programu PowerBI. Jelikož Power BI neumí nativně pracovat SQLite databázi je nutné využít SQLite ovladač pro ODBC\footnote{viz. http://www.ch-werner.de/sqliteodbc/}. Generátor i databáze s testovacími daty jsou součástí příloh.
 
-Generátor i databáze s testovacími daty jsou součástí příloh.
+
 
 \section{Report - PowerBi}
 Data byla do programu Power BI Desktop nahrána pomocí ODBC driveru pro SQLite zmíněného výše a jsou využita tak, jak jsou uležena v databázi bez dalších transformací, k datům byla pouze přidána tabulka \emph{denní\_kurz}, která slouží pro přepočet hodnot rozpočtů v cizích měnách viz. \ref{denni-kurz}. Tabulka je s rozpočtovou tabulkou propojena pomocí klíče uloženém ve sloupci \emph{kod}.  
@@ -973,17 +975,17 @@ Data byla do programu Power BI Desktop nahrána pomocí ODBC driveru pro SQLite 
 Dle zadání se výsledný report skládá ze tří samostatných dashboardů. Jednotlivé dashboardy jsou dostupné z úvodní obrazovky, která slouží jako základní rozcestník, viz. obrázek \ref{fig:crossroad}. Pro kliknutí na navigační tlačítko je uživatel přesměrován na již na zvolený dashboard, kde jsou vizualizované jednotlivé metriky. Tyto metriky jsou definovány za pomocí jazyka DAX\footnote{z angl. Data Analysis Expressions}, který je v Power BI využíván na tvorbu metrik a kalkulovaných sloupců, v jednodušších případech se jendá pouze o agregační funkce programu Power BI Desktop.
     \begin{figure}[t]
         \begin{center}
-            \includegraphics[width=11cm]{img/crossroad.png}
+            \includegraphics[width=13cm]{img/crossroad.png}
         \end{center}
         \caption{Report - rozcestník}
         \label{fig:crossroad}
     \end{figure}
 
 \subsection{Personál}
-První dashboard z nabídky se věnuje vizualizaci genderových dat osob, které jsou zainteresovány v jednotlivých projektech a jeho zpracování je na obrázku \ref{fig:persons}. Tento dashboard obsahuje následující základní trojici metrik.
+První dashboard z nabídky se věnuje vizualizaci genderu osob, které jsou zainteresovány v jednotlivých projektech a jeho zpracování je na obrázku \ref{fig:persons}. Tento dashboard obsahuje následující základní trojici metrik.
     \begin{figure}[t]
         \begin{center}
-            \includegraphics[width=11cm]{img/persons.png}
+            \includegraphics[width=13cm]{img/persons.png}
         \end{center}
         \caption{Report - personál}
         \label{fig:persons}
@@ -1060,11 +1062,18 @@ WomenRatio = DIVIDE(Projekt[WomanCount],
                     1)
 ```
 \end{markdown*}
-Hodnota je vizualizována ve formátu procent. 
-
+Výsledná hodnota je následně vizualizována ve formátu procent. 
 
 \subsection{Projekty}
 Druhý dashboard vizualizuje úspěšnost projektových návrhů v závislosti na genderu navrhovatele a je zobrazen na obrázku \ref{fig:projects}. Pro tento účel obsahuje následující základní metriku:
+
+    \begin{figure}[t]
+        \begin{center}
+            \includegraphics[width=11cm]{img/projects.png}
+        \end{center}
+        \caption{Report - projekty}
+        \label{fig:projects}
+    \end{figure}
 
 \paragraph{Konverze projekt/návrh} Tato metrika zobrazuje procentuální úspěšnost navrhovatelů projektu v závislosti na jejich genderu. Metrika je pro ženského navrhovatele vypočítána jako podíl počtu řádků v tabulce \textbf{Navrh}, které mají ženského navrhovatele a realizovaný projekt s počtem všechnávrhů podaných ženami. Existence projektu je určena pomocí metriky \emph{ProjectExist}, která k návrhu hledá příslušný projekt, pokud projekt existuje je vrácena hodnota \emph{True()}, v opačném případě \emph{False()}. Metrika je vizualizována jako dvojice grafů paprskového měřidla, kdy každé zobrazuje konverzi návrh/projekt pro jedno pohlaví a to jak graficky, tak i ve formě procentuální informace.
 Zdrojový kód metriky je pak následující:
@@ -1089,9 +1098,13 @@ ManConversion =
                 COUNTROWS(Navrh),
                     Navrh[Navrhovatel_gender] = "Muz"), 0))
 RETURN IF(res = BLANK(), 0, res)
-
---------------------------------------------
-
+```
+\end{markdown*}
+\newpage
+\begin{markdown*}{%
+  fencedCode,
+}
+```
 WomanConversion = 
     var res = CALCULATE(
         DIVIDE(
@@ -1108,8 +1121,7 @@ RETURN IF(res = BLANK(), 0, res)
 
 Tato metrika je dále doplněna sumami všech podaných návrhů, realizovaných projektů a celkovou úspěšností bez ohledu na gender. Počet všech podaných návrhů je vypočítám jako suma všech záznamů v tabulce \textbf{Navrh}, počet realizovaných projektů jako suma všech záznamů v tabulce \textbf{Navrh}, pro které je metrika \emph{ProjectExist} rovna \emph{TRUE()}.
 
-\newpage
-Celková konverze návrh/projekt je pak spočítána defacto jako podíl dvou předchozích hodnot s tím rozdílem, že jednotlivé sumy jsou v tomto případě vypočítány pomocí DAX následující způsobem.
+Celková konverze návrh/projekt je pak spočítána defacto jako podíl dvou předchozích hodnot s tím rozdílem, že jednotlivé sumy jsou v tomto případě vypočítány pomocí DAX následující způsobem:
 
 \begin{markdown*}{%
   fencedCode,
@@ -1128,25 +1140,15 @@ Tato metrika je vizualizována ve formátu procent.
 Dasboard také obsahuje přehledový graf s absolutními počty návrhů a projektů v jednotlivých letech, který je doplněn o křivky konverze návrh/projekt pro jednotlivé pohlaví.
 
 Absolutní počty návrhů a projektů jsou stejné metriky, které jsou popsány výše, doplňkové křivky s úspěšností pro jednotlivá pohlaví jsou pak metriky \emph{WomanConversion} a \emph{ManConversion}, které jsou popsány v odstavci \emph{Konverze projekt/navrh}.
-    \begin{figure}[t]
-        \begin{center}
-            \includegraphics[width=11cm]{img/projects.png}
-        \end{center}
-        \caption{Report - projekty}
-        \label{fig:projects}
-    \end{figure}
-    
+
 \subsection{Finance}
-Poslední zpracovaným dahsboardem v rámci reportu je rozdělení financí dle genderu hlavního řešitele. Celý tento dashboard v zásadě zobrazuje pouze jednu metriku a to relativní velikost rozpočtu dle genderu hlavního řešitele. Avšak metrika je zde vizualizována ve čtyřech variantách a to pro muže a ženy v kombinaci s rozdělením rozpočtu na investiční a neinvestiční.  
+Poslední zpracovaným dahsboardem v rámci reportu je rozdělení financí dle genderu hlavního řešitele. Celý tento dashboard v zásadě zobrazuje pouze jednu metriku a to relativní velikost rozpočtu dle genderu hlavního řešitele. Tato metrika je zde vizualizována ve čtyřech variantách a to pro muže a ženy v kombinaci s rozdělením rozpočtu na investiční a neinvestiční.  
 
-V obou případech je vizualizace uskutečněna jednak za pomoci koláčového grafu, který vizualizuje poměrné rozdělení za celé sledované období a dále pak za pomoci sloupcového grafu, který ukazuje průměrné velikosti rozpočtu v průběhu let. Tento graf je dále doplněn o lineární graf, který vizualizuje poměr veli velikostí rozpočtů.
-
-
-
+V obou případech je vizualizace uskutečněna jednak za pomoci koláčového grafu, který vizualizuje poměrné rozdělení za celé sledované období a dále pak za pomoci sloupcového grafu, který ukazuje průměrné velikosti rozpočtu v průběhu let. Tento graf je dále doplněn o lineární graf, který vizualizuje poměr velikostí rozpočtů pro mezi jednotlivými gendery.
 
     \begin{figure}[t]
         \begin{center}
-            \includegraphics[width=11cm]{img/finance.png}
+            \includegraphics[width=13cm]{img/finance.png}
         \end{center}
         \caption{Report - finance}
         \label{fig:finance}
@@ -1169,6 +1171,8 @@ RozpocetZenyInvesticni =
                     Projekt[Gender] == "Zena")),
                 0))
 
+––––––––––––––––––––––
+
 RozpocetMuziInvesticni =                    
     CALCULATE(
         DIVIDE(
@@ -1181,6 +1185,8 @@ RozpocetMuziInvesticni =
                     Projekt[Gender] == "Muz")),
                 0))
 
+––––––––––––––––––––––
+
 RozpocetZenyNeinvesticni =                    
     CALCULATE(
         DIVIDE(
@@ -1192,6 +1198,8 @@ RozpocetZenyNeinvesticni =
                     Projekt,
                     Projekt[Gender] == "Zena")),
                 0))
+
+––––––––––––––––––––––
 
 RozpocetMuziNeinvesticni =                    
     CALCULATE(
@@ -1243,7 +1251,7 @@ RozpocetNoninvestSum =
 ```
 \end{markdown*}
 
-Poslední vizualizovanou metrikou v rámci dashboardu je pak poměr rozpočtu mužů a žen, která vizualizuje křivku poměru mezi jednotlivými rozpočty. Metrika \emph{RozpocetGenderRatio} je vypočítána jako větší hodnota z podílu metrik \emph{RozpocetZenyNeinvesticni} a \emph{RozpocetMuziNeinvesticni} a z podílu jejich obrácené hodnoty. V DAX pak zápis vypadá následovně: 
+Poslední vizualizovanou metrikou v rámci dashboardu je pak poměr rozpočtů pro jednotlivé gendery. Tato křivka vizualizuje poměr mezi jednotlivými průměrnými velikostmi rozpočtů, z tohoto důvodu  je metrika \emph{RozpocetGenderRatio} vypočítána jako větší hodnota z podílu metrik \emph{RozpocetZenyNeinvesticni} a \emph{RozpocetMuziNeinvesticni} a z podílu jejich obrácené hodnoty. V DAX pak zápis vypadá následovně: 
 
 \begin{markdown*}{%
   fencedCode,
@@ -1252,20 +1260,21 @@ Poslední vizualizovanou metrikou v rámci dashboardu je pak poměr rozpočtu mu
 RozpocetGenderRatio = 
     MAX(
         DIVIDE(
-            [RozpocetZenyNeinvesticni], [RozpocetMuziNeinvesticni], 1),
+            [RozpocetZenyNeinvesticni], [RozpocetMuziNeinvesticni], 0),
         DIVIDE(
-            [RozpocetMuziNeinvesticni], [RozpocetZenyNeinvesticni], 1)
+            [RozpocetMuziNeinvesticni], [RozpocetZenyNeinvesticni], 0)
         )
 ```
 \end{markdown*}
 
 Z výpočtu tedy vyplývá, že čím více se tato křivka přibližuje hodnotě 1, tím více  jsou velikosti rozpočtů vyrovnané, naopak čím je hodnota větší, tím větší je nepoměr mezi velikostmi rozpočtů.
 
+\vspace{5mm}
+Takto sestavený report umožňuje velmi snadný a rychlý přehled o základních otázkách týkajících se projektového řízení a genderu řešitelů na celé Masarykově univerzitě. 
+Data vizualizovaná v reportu neobsahují žádné osobní ani jiné údaje a tak zle dle bezpečnostní kategorizace výsledný report zařadit do kategorie I. viz. \ref{data_sec} a jeho výstup je tedy možné prezentovat veřejně. Sdílení samotné Power Bi sestavy, respektive zdrojového souboru ve formátu *.pbix, však není veřejně možné, neboť v případě připojení produkční databáze by tento soubor obsahoval příslušný \emph{connection string}, díky kterému by případný útočník získal přístup ke čtení původních a tedy nezagregovaných dat.
+
+\chapter{Diskuse}
 \chapter{Závěr}
-\section{Diskuse výsledků práce}
-\subsection{Teoretická část}
-\subsection{Aplikační část}
-\section{Konec}
 
 \printbibliography[heading=bibintoc] %% Print the bibliography.
 
