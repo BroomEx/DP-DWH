@@ -56,11 +56,13 @@
     department  = Katedra informačních studií a knihovnictví,
     author      = Ing. Pavel Dytrych,
     gender      = m,
-    advisor     = {Ing. Filip Janovič PhD., MBA\\Konzultant: Ing. Jindřich Zechmeister},
+    advisor     = {Ing. Filip Janovič PhD., MBA},
+    consultant  = Ing. Jindřich Zechmeister,
     title       = Zavádění datového skladu v rámci Masarykovy univerzity,
     TeXtitle    = Zavádění datového skladu v rámci Masarykovy univerzity,
-    keywords    = {keyword1, keyword2, ...},
-    TeXkeywords = {keyword1, keyword2, \ldots},
+    keywords    = {DWH, Power Bi, ITIL, ITSM, datový sklad, dashboard, služby, IT služby },
+    TeXkeywords = {DWH, Power Bi, ITIL, ITSM, datový sklad, dashboard, lužby, IT služby},
+    abstract    = { Tohle je nějaký líbivý abstrakt, tady píšu o tm, o čem bych rád psal}
     thanks      = {%
       Na tomto místě bych rád poděkoval:
     },
@@ -68,15 +70,14 @@
     %% The following keys are only useful, when you're using a
     %% locale other than English. You can safely omit them in an
     %% English thesis.
-    programmeEn        = NA,
-    fieldEn            = Cognitive Sciences,
+    programmeEn        = Information and Library Studies,
+    fieldEn            = Information and Library Studies,
     departmentEn       = kisk,
-    titleEn            = What Can Typography Tell Us
-                 About the Nature of Man,
+    titleEn            = Implementation of a data warehouse within Masaryk University,
     TeXtitleEn         = What Can Typography Tell Us
                  About the Nature of Man,
-    keywordsEn         = {keyword1, keyword2, ...},
-    TeXkeywordsEn      = {keyword1, keyword2, \ldots},
+    keywordsEn         = {DWH, Power Bi, ITIL, ITSM, data warehouse, data report, services, IT services},
+    TeXkeywordsEn      = {DWH, Power Bi, ITIL, ITSM, data warehouse, data report, services, IT services},
     abstractEn         = {%
     This is the English abstract of my thesis, which can
 
@@ -145,7 +146,7 @@ Spolu s nástupem osobních počítačů a rostoucí velikostí firemních sít�
 
 V devadesátých letech, tak všechny tyto skutečnosti vyvrcholily v potřebu vzniku jednotného úložiště, které by umožňovalo data snadno udržet v aktualizované a konzistentní podobě. Z tohoto důvodu vzniklo několik konceptů, jako jsou například koncepty Data Lake a Datový sklad, oba koncepty jsou detailněji popsány níže.
 
-Jelikož interfiremní datová analýza nebyla v té době nikterak masivně rozšířená, nebyli z počátku požadavky na vznik jednotných úložišť brány IT odděleními v potaz, jako relevantní. Za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství dat, jejichž zpracování bylo možné využít pro podporu rozhodování. \parencite{Inmon2021}
+Jelikož analýza interních firemních dat nebyla v té době nikterak masivně rozšířená, nebyli z počátku požadavky na vznik jednotných úložišť brány IT odděleními v potaz, jako relevantní. Za jejich rozmachem tak stály zejména požadavky prodejních a marketingových oddělení, které pro zlepšení svých rozhodovacích procesů potřebovali co největší množství dat, jejichž zpracování bylo možné využít pro podporu rozhodování. \parencite{Inmon2021}
 
 Jedním z velkých impulsů stojícím za rozmachem vývoje jednotných úložišť dat a zejména datových skladů, byl například rozvoj mobilních telefonů. Který umožnil marketingový a obchodním oddělením telefonních společností, jako je například AT\&T, přístup k velkému množství dat, která se týkala koncových uživatelů, což značně usnadňovalo rozhodovací proces a obchodní zacílení.\parencite{Inmon2021}
 
@@ -1274,6 +1275,7 @@ Takto sestavený report umožňuje velmi snadný a rychlý přehled o základní
 Data vizualizovaná v reportu neobsahují žádné osobní ani jiné údaje a tak zle dle bezpečnostní kategorizace výsledný report zařadit do kategorie I. viz. \ref{data_sec} a jeho výstup je tedy možné prezentovat veřejně. Sdílení samotné Power Bi sestavy, respektive zdrojového souboru ve formátu *.pbix, však není veřejně možné, neboť v případě připojení produkční databáze by tento soubor obsahoval příslušný \emph{connection string}, díky kterému by případný útočník získal přístup ke čtení původních a tedy nezagregovaných dat.
 
 \chapter{Diskuse}
+V diplomové práci jsem se věnoval zavádění datového skladu na Masarykově univerzitě a to jak z pohledu technického, tak z pohledu IT služby a rámce ITIL. V aplivakční části jsem pak na základě dat, kte
 \chapter{Závěr}
 
 \printbibliography[heading=bibintoc] %% Print the bibliography.
