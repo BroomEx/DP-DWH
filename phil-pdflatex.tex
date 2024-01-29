@@ -61,8 +61,8 @@
     title       = Zavádění datového skladu v rámci Masarykovy univerzity,
     TeXtitle    = Zavádění datového skladu v rámci Masarykovy univerzity,
     keywords    = {DWH, Power Bi, ITIL, ITSM, datový sklad, dashboard, služby, IT služby },
-    TeXkeywords = {DWH, Power Bi, ITIL, ITSM, datový sklad, dashboard, lužby, IT služby},
-    abstract    = { Tohle je nějaký líbivý abstrakt, tady píšu o tm, o čem bych rád psal}
+    TeXkeywords = {DWH, Power Bi, ITIL, ITSM, datový sklad, dashboard, služby, IT služby},
+    abstract    = { Tato diplomová práce se zabývá analýzou a implementací datového skladu na Masarykově univerzitě. Hlavním cílem je analýza samotné služby datového skladu a to jak z hlediska její technické realizace, tak i implementace služby dle rámce ITIL a její následná evaluace. V aplikační části je hlavním cílem práce návrh datového reportu, který je postaven na službě datového skladu a zpracovává anonymizovaná data ze systému ERP.}
     thanks      = {%
       Na tomto místě bych rád poděkoval:
     },
@@ -74,14 +74,11 @@
     fieldEn            = Information and Library Studies,
     departmentEn       = kisk,
     titleEn            = Implementation of a data warehouse within Masaryk University,
-    TeXtitleEn         = What Can Typography Tell Us
-                 About the Nature of Man,
+    TeXtitleEn         = Implementation of a data warehouse within Masaryk University,
     keywordsEn         = {DWH, Power Bi, ITIL, ITSM, data warehouse, data report, services, IT services},
     TeXkeywordsEn      = {DWH, Power Bi, ITIL, ITSM, data warehouse, data report, services, IT services},
     abstractEn         = {%
-    This is the English abstract of my thesis, which can
-
-      span multiple paragraphs.
+    This master's thesis focuses on the analysis and implementation of a data warehouse at Masaryk University. The main objective is to analyze the data warehouse service itself, both in terms of its technical implementation and its implementation according to the ITIL framework, followed by its evaluation. In the application part, the main goal of the thesis is to design a data report based on the data warehouse service, processing anonymized data from the ERP system
     },
 }
 \usepackage{makeidx}      %% The `makeidx` package contains
@@ -889,16 +886,18 @@ V rámci diplomové práce je prakticky zpracován jeden uživatelský report za
 
 Hlavní účel systému je evidence a správa jak návrhů na nové projekty, tak projektů samotných. V systému jsou tak ke každému návrhu uloženy všechny potřebná data, jako jsou všechny na projektu se podílející osoby, rozpočty s jednotlivými položkami, zdroje financování atp. slouží také jako elektronický archiv projektové dokumentace.
 
-Realizovaný report se věnuje vizualizaci projektových dat na základě genderu osob zainteresovaných do jednotlivých projektů. V rámci přípravy realizace je nutné definovat následující základní parametry reportu.
+Realizovaný report se věnuje vizualizaci projektových dat na základě genderu osob zainteresovaných do jednotlivých projektů a vychází z reálného požadavku na datový report.
 
-Prvním parametrem je účel samotného reportu, kterým je poskytnutí snadného nástroje pro monitoring genderové vyváženosti projektů na Masarykově univerzitě. Pro tento účel je třeba zvolit sledované metriky, které slouží jako hlavní KPI reportu, z těchto metriky pak vyplývají i příslušné dimenze dat. Realizovaný report se skládá ze tři samostatných dahsboardů, kdy se každý z nich věnuje nějakému specifickému tématickému okruhu. 
+V rámci přípravy realizace je nutné definovat základní strukturu reportu. Základním parametrem je účel samotného reportu, kterým je poskytnutí snadného nástroje pro monitoring genderové vyváženosti projektů na Masarykově univerzitě. Pro tento
+
+Realizovaný report se skládá ze tři samostatných dahsboardů, kdy se každý z nich věnuje nějakému specifickému tématickému okruhu. 
 \paragraph{Personál} První dashboard se věnuje analýze genderu osob, které jsou zainteresovány v jednotlivých projektech. Jeho základní vizualizované metriky jsou: 
 \begin{compactitem}
     \item Poměr žen a mužů mezi participujícími osobami
     \item Relativní zastoupení žen v roli hlavního řešitele
     \item Genderové rozložení jednotlivých rolí
 \end{compactitem}
-Kromě těchto základních parametrů je dashboard doplněn o celkový vývoj počtu mužů a žen participující na všech projektech a poměrové zastoupení žen.
+Kromě těchto základních metrik je dashboard doplněn o celkový vývoj počtu mužů a žen participující na všech projektech a poměrové zastoupení žen.
 
 \paragraph{Projekty} Dashboard má za úkol vizualizovat projekty jako celky a to na základě pohlaví jejich hlavního řešitele. Vizualizovány jsou následující metriky:
 \begin{compactitem}
@@ -1275,8 +1274,53 @@ Takto sestavený report umožňuje velmi snadný a rychlý přehled o základní
 Data vizualizovaná v reportu neobsahují žádné osobní ani jiné údaje a tak zle dle bezpečnostní kategorizace výsledný report zařadit do kategorie I. viz. \ref{data_sec} a jeho výstup je tedy možné prezentovat veřejně. Sdílení samotné Power Bi sestavy, respektive zdrojového souboru ve formátu *.pbix, však není veřejně možné, neboť v případě připojení produkční databáze by tento soubor obsahoval příslušný \emph{connection string}, díky kterému by případný útočník získal přístup ke čtení původních a tedy nezagregovaných dat.
 
 \chapter{Diskuse}
-V diplomové práci jsem se věnoval zavádění datového skladu na Masarykově univerzitě a to jak z pohledu technického, tak z pohledu IT služby a rámce ITIL. V aplivakční části jsem pak na základě dat, kte
+V diplomové práci jsem se věnoval zavádění služby datového skladu na Masarykově univerzitě. V teoretické části jsem se zaměřil na samotnou službu a její implementaci dle rámce ITIL a dále pak i na její technické parametry. Aplikační část se pak věnuje využití služby datového skladu a jejím obsahem je návrh a implementace datového reportu nad daty ze systému ISEP, které jsou v datovém skladě již uloženy. 
+
+\subsection{Teoretická část}
+Teoretická část práce byla zpracována zejména ve spolupráci s Ing. Jindřichem Zechmeisterem a s vlastníkem datového skladu. Vzhledem k tomu, že je služba stále ještě ve vývoji, nejsou všechny aspekty, zejména co se týče rámce ITIL, ještě pevně zakotveny. Většina informací ohledně ITIL pak pochází ze zakládací listiny datového skladu, která nebyla v době zpracování diplomové práce ve finální verzi. I přes velkou ochotu zmíněných konzultantů tento stav komplikoval samotnou analýzu služby, což spolu s další vývojem může způsobit, že popisovaný stav může být v určitých ohledech již zastaralý. 
+
+Co se samotné implementace týče, tak služba splňuje parametry služby dle ITIL, avšak vzhledem k výše zmíněnému stále trvajícímu stádiu vývoje neexistuje její komplexní popis a některé klíčové aspekty služby, jako jsou například KPI, jsou definovány velmi vágně a tak zde mohlo dojít k nepřesnostem. 
+
+Technická realizace služby byla provedena externí společností, která se na stavbu datových skladů specializuje, není zde tedy po technické stránce co vytknout. 
+
+Datového sklad momentálně neslouží jako jednotné datové úložiště, ale je využíván nahodile dle potřeby jednotlivých uživatelů a ukládaná data, tak nepodléhají jednotné politice. Z tohoto důvodu  je jejich formát značně heterogenní a datový sklad tak není možné snadno kategorizovat dle datového objemu (viz \ref{dwh_types}), byť by se dalo říci, že se jedná o datový sklad hybridní. Co se kategorizace dle prostředí týče, tak by se dalo říci, že se jedná nejvíce o \emph{Data marts}, ale i v tomto případě je dle aktuálního využití kategorizace jednoznačná a může se měnit prakticky s každým novým usecasem. 
+
+\subsection{Aplikační část}
+\label{dis-appli}
+V aplikační části se práce věnuje návrh a realizaci datového reportu nad službou datového skladu. Jako zdrojová data jsou v tomto reportu využita data z ISEP, nad kterými je následně realizován datový report. Data z ISEP jsou již v datovém skladu uložena a tak mohla být rovnou využita. Zvláštnosti v tomto případě je, že data během procesu nahrávání do datového skladu neprochází žádnou transformací a tak jejich volba nebyla vhodná pro popis reálné funkce ETL procesu.
+
+V rámci samotného návrhu a realizace spočíval hlavní problém zejména v problému přístupu k datům, neboť zpracovávaný systém ISEP obsahuje interní informace o projektech a osobách do nich zapojených. Z tohoto důvodu nebylo možné zpracovat reálná data a to i přes fakt, že na určité úrovní mají přístup ke zdrojovému systému skrze webové rozhraní všichni uživatelé informačního systému MUNI. 
+
+Výsledný report tak musel být zpracován na náhodně generovaných datech, které vůbec neodpovídají realitě, díky čemuž se některé metriky mohou jevit jako přínosné, i když na produkčních datech by se mohla metrika jevit jako zbytečná.
+
+Další velkou nevýhodou také je, že není možné zahrnou výsledky plynoucí ze zpracování dat do výsledků této práce, neboť nemají žádnou výpovědní hodnotu. Následné produkční nasazení výsledného reportu je sice možné a minimálně v rámci testu pravděpodobné, bude ale případně realizováno již mimo tuto diplomovou práci.  
+
 \chapter{Závěr}
+Služba datového skladu je jedna ze služeb, které Ústav výpočetní techniky MUNI provozuje, s cílem zkvalitnit a zefektivnit fungování celé univerzity. Hlavními cíli této práce bylo v její teoretické části nejprve zanalyzovat současný stav služby datového skladu a to dle jeho technické implementace a dále pak z hlediska služby tak, jak ji popisuje rámec ITIL a zodpovědět otázku, zdali je provoz služba implementována funkčně a efektivně, případě navrhnout její optimalizaci. Druhým hlavním cílem pak byl návrh a implementace datového reportu, který službu datového skladu využívá.
+
+Z tohoto důvodu je práce dělena na dvě části, z nichž první obsahuje potřebné teoretické ukotvení a druhá praktické zpracování definovaných cílů. V první části jsem se věnoval zejména konceptu datového skladu, jeho historickému vývoji, technické implementaci a rozdělení, ale také i metodice tvorby datových reportů a základním pravidlům jejich návrhu. 
+
+Dále jsem se v teorii věnoval zejména ukotvení pojmů ITSM a ITIL, které jsou v rámci ÚVT MUNI využívány pro provoz a správu služeb. V této části je tak zevrubně popsána historie samotného managementu IT služeb a následně pak základní principy a fungování již zmíněného rámce ITIL ve verzích 3 a 4. Přičemž verze 4 je sice určitou měrou na ÚVT provozována, primárně však stále pracuje s verzí 3. Verzi 4 zde tak uvádím primárně pro doplnění úplného teoretického přehledu, neboť mezi oběma verzemi je značný rozdíl. 
+
+
+V praktické části se již věnuji samotnému zpracování cílů diplomové práce. Tato část je rozdělena na dvě části teoretickou a aplikační. V rámci první zmíněné popisuji a následně hodnotím současný stav datového skladu, a to zejména z hlediska parametrů služby ITIL, součástí ale je i technická implementace datového skladu a popis jeho fungování. 
+
+V další, aplikační, části se pak věnuji návrhu a implementaci ukázkového reportu a to za pomoci služby datového skladu a analytického nástroje Power Bi, zde, jak již bylo zmíněno v diskusi, bohužel nebylo možné využít produkční data a tak je malá část věnována generování testovacích dat.
+
+Pro splnění prvního cíle jsem na základě dostupných informací analyzoval službu datového skladu. Ta je dle ITIL implementována správně, avšak jak je již zmíněno v diskusi, jedná se zatím o minimální implementaci.  Služba tak nyní implementuje pouze dva procesy, které slouží ke sběru nových požadavků a ohlašování problémů, v rámci budoucího rozvoje by bylo vhodné zavést další procesy, zejména pro zpětnou kontrolu doručované kvality. 
+
+Všechny do zavedené procesy jsou dle vlastníka služby bezproblémově využívány uživateli, díky čemuž služba téměř dokázala splnit definované KPI necelý rok po jejím spuštění a po zprovoznění připravovaných usecasů bude toto KPI bez problému splněno. Zde je však důležité zmínit, že většina již realizovaných usecasů spadá do spíše do ukázkového provozu a v případě RECETOXu je stále potřeba i data procesovat i manuálně. S opravdovou jistotou tak ještě není možné službu posoudit.
+
+Celkově vzato lze ale považovat službu za funkční a efektivní, i když by v rámci budoucího rozvoje bylo vhodné doplnit službu rozšířit o výše zmíněné typy procesů. První z hlavních cílů a tedy analýzu současného stavu služby datového skladu a posouzení její funkčnosti tedy považuji za splněný. 
+
+Hlavním cílem aplikační části bylo navrhnout a implementovat jednoduchý datový report. Pro tento účel byli zvoleny data ze systému ISEP, který je již ke službě datového skladu připojen a u nějž existoval požadavek na datový report s přehledem genederových dat osob, zainteresovaných v jednotlivých projektech. 
+
+Report jsem kategorizoval jako strategický, určený primárně pro management univerzity a s 24 hodinovou granularitou, která odpovídá standardnímu cyklu aktivace ETL procesu. 
+Nad daty jsem následně navrhl hlavní metriky, které mají být v reportu vizualizovány. Pro samotný návrh a realizaci reportu jsem využil program Power Bi Desktop, ve kterém jsem za pomocí jazyka DAX vytvořil všechny potřebné metriky a následně vizualizoval všechny tři dashboard, které jsou součástí výsledného reportu. 
+
+Výsledný report je plně funkční a jeho zdrojový soubor je součástí příloh diplomové práce. Zde jen opět upozorňuji, že se nejedná o reálná data, ale o data testovací a náhodně vygenerovaná viz \ref{dis-appli}.
+
+Tato diplomová práce tedy ve svém rozsahu naplňuje oba nastolené hlavní cíle a nastiňuje případný směr dalšího možného vývoje služby datového skladu, který vidím zejména v lepší procesním zpracování zpětné vazby od uživatelů. Dalším možným krokem je aplikace vytvořeného reportu na produkční data, díky čemuž by výstup z této práce dostal další praktický aspekt. 
 
 \printbibliography[heading=bibintoc] %% Print the bibliography.
 
@@ -1287,6 +1331,6 @@ V diplomové práci jsem se věnoval zavádění datového skladu na Masarykově
 
 \appendix %% Start the appendices.
 \chapter{Přílohy}
-Here you can insert the appendices of your thesis.
+Příloha č.1: Generator.zip\\Příloha č.2: database.db
 
 \end{document}
