@@ -106,6 +106,7 @@
 \gdef\thesis@czech@advisorSignature{Podpis vedoucího}
 \gdef\thesis@czech@fieldTitle{Obor}
 \gdef\thesis@czech@advisorTitle{Vedoucí práce}
+\gdef\thesis@czech@consultantTitle{Konzultant}
 \gdef\thesis@czech@authorTitle{Autor}
 \gdef\thesis@czech@abstractTitle{Shrnutí}
 \gdef\thesis@czech@keywordsTitle{Klíčová slova}
