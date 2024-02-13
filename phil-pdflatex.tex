@@ -43,6 +43,7 @@
 %% For non-Latin scripts, it may be necessary to load additional
 %% fonts:
 \usepackage{paratype}
+\usepackage[most]{tcolorbox}
 \def\textrussian#1{{\usefont{T2A}{PTSerif-TLF}{m}{rm}#1}}
 %%
 %% The following section sets up the metadata of the thesis.
@@ -64,7 +65,7 @@
     TeXkeywords = {DWH, Power Bi, ITIL, ITSM, datový sklad, dashboard, služby, IT služby},
     abstract    = { Tato diplomová práce se zabývá analýzou a implementací datového skladu na Masarykově univerzitě. Hlavním cílem je analýza samotné služby datového skladu a to jak z hlediska její technické realizace, tak i implementace služby dle rámce ITIL a její následná evaluace. V aplikační části je hlavním cílem práce návrh datového reportu, který je postaven na službě datového skladu a zpracovává anonymizovaná data ze systému ERP.},
     thanks      = {%
-    Na tomto místě bych rád poděkoval panu Ing. Filipu Janovičovi, Ph.D., MBA, a panu Ing. Jindřichu Zechmeisterovi za vedení a konzultace.\\Dále děkuji Bc. Filipu Švaříčkovi za konzultace týkající se služby datového skladu.\\Poděkování patří také Kláře Filipové za to, že mně je ještě ochotná poslouchat.
+    Na tomto místě bych rád poděkoval panu Ing. Filipu Janovičovi, Ph.D., MBA, a panu Ing. Jindřichu Zechmeisterovi za vedení a konzultace.\\Dále děkuji Bc. Filipu Švaříčkovi za informace týkající se služby datového skladu.\\Poděkování patří také Kláře Filipové za to, že mě je ještě ochotná poslouchat.
     },
     bib        = bibliografie.bib,
     %% The following keys are only useful, when you're using a
@@ -963,7 +964,7 @@ Velikosti rozpočtů, které jsou takto přepočteny na české koruny, tak odpo
 
 \subsection{Testovací data}
 \label{testovaci-data}
-Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu databáze ISEP ve formátu, ve kterém je uložena v datovém skladu, veškerá zpracovávaná data jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu. Vzhledem k zachování původního datového modelu je v případě reálného nasazení možné do Power BI přidat nový datový zdroj a připojit tak produkční databázi datového skladu. S minimálními úpravami tak lze vizualizovat reálný stav, tak jak je uložen v databázi ISEP. 
+Vzhledem k citlivé povaze dat, která obsahují soukromé informace o zainteresovaných osobách a rozpočtech, nevyužívá zde prezentovaný report produkční data, ale vychází pouze z datového modelu databáze ISEP ve formátu, ve kterém je uložena v datovém skladu, veškerá zpracovávaná data jsou náhodně vygenerovaná a nemají tak žádnou výpovědní hodnotu. 
 
 Testovací data byla vygenerována za pomocí jednoduchého programu napsaného v jazyce C\# za využití frameworku \emph{.NET core} a knihovny \emph{bogus}, která je zodpovědná za generování náhodných dat. Data jsou pro účely testu uložena v databázi SQLite, která ze které jsou následně nahrány do programu PowerBI. Jelikož Power BI neumí nativně pracovat SQLite databázi je nutné využít SQLite ovladač pro ODBC\footnote{viz. http://www.ch-werner.de/sqliteodbc/}. Generátor i databáze s testovacími daty jsou součástí příloh.
 
@@ -972,7 +973,7 @@ Testovací data byla vygenerována za pomocí jednoduchého programu napsaného 
 \section{Report - PowerBi}
 Data byla do programu Power BI Desktop nahrána pomocí ODBC driveru pro SQLite zmíněného výše a jsou využita tak, jak jsou uležena v databázi bez dalších transformací, k datům byla pouze přidána tabulka \emph{denní\_kurz}, která slouží pro přepočet hodnot rozpočtů v cizích měnách viz. \ref{denni-kurz}. Tabulka je s rozpočtovou tabulkou propojena pomocí klíče uloženém ve sloupci \emph{kod}.  
 
-Dle zadání se výsledný report skládá ze tří samostatných dashboardů. Jednotlivé dashboardy jsou dostupné z úvodní obrazovky, která slouží jako základní rozcestník, viz. obrázek \ref{fig:crossroad}. Pro kliknutí na navigační tlačítko je uživatel přesměrován na již na zvolený dashboard, kde jsou vizualizované jednotlivé metriky. Tyto metriky jsou definovány za pomocí jazyka DAX\footnote{z angl. Data Analysis Expressions}, který je v Power BI využíván na tvorbu metrik a kalkulovaných sloupců, v jednodušších případech se jendá pouze o agregační funkce programu Power BI Desktop.
+Dle zadání se výsledný report skládá ze tří samostatných dashboardů. Jednotlivé dashboardy jsou dostupné z úvodní obrazovky, která slouží jako základní rozcestník, viz. obrázek \ref{fig:crossroad}. Pro kliknutí na navigační tlačítko je uživatel přesměrován na již na zvolený dashboard, kde jsou vizualizované jednotlivé metriky. Tyto metriky jsou definovány za pomocí jazyka DAX\footnote{z angl. Data Analysis Expressions}, který je v Power BI využíván na tvorbu metrik a kalkulovaných sloupců, v jednodušších případech se jedná pouze o agregační funkce programu Power BI Desktop.
     \begin{figure}[t]
         \begin{center}
             \includegraphics[width=13cm]{img/crossroad.png}
@@ -1009,41 +1010,52 @@ Metrika se pro mužskou variantu označuje jako \emph{PocetMuziRole} a je spoč�
 
 Oba dva výpočty pak mají i variantu pro ženské pohlaví \emph{PocetZenyRole, WomanCount}. Všechny výpočty pak v jazyce DAX vypadají následovně:
 
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
 ```
 ManCount = 
 var cnt = CALCULATE(
-    COUNTROWS(Projekt_osoba), Projekt_osoba[Pohlavi] = "Muz"
-    ) 
+    COUNTROWS(Projekt_osoba),
+    Projekt_osoba[Pohlavi] = "Muz") 
 RETURN IF(cnt = BLANK(), 0, cnt)
 
 --------------------------------------------
 
 WomanCount = 
 var cnt = CALCULATE(
-    COUNTROWS(Projekt_osoba), Projekt_osoba[Pohlavi] = "Zena"
-    ) 
+    COUNTROWS(Projekt_osoba),
+    Projekt_osoba[Pohlavi] = "Zena") 
 RETURN IF(cnt = BLANK(), 0, cnt)
 
 --------------------------------------------
 
 PocetMuziRole = DIVIDE(
         COUNTROWS(
-            FILTER(Projekt_osoba, Projekt_osoba[Pohlavi] == "Muz")), 
-                    SUM(Prac_vazba[ManCount]), 0
-        )
+            FILTER(Projekt_osoba,
+                   Projekt_osoba[Pohlavi] == "Muz")
+                ), 
+            SUM(Prac_vazba[ManCount]), 0)
+\end{markdown*}
+\end{tcolorbox}
 
---------------------------------------------
-
+\begin{tcolorbox}
+\begin{markdown*}{%
+  fencedCode,
+}
+```
 PocetZenyRole = DIVIDE(
         COUNTROWS(
-            FILTER(Projekt_osoba, Projekt_osoba[Pohlavi] == "Zeny")),
-                    SUM(Prac_vazba[WomanCount]), 0
+            FILTER(Projekt_osoba,
+                   Projekt_osoba[Pohlavi] == "Zeny")
+                ),
+            SUM(Prac_vazba[WomanCount]), 0
         )
 ```
 \end{markdown*}
+\end{tcolorbox}
+\shorthandoff{-}
 
 Tyto data jsou následně v grafu rozdělena dle jednotlivých rolí, které slouží jako legenda grafu. Pojmenování rolí je uloženo ve sloupci \emph{Popis} tabulky \textbf{Vav\_role}. 
 
@@ -1053,15 +1065,19 @@ Tyto základní metriky jsou dále doplněny o přehledový sloupcový graf \emp
 
 Data vizualizovaná v tomto grafu pocházejí z hodnot \emph{ManCount} a \emph{WomantCount}, které jsou rozebrány výše. Křivka relativního zastoupení žen je pak spočítána jako podíl hodnoty \emph{WomanCount} a součtu hodnot \emph{ManCount} a \emph{WomanCount}, které jsou obě rozebrány výše. Taktéž je zde využita funkce \emph{DIVIDE()} pro ošetření dělení nulou. Celý výpočet je v DAX následující:
 
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
 ```
-WomenRatio = DIVIDE(Projekt[WomanCount], 
-                    Projekt[ManCount] + Projekt[WomanCount],
-                    1)
+WomenRatio = DIVIDE(
+        Projekt[WomanCount], 
+        Projekt[ManCount] + Projekt[WomanCount],
+        1)
 ```
 \end{markdown*}
+\end{tcolorbox}
+    
 Výsledná hodnota je následně vizualizována ve formátu procent. 
 
 \subsection{Projekty}
@@ -1078,6 +1094,7 @@ Druhý dashboard vizualizuje úspěšnost projektových návrhů v závislosti n
 \paragraph{Konverze projekt/návrh} Tato metrika zobrazuje procentuální úspěšnost navrhovatelů projektu v závislosti na jejich genderu. Metrika je pro ženského navrhovatele vypočítána jako podíl počtu řádků v tabulce \textbf{Navrh}, které mají ženského navrhovatele a realizovaný projekt s počtem všechnávrhů podaných ženami. Existence projektu je určena pomocí metriky \emph{ProjectExist}, která k návrhu hledá příslušný projekt, pokud projekt existuje je vrácena hodnota \emph{True()}, v opačném případě \emph{False()}. Metrika je vizualizována jako dvojice grafů paprskového měřidla, kdy každé zobrazuje konverzi návrh/projekt pro jedno pohlaví a to jak graficky, tak i ve formě procentuální informace.
 Zdrojový kód metriky je pak následující:
 
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
@@ -1087,53 +1104,56 @@ ProjectExist =
 RETURN IF(proj = BLANK(), FALSE(), TRUE())
 
 --------------------------------------------
-
 ManConversion = 
     var res = CALCULATE(
         DIVIDE(
             CALCULATE(
                 COUNTROWS(Navrh), 
-                    Navrh[Navrhovatel_gender] = "Muz", Navrh[ProjectExist]),
+                    Navrh[Navrhovatel_gender] = "Muz",
+                    Navrh[ProjectExist]),
             CALCULATE(
                 COUNTROWS(Navrh),
-                    Navrh[Navrhovatel_gender] = "Muz"), 0))
+                    Navrh[Navrhovatel_gender] = "Muz"),
+                    0))
 RETURN IF(res = BLANK(), 0, res)
-```
-\end{markdown*}
-\newpage
-\begin{markdown*}{%
-  fencedCode,
-}
-```
+
+--------------------------------------------
 WomanConversion = 
     var res = CALCULATE(
         DIVIDE(
             CALCULATE(
                 COUNTROWS(Navrh), 
-                Navrh[Navrhovatel_gender] = "Zena", Navrh[ProjectExist]),
+                Navrh[Navrhovatel_gender] = "Zena",
+                Navrh[ProjectExist]),
             CALCULATE(
                 COUNTROWS(Navrh),
-                Navrh[Navrhovatel_gender] = "Zena"), 0))
+                Navrh[Navrhovatel_gender] = "Zena"),
+                0))
 RETURN IF(res = BLANK(), 0, res)
 ```
 \end{markdown*}
-
+\end{tcolorbox}
 
 Tato metrika je dále doplněna sumami všech podaných návrhů, realizovaných projektů a celkovou úspěšností bez ohledu na gender. Počet všech podaných návrhů je vypočítám jako suma všech záznamů v tabulce \textbf{Navrh}, počet realizovaných projektů jako suma všech záznamů v tabulce \textbf{Navrh}, pro které je metrika \emph{ProjectExist} rovna \emph{TRUE()}.
 
 Celková konverze návrh/projekt je pak spočítána defacto jako podíl dvou předchozích hodnot s tím rozdílem, že jednotlivé sumy jsou v tomto případě vypočítány pomocí DAX následující způsobem:
-
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
 ```
 CelkovaKonverze = DIVIDE(
                     COUNTROWS(
-                        FILTER(Navrh, Navrh[ProjectExist] = TRUE())),
+                        FILTER(
+                          Navrh,
+                          Navrh[ProjectExist] = TRUE()
+                        )),
                         COUNTROWS(Navrh),
                         0)
 ```
-\end{markdown*}
+\end{markdown*} 
+\end{tcolorbox}
+
 Tato metrika je vizualizována ve formátu procent.
 
 
@@ -1155,6 +1175,7 @@ V obou případech je vizualizace uskutečněna jednak za pomoci koláčového g
     \end{figure}
 
 Pro variantu investičního rozpočtu projektů řešených ženami - \emph{RozpocetZenyInvesticni} - je primární metrika vypočítána jako podíl celkové sumy investičních položek rozpočtu a počtem řádků všech projektů, u kterých jsou hlavní řešitelé ženy.
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
@@ -1171,7 +1192,13 @@ RozpocetZenyInvesticni =
                     Projekt[Gender] == "Zena")),
                 0))
 
-––––––––––––––––––––––
+\end{markdown*}
+\end{tcolorbox}
+\begin{tcolorbox}
+\begin{markdown*}{%
+  fencedCode,
+}
+```
 
 RozpocetMuziInvesticni =                    
     CALCULATE(
@@ -1186,7 +1213,6 @@ RozpocetMuziInvesticni =
                 0))
 
 ––––––––––––––––––––––
-
 RozpocetZenyNeinvesticni =                    
     CALCULATE(
         DIVIDE(
@@ -1200,7 +1226,6 @@ RozpocetZenyNeinvesticni =
                 0))
 
 ––––––––––––––––––––––
-
 RozpocetMuziNeinvesticni =                    
     CALCULATE(
         DIVIDE(
@@ -1214,29 +1239,35 @@ RozpocetMuziNeinvesticni =
                 0))
 ```
 \end{markdown*}
+\end{tcolorbox}
+
 
 Pomocná metrika \emph{RozpocetInvestSum}, která udává celkovou sumu investičních položek je vypočítána pomocí metriky \emph{RozpocetInvestSum} vytvořené v tabulce \textbf{Projekt} a která počítá celkovou sumu z hodnot z metriky \emph{TotalInvest} z tabulky \textbf{Rozpocet}. Tato metrika pak poskytuje celkovou sumu ze sloupce \emph{N\_Investicni} tabulky \textbf{Projekt\_rozpocet\_radek}.
 
 V DAX se pak všechny zmíněné metriky počítají následovně:
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
 ```
 TotalInvest = 
     SUMX(FILTER(Projekt_rozpocet_radek,
-         Projekt_rozpocet_radek[Projekt_rozpocet_Id] = Rozpocet[Projekt_Id]),
+         Projekt_rozpocet_radek[Projekt_rozpocet_Id] =
+            Rozpocet[Projekt_Id]),
     Projekt_rozpocet_radek[N_Investicni])
 
 TotalNonInvest = 
     SUMX(FILTER(Projekt_rozpocet_radek,
-         Projekt_rozpocet_radek[Projekt_rozpocet_Id] = Rozpocet[Projekt_Id]),
+         Projekt_rozpocet_radek[Projekt_rozpocet_Id] =
+            Rozpocet[Projekt_Id]),
     Projekt_rozpocet_radek[N_Neinvesticni])
 
 
 RozpocetInvestSum = 
     SUMX(
         FILTER(
-            Rozpocet, Rozpocet[Projekt_Id] = Projekt[Projekt_Id]
+            Rozpocet,
+            Rozpocet[Projekt_Id] = Projekt[Projekt_Id]
             ),
         Rozpocet[TotalInvest]
     )
@@ -1244,15 +1275,18 @@ RozpocetInvestSum =
 RozpocetNoninvestSum = 
     SUMX(
         FILTER(
-            Rozpocet, Rozpocet[Projekt_Id] = Projekt[Projekt_Id]
+            Rozpocet,
+            Rozpocet[Projekt_Id] = Projekt[Projekt_Id]
             ),
         Rozpocet[TotalNoninvest]
     )
 ```
 \end{markdown*}
+\end{tcolorbox}
 
 Poslední vizualizovanou metrikou v rámci dashboardu je pak poměr rozpočtů pro jednotlivé gendery. Tato křivka vizualizuje poměr mezi jednotlivými průměrnými velikostmi rozpočtů, z tohoto důvodu  je metrika \emph{RozpocetGenderRatio} vypočítána jako větší hodnota z podílu metrik \emph{RozpocetZenyNeinvesticni} a \emph{RozpocetMuziNeinvesticni} a z podílu jejich obrácené hodnoty. V DAX pak zápis vypadá následovně: 
 
+\begin{tcolorbox}
 \begin{markdown*}{%
   fencedCode,
 }
@@ -1260,18 +1294,27 @@ Poslední vizualizovanou metrikou v rámci dashboardu je pak poměr rozpočtů p
 RozpocetGenderRatio = 
     MAX(
         DIVIDE(
-            [RozpocetZenyNeinvesticni], [RozpocetMuziNeinvesticni], 0),
+            [RozpocetZenyNeinvesticni],
+            [RozpocetMuziNeinvesticni], 0),
         DIVIDE(
-            [RozpocetMuziNeinvesticni], [RozpocetZenyNeinvesticni], 0)
+            [RozpocetMuziNeinvesticni],
+            [RozpocetZenyNeinvesticni], 0)
         )
 ```
 \end{markdown*}
-
+\end{tcolorbox}
 Z výpočtu tedy vyplývá, že čím více se tato křivka přibližuje hodnotě 1, tím více  jsou velikosti rozpočtů vyrovnané, naopak čím je hodnota větší, tím větší je nepoměr mezi velikostmi rozpočtů.
 
 \vspace{5mm}
 Takto sestavený report umožňuje velmi snadný a rychlý přehled o základních otázkách týkajících se projektového řízení a genderu řešitelů na celé Masarykově univerzitě. 
-Data vizualizovaná v reportu neobsahují žádné osobní ani jiné údaje a tak zle dle bezpečnostní kategorizace výsledný report zařadit do kategorie I. viz. \ref{data_sec} a jeho výstup je tedy možné prezentovat veřejně. Sdílení samotné Power Bi sestavy, respektive zdrojového souboru ve formátu *.pbix, však není veřejně možné, neboť v případě připojení produkční databáze by tento soubor obsahoval příslušný \emph{connection string}, díky kterému by případný útočník získal přístup ke čtení původních a tedy nezagregovaných dat.
+Data vizualizovaná v reportu neobsahují žádné osobní ani jiné údaje a tak zle dle bezpečnostní kategorizace výsledný report zařadit do kategorie I. viz. \ref{data_sec} a jeho výstup je tedy možné prezentovat veřejně.
+
+\subsection{Produkční nasazení}
+I přes to, že zpracovaný report nebyl postaven nad reálnými daty uloženými v datovém skladu,je možné jej k databázi datového skladu připojit. Testovací data zachovávají stejný data model, jako mají reálná data v databázi datového skladu, pro jejich vizualizaci tak stačí změnit datový zdroj v Power BI z testovací SQLite databáze na reálnou databázi datového skladu. 
+
+Pro reálné zpřístupnění, je pak nutné zvolit majitele reportu, který je zodpovědný za jeho provoz, report se dále musí zpřístupnit online, k čemuž v rámci Masarykovi univerzity slouží zejména služba Microsoft SharePoint\footnote{viz. https://www.microsoft.com/cs-cz/microsoft-365/sharepoint/collaboration}, které v tomto případě funguje jako cloudové úložiště. V rámci služby SharePoint je pak následně možné nastavit potřebná přístupová práva. Posledním krokem je pak zveřejnění reportu v seznamu reportovacího portálu.
+
+Sdílení samotné Power Bi sestavy, respektive zdrojového souboru ve formátu *.pbix s napojením na produkční data, není veřejně možné, neboť v případě připojení produkční databáze by tento soubor obsahoval příslušný \emph{connection string}, díky kterému by případný útočník získal přístup ke čtení původních, nezagregovaných dat, která nejsou nikterak anonymizovaná.
 
 \chapter{Diskuse}
 V diplomové práci jsem se věnoval zavádění služby datového skladu na Masarykově univerzitě. V teoretické části jsem se zaměřil na samotnou službu a její implementaci dle rámce ITIL a dále pak i na její technické parametry. Aplikační část se pak věnuje využití služby datového skladu a jejím obsahem je návrh a implementace datového reportu nad daty ze systému ISEP, které jsou v datovém skladě již uloženy. 
